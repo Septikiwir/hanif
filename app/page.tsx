@@ -795,25 +795,7 @@ export default function Home() {
           <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
           <h2 className="footer-names reveal reveal-delay-3">Hanif &amp; Opay</h2>
 
-          <div
-            style={{ textAlign: "center", marginBottom: "2rem" }}
-            className="reveal reveal-delay-4"
-          >
-            <svg width="48" height="24" viewBox="0 0 48 24" fill="none">
-              <path
-                d="M24 2 C20 2 16 6 16 10 C16 16 24 22 24 22 C24 22 32 16 32 10 C32 6 28 2 24 2Z"
-                fill="#B8923A"
-                opacity="0.3"
-              />
-              <path
-                d="M24 6 C22 6 20 8 20 10 C20 13 24 17 24 17 C24 17 28 13 28 10 C28 8 26 6 24 6Z"
-                fill="#B8923A"
-                opacity="0.5"
-              />
-            </svg>
-          </div>
-
-          <div className="footer-credit">Made with ♥ by Webita.id</div>
+          <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
         </footer>
       </main>
 

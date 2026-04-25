@@ -471,6 +471,7 @@ main {
   justify-content: center;
   gap: 16px;
   margin-bottom: 1rem;
+  flex-wrap: nowrap;
 }
 
 .countdown-unit {
@@ -480,7 +481,7 @@ main {
 
 .countdown-number {
   font-family: var(--font-cormorant-garamond), serif;
-  font-size: 52px;
+  font-size: clamp(34px, 10.5vw, 52px);
   font-weight: 300;
   color: #fff;
   line-height: 1;
@@ -489,7 +490,7 @@ main {
 
 .countdown-sep {
   font-family: var(--font-cormorant-garamond), serif;
-  font-size: 40px;
+  font-size: clamp(22px, 8.5vw, 40px);
   color: var(--gold-light);
   align-self: flex-start;
   padding-top: 8px;
@@ -498,12 +499,26 @@ main {
 
 .countdown-name {
   font-family: var(--font-cormorant-sc), serif;
-  font-size: 9px;
+  font-size: clamp(8px, 2.6vw, 9px);
   letter-spacing: 0.2em;
   color: var(--gold-pale);
   opacity: 0.6;
   display: block;
   margin-top: 4px;
+}
+
+@media (max-width: 380px) {
+  .countdown-grid {
+    gap: 10px;
+  }
+
+  .countdown-unit {
+    min-width: 52px;
+  }
+
+  .countdown-sep {
+    padding-top: 6px;
+  }
 }
 
 .countdown-done {
