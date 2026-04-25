@@ -12,10 +12,7 @@ type CountdownState = {
 };
 
 export default function Home() {
-  const weddingDate = useMemo(
-    () => new Date("2026-03-26T09:00:00+07:00"),
-    []
-  );
+  const weddingDate = useMemo(() => new Date("2026-05-17T00:00:00+07:00"), []);
 
   const galleryImages = useMemo(
     () => [
