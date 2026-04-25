@@ -21,6 +21,15 @@ export default function Home() {
     []
   );
 
+  const [guestName, setGuestName] = useState("Tamu Undangan");
+
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const raw = sp.get("to") ?? sp.get("tamu") ?? sp.get("guest") ?? sp.get("nama");
+    const cleaned = (raw ?? "").replace(/\s+/g, " ").trim();
+    setGuestName(cleaned ? cleaned.slice(0, 60) : "Tamu Undangan");
+  }, []);
+
   const galleryImages = useMemo(
     () => [
       "https://picsum.photos/seed/hanif-opay-01/900/1200",
@@ -34,6 +43,7 @@ export default function Home() {
   );
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -51,10 +61,12 @@ export default function Home() {
 
     let cancelled = false;
 
+    const shouldPlay = isInvitationOpen && isPlaying;
+
     const sync = async () => {
       if (!audio) return;
 
-      if (isPlaying) {
+      if (shouldPlay) {
         try {
           await audio.play();
         } catch {
@@ -70,7 +82,20 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-  }, [isPlaying]);
+  }, [isInvitationOpen, isPlaying]);
+
+  useEffect(() => {
+    if (isInvitationOpen) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isInvitationOpen]);
 
   const goPrev = () => {
     setCarouselIndex((idx) =>
@@ -148,6 +173,42 @@ export default function Home() {
 
   return (
     <>
+      {!isInvitationOpen && (
+        <section className="opening-screen" aria-label="Opening Screen">
+          <div className="opening-panel">
+            <div className="opening-content">
+              <div className="opening-card">
+                <p className="opening-kicker">Undangan Pernikahan</p>
+
+                <div className="opening-monogram">
+                  <span className="opening-monogram-text">Ho</span>
+                </div>
+
+                <h1 className="opening-names">
+                  Hanif <span className="opening-ampersand">&amp;</span> Opay
+                </h1>
+
+                <span className="gold-line" style={{ marginTop: "1.5rem" }} />
+
+                <p className="opening-to">Nama tamu</p>
+                <p className="opening-guest">{guestName}</p>
+
+                <button
+                  type="button"
+                  className="opening-button"
+                  onClick={() => {
+                    setIsInvitationOpen(true);
+                    setIsPlaying(true);
+                  }}
+                >
+                  Buka Undangan
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <main>
         {/* ─── HERO ─── */}
         <header className="hero">
@@ -837,25 +898,27 @@ export default function Home() {
       <audio ref={audioRef} src={audioSrc} autoPlay playsInline preload="auto" />
 
       {/* ─── MUSIC FAB ─── */}
-      <button
-        className={`music-fab${isPlaying ? " playing" : ""}`}
-        title="Music"
-        type="button"
-        onClick={() => setIsPlaying((v) => !v)}
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#EDD9A3"
-          strokeWidth="1.5"
+      {isInvitationOpen && (
+        <button
+          className={`music-fab${isPlaying ? " playing" : ""}`}
+          title="Music"
+          type="button"
+          onClick={() => setIsPlaying((v) => !v)}
         >
-          <path d="M9 18V5l12-2v13" />
-          <circle cx="6" cy="18" r="3" />
-          <circle cx="18" cy="16" r="3" />
-        </svg>
-      </button>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#EDD9A3"
+            strokeWidth="1.5"
+          >
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+          </svg>
+        </button>
+      )}
     </>
   );
 }

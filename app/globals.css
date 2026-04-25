@@ -946,6 +946,149 @@ main {
   }
 }
 
+/* ─── OPENING SCREEN ─── */
+.opening-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: var(--burgundy);
+  display: flex;
+  justify-content: center;
+}
+
+.opening-panel {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  position: relative;
+  padding: 72px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.opening-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(30, 5, 10, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+.opening-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.opening-card {
+  width: 100%;
+  border-radius: 22px;
+  background: var(--cream);
+  border: 1px solid rgba(212, 173, 104, 0.55);
+  padding: 38px 24px 30px;
+}
+
+.opening-kicker {
+  font-family: var(--font-cormorant-sc), serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+.opening-monogram {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 146, 58, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem auto 1.25rem;
+  position: relative;
+}
+
+.opening-monogram::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 146, 58, 0.18);
+}
+
+.opening-monogram-text {
+  font-family: var(--font-great-vibes), cursive;
+  font-size: 44px;
+  color: var(--burgundy);
+  line-height: 1;
+}
+
+.opening-names {
+  font-family: var(--font-cormorant-garamond), serif;
+  font-size: 40px;
+  font-weight: 300;
+  color: var(--burgundy);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin-top: 0.25rem;
+}
+
+.opening-ampersand {
+  font-family: var(--font-great-vibes), cursive;
+  font-size: 44px;
+  color: var(--gold);
+  margin: 0 6px;
+}
+
+.opening-to {
+  font-family: var(--font-cormorant-sc), serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 1.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.opening-guest {
+  font-family: var(--font-cormorant-garamond), serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin-bottom: 1.75rem;
+}
+
+.opening-button {
+  margin-top: 2.25rem;
+  width: 100%;
+  max-width: 280px;
+  padding: 14px 18px;
+  background: var(--burgundy);
+  border: 1px solid rgba(184, 146, 58, 0.55);
+  color: var(--gold-pale);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-cormorant-sc), serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.opening-button:hover {
+  transform: translateY(-1px);
+  background: var(--burgundy-mid);
+}
+
 /* ─── DECORATIVE SVG FLOWERS ─── */
 .floral-divider {
   display: flex;
