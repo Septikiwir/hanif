@@ -13,6 +13,13 @@ type CountdownState = {
 
 export default function Home() {
   const weddingDate = useMemo(() => new Date("2026-05-17T00:00:00+07:00"), []);
+  const audioSrc = useMemo(
+    () =>
+      encodeURI(
+        "/KICAU MANIA - NDARBOY GENK x BANDITOZ YAOW 86 (OFFICIAL LYRIC VIDEO) GAS POL NDANGAK.mp3"
+      ),
+    []
+  );
 
   const galleryImages = useMemo(
     () => [
@@ -26,7 +33,8 @@ export default function Home() {
     []
   );
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const [countdown, setCountdown] = useState<CountdownState>({
@@ -36,6 +44,33 @@ export default function Home() {
     secs: "00",
     done: false,
   });
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let cancelled = false;
+
+    const sync = async () => {
+      if (!audio) return;
+
+      if (isPlaying) {
+        try {
+          await audio.play();
+        } catch {
+          if (!cancelled) setIsPlaying(false);
+        }
+      } else {
+        audio.pause();
+      }
+    };
+
+    void sync();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isPlaying]);
 
   const goPrev = () => {
     setCarouselIndex((idx) =>
@@ -798,6 +833,8 @@ export default function Home() {
           <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
         </footer>
       </main>
+
+      <audio ref={audioRef} src={audioSrc} autoPlay playsInline preload="auto" />
 
       {/* ─── MUSIC FAB ─── */}
       <button
