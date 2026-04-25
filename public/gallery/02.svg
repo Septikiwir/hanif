@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#FAF6F0"/>
+  <path d="M0 540 C 200 420, 360 660, 800 420 L800 800 L0 800 Z" fill="#EDE0D0"/>
+  <path d="M0 610 C 220 510, 420 760, 800 500" fill="none" stroke="#EDD9A3" stroke-opacity="0.55" stroke-width="2"/>
+  <rect x="44" y="44" width="712" height="712" rx="24" fill="none" stroke="#B8923A" stroke-opacity="0.32" stroke-width="2"/>
+  <text x="400" y="355" text-anchor="middle" font-family="serif" font-size="74" fill="#4A0E1A" opacity="0.9">Hanif</text>
+  <text x="400" y="430" text-anchor="middle" font-family="serif" font-size="58" fill="#B8923A" opacity="0.85">&amp;</text>
+  <text x="400" y="505" text-anchor="middle" font-family="serif" font-size="74" fill="#4A0E1A" opacity="0.9">Opay</text>
+</svg>

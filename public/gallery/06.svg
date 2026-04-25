@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#F2EAE0"/>
+  <rect x="44" y="44" width="712" height="712" rx="24" fill="#FAF6F0"/>
+  <rect x="44" y="44" width="712" height="712" rx="24" fill="none" stroke="#B8923A" stroke-opacity="0.26" stroke-width="2"/>
+  <g fill="none" stroke="#D4AD68" stroke-opacity="0.45" stroke-width="2">
+    <path d="M140 620 C 260 520, 340 680, 470 600 C 610 520, 650 620, 700 560"/>
+    <path d="M140 560 C 250 460, 360 620, 490 540 C 600 470, 650 540, 700 500"/>
+  </g>
+  <text x="400" y="380" text-anchor="middle" font-family="serif" font-size="92" fill="#4A0E1A" opacity="0.86">06</text>
+  <text x="400" y="440" text-anchor="middle" font-family="serif" font-size="20" fill="#5C3D30" opacity="0.7" letter-spacing="5">PHOTO</text>
+</svg>
