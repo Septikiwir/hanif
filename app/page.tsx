@@ -85,6 +85,30 @@ export default function Home() {
   }, [isInvitationOpen, isPlaying]);
 
   useEffect(() => {
+    const stopAudio = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.pause();
+      audio.currentTime = 0;
+    };
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") stopAudio();
+    };
+
+    window.addEventListener("pagehide", stopAudio);
+    window.addEventListener("beforeunload", stopAudio);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      window.removeEventListener("pagehide", stopAudio);
+      window.removeEventListener("beforeunload", stopAudio);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      stopAudio();
+    };
+  }, []);
+
+  useEffect(() => {
     if (isInvitationOpen) {
       document.body.style.overflow = "";
       return;
