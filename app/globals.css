@@ -558,7 +558,7 @@ main {
 /* ─── EVENT SECTION ─── */
 .event-section {
   background: transparent;
-  padding: 0 var(--section-padding-x) var(--section-padding-y);
+  padding: 0 var(--section-padding-x);
   position: relative;
 }
 
@@ -795,7 +795,7 @@ main {
 /* ─── PHOTO GALLERY ─── */
 .gallery-section {
   background: transparent;
-  padding: var(--section-padding-y) var(--section-padding-x);
+  padding: 0 var(--section-padding-x);
   text-align: center;
 }
 
