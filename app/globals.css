@@ -13,6 +13,28 @@
   --text-dark: #2c1810;
   --text-mid: #5c3d30;
   --text-light: #8b6b58;
+
+  /* Typography System */
+  --font-heading: var(--font-cormorant-garamond), serif;
+  --font-sub: var(--font-cormorant-sc), serif;
+  --font-body: var(--font-eb-garamond), serif;
+
+  --h1: clamp(40px, 12vw, 52px);
+  --h2: clamp(32px, 8vw, 42px);
+  --h3: clamp(24px, 6vw, 28px);
+  --h4: clamp(20px, 5vw, 22px);
+  --body: 16px;
+  --small: 13px;
+  --xs: 10.5px;
+
+  /* Spacing System */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 80px;
+  --section-padding-y: 80px;
+  --section-padding-x: 24px;
 }
 
 html {
@@ -32,8 +54,8 @@ body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-size: 16px;
+  font-family: var(--font-body);
+  font-size: var(--body);
   line-height: 1.8;
 }
 
@@ -144,36 +166,36 @@ main {
 
 .hero .content {
   position: absolute;
-  bottom: 92px;
+  bottom: 152px;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0 28px 40px 28px;
+  padding: 0 28px 0 28px;
   z-index: 10;
 }
 
 .hero .wedding-of {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 300;
-  font-size: 10.5px;
+  font-size: var(--xs);
   letter-spacing: 4.5px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.72);
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xs);
   animation: heroFadeUp 0.9s 0.3s both;
 }
 
 .hero .names {
-  font-family: var(--font-cormorant-garamond), serif;
-  font-size: 44px;
+  font-family: var(--font-heading);
+  font-size: var(--h1);
   font-weight: 400;
   color: #ffffff;
   letter-spacing: -0.5px;
   line-height: 1.08;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-sm);
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
   animation: heroFadeUp 0.9s 0.5s both;
 }
@@ -183,12 +205,12 @@ main {
 }
 
 .hero .date {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 300;
-  font-size: 13px;
+  font-size: var(--small);
   letter-spacing: 6px;
   color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 0;
+  margin-bottom: var(--space-md);
   animation: heroFadeUp 0.9s 0.7s both;
 }
 
@@ -215,7 +237,7 @@ main {
 }
 
 .hero .count-number {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 36px;
   font-weight: 400;
   color: #ffffff;
@@ -227,7 +249,7 @@ main {
 }
 
 .hero .count-label {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 300;
   font-size: 10px;
   letter-spacing: 1.5px;
@@ -269,7 +291,7 @@ main {
 }
 
 .swipe-up-text {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -308,7 +330,8 @@ main {
 }
 
 .quote-mark {
-  font-family: var(--font-great-vibes), cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 80px;
   color: var(--gold-light);
   line-height: 0.5;
@@ -318,7 +341,7 @@ main {
 }
 
 .quote-text {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 17px;
   font-style: italic;
   font-weight: 400;
@@ -328,7 +351,7 @@ main {
 }
 
 .quote-ref {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 11px;
   letter-spacing: 0.25em;
   color: var(--gold);
@@ -355,7 +378,7 @@ main {
 }
 
 .person-name {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 500;
   color: #fff;
@@ -369,7 +392,8 @@ main {
 }
 
 .ampersand-divider {
-  font-family: var(--font-great-vibes), cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 56px;
   color: var(--gold);
   line-height: 1;
@@ -380,29 +404,30 @@ main {
 /* ─── SECTION HEADING ─── */
 .section-heading {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-lg);
 }
 
 .section-label {
-  font-family: var(--font-cormorant-sc), serif;
-  font-size: 10px;
+  font-family: var(--font-sub);
+  font-size: var(--xs);
   letter-spacing: 0.35em;
   color: var(--gold);
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-xs);
 }
 
 .section-title {
-  font-family: var(--font-great-vibes), cursive;
-  font-size: 42px;
+  font-family: var(--font-heading);
+  font-size: var(--h2);
   color: #fff;
-  line-height: 1;
+  line-height: 1.1;
+  font-style: italic;
 }
 
 /* ─── STORY SECTION ─── */
 .story-section {
   background: transparent;
-  padding: 120px 0 72px;
+  padding: var(--section-padding-y) 0;
   position: relative;
   text-align: center;
 }
@@ -410,7 +435,7 @@ main {
 .cinematic-story {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--space-xs);
   width: 100%;
 }
 
@@ -444,8 +469,8 @@ main {
   bottom: 16px;
   left: 20px;
   right: 20px;
-  font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: var(--small);
   color: #fff;
   text-align: center;
   line-height: 1.1;
@@ -456,17 +481,17 @@ main {
 /* ─── EVENT SECTION ─── */
 .event-section {
   background: transparent;
-  padding: 72px 28px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   position: relative;
 }
 
 .event-card {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 40px 32px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: var(--space-lg) var(--space-md);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-md);
   position: relative;
   overflow: hidden;
 }
@@ -492,7 +517,7 @@ main {
 }
 
 .event-type {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.3em;
   color: var(--gold);
@@ -500,7 +525,7 @@ main {
 }
 
 .event-name {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 28px;
   font-weight: 500;
   color: #fff;
@@ -514,7 +539,7 @@ main {
 }
 
 .event-details strong {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 500;
   letter-spacing: 0.05em;
   color: #fff;
@@ -529,7 +554,7 @@ main {
   padding: 10px 28px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: #fff;
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-decoration: none;
@@ -553,7 +578,7 @@ main {
 }
 
 .countdown-label {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.35em;
   color: var(--gold-pale);
@@ -564,8 +589,8 @@ main {
 .countdown-grid {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 1rem;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
   flex-wrap: nowrap;
 }
 
@@ -575,7 +600,7 @@ main {
 }
 
 .countdown-number {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: clamp(34px, 10.5vw, 52px);
   font-weight: 300;
   color: #fff;
@@ -584,7 +609,7 @@ main {
 }
 
 .countdown-sep {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: clamp(22px, 8.5vw, 40px);
   color: var(--gold-light);
   align-self: flex-start;
@@ -593,7 +618,7 @@ main {
 }
 
 .countdown-name {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: clamp(8px, 2.6vw, 9px);
   letter-spacing: 0.2em;
   color: var(--gold-pale);
@@ -617,7 +642,7 @@ main {
 }
 
 .countdown-done {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 18px;
   font-style: italic;
   color: var(--gold-pale);
@@ -627,14 +652,14 @@ main {
 /* ─── LIVE STREAM ─── */
 .livestream-section {
   background: transparent;
-  padding: 64px 36px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   text-align: center;
 }
 
 .livestream-card {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(0, 0, 0, 0.4);
-  padding: 40px 28px;
+  padding: var(--space-lg) var(--space-md);
   position: relative;
   border-radius: 4px;
 }
@@ -642,7 +667,7 @@ main {
 /* ─── PHOTO GALLERY ─── */
 .gallery-section {
   background: transparent;
-  padding: 64px 28px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   text-align: center;
 }
 
@@ -655,7 +680,7 @@ main {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  margin: 0 auto 48px;
+  margin: 0 auto var(--space-md);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   overflow: hidden;
@@ -671,7 +696,7 @@ main {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: var(--space-sm);
 }
 
 /* ─── LIGHTBOX ─── */
@@ -713,8 +738,13 @@ main {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .gallery-thumb {
@@ -739,7 +769,7 @@ main {
   gap: 6px;
   background: #b91c1c;
   color: #fff;
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 9px;
   letter-spacing: 0.2em;
   padding: 4px 12px;
@@ -770,7 +800,7 @@ main {
 /* ─── GIFT SECTION ─── */
 .gift-section {
   background: transparent;
-  padding: 64px 36px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   text-align: center;
 }
 
@@ -798,7 +828,7 @@ main {
 /* ─── WISHES SECTION ─── */
 .wishes-section {
   background: var(--cream);
-  padding: 64px 24px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   position: relative;
   overflow: hidden;
 }
@@ -820,7 +850,8 @@ main {
 }
 
 .wishes-title {
-  font-family: var(--font-great-vibes), cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 48px;
   color: var(--burgundy);
 }
@@ -854,7 +885,7 @@ main {
 }
 
 .rsvp-number {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 36px;
   font-weight: 300;
   color: #fff;
@@ -863,7 +894,7 @@ main {
 }
 
 .rsvp-label {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.7);
@@ -883,7 +914,7 @@ main {
   background: transparent;
   border: 1px solid rgba(184, 146, 58, 0.4);
   color: var(--text-dark);
-  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-family: var(--font-body);
   font-size: 15px;
   border-radius: 2px;
   margin-bottom: 12px;
@@ -913,7 +944,7 @@ main {
   background: var(--gold);
   border: none;
   color: var(--cream);
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 13px;
   letter-spacing: 0.25em;
   cursor: pointer;
@@ -935,7 +966,7 @@ main {
 }
 
 .comment-name {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 17px;
   font-weight: 500;
   color: var(--burgundy);
@@ -950,7 +981,7 @@ main {
 }
 
 .comment-meta {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.1em;
   color: rgba(0, 0, 0, 0.4);
@@ -982,7 +1013,8 @@ main {
 }
 
 .footer-monogram-text {
-  font-family: var(--font-great-vibes), cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 38px;
   color: var(--gold-pale);
 }
@@ -998,7 +1030,7 @@ main {
 }
 
 .footer-byline {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 11px;
   letter-spacing: 0.15em;
   color: #fff;
@@ -1006,7 +1038,8 @@ main {
 }
 
 .footer-names {
-  font-family: var(--font-great-vibes), cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 44px;
   color: #fff;
   margin-bottom: 3rem;
@@ -1015,7 +1048,7 @@ main {
 .footer-credit {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 2rem;
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 0.15em;
   color: #fff;
@@ -1135,7 +1168,7 @@ main {
 }
 
 .opening-screen .wedding-of {
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 300;
   font-size: 10px;
   letter-spacing: 4px;
@@ -1146,7 +1179,7 @@ main {
 }
 
 .opening-screen .names {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 42px;
   font-weight: 400;
   color: #ffffff;
@@ -1171,7 +1204,7 @@ main {
 }
 
 .opening-screen .kepada {
-  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 13px;
   letter-spacing: 1.5px;
@@ -1182,7 +1215,7 @@ main {
 }
 
 .opening-screen .tamu {
-  font-family: var(--font-cormorant-garamond), serif;
+  font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 500;
   color: #ffffff;
@@ -1192,7 +1225,7 @@ main {
 }
 
 .opening-screen .note {
-  font-family: var(--font-eb-garamond), Georgia, serif;
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 10px;
   color: rgba(255, 255, 255, 0.55);
@@ -1211,7 +1244,7 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.6);
   background: transparent;
   color: #ffffff;
-  font-family: var(--font-cormorant-sc), serif;
+  font-family: var(--font-sub);
   font-weight: 300;
   font-size: 13px;
   letter-spacing: 2px;
@@ -1307,7 +1340,7 @@ main {
   position: absolute;
   bottom: 60px;
   right: -8px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 180px;
   font-weight: 400;
   font-style: italic;
@@ -1342,14 +1375,15 @@ main {
 }
 
 .v4-top-line-text {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-sub);
   font-size: 9px;
   letter-spacing: 4px;
   color: #888;
 }
 
 .v4-role {
-  font-family: 'Pinyon Script', cursive;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: 24px;
   color: #ffffff;
   line-height: 1;
@@ -1357,7 +1391,7 @@ main {
 }
 
 .v4-name {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 36px;
   font-weight: 400;
   color: #f8f6f2;
@@ -1386,7 +1420,7 @@ main {
 }
 
 .v4-sub-label {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-sub);
   font-weight: 300;
   font-size: 9px;
   letter-spacing: 3.5px;
@@ -1396,7 +1430,7 @@ main {
 }
 
 .v4-sub-parents {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-sub);
   font-weight: 300;
   font-size: 14px;
   color: #dcd6ce;
@@ -1407,7 +1441,7 @@ main {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-sub);
   font-size: 10px;
   letter-spacing: 2px;
   color: #a0967e;

@@ -327,7 +327,7 @@ export default function Home() {
             <h1 className="names">
               Fizah <span className="amp">&amp;</span> Hanif
             </h1>
-            <p className="date">Minggu · 17 Mei 2026 · Ketapang</p>
+            <p className="date">Minggu · 17 Mei 2026</p>
           </div>
 
           <div className="countdown-bar" aria-label="Hitung mundur">
@@ -391,13 +391,13 @@ export default function Home() {
 
         {/* ─── INTRO ─── */}
         <section className="intro-section" style={{ padding: 0 }}>
-          <div style={{ 
-            padding: '48px 32px', 
-            textAlign: 'center', 
-            background: 'rgba(0, 0, 0, 0.4)', 
+          <div style={{
+            padding: 'var(--space-lg) var(--space-md)',
+            textAlign: 'center',
+            background: 'rgba(0, 0, 0, 0.4)',
             borderRadius: '6px',
             border: '1px solid rgba(255, 255, 255, 0.15)',
-            margin: '40px 24px 60px 24px'
+            margin: 'var(--space-lg) var(--section-padding-x) var(--space-xl) var(--section-padding-x)'
           }}>
             <div className="ornament-center reveal">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -599,7 +599,7 @@ export default function Home() {
             </p>
             <div
               style={{
-                fontFamily: "var(--font-cormorant-sc), serif",
+                fontFamily: "var(--font-sub)",
                 fontSize: 12,
                 letterSpacing: "0.1em",
                 color: "var(--gold-pale)",
@@ -773,7 +773,7 @@ export default function Home() {
             <div className="comment-list reveal reveal-delay-3">
               <p
                 style={{
-                  fontFamily: "var(--font-cormorant-sc), serif",
+                  fontFamily: "var(--font-sub)",
                   fontSize: 10,
                   letterSpacing: "0.2em",
                   color: "rgba(0,0,0,0.4)",
@@ -816,7 +816,7 @@ export default function Home() {
                 justifyContent: "center",
                 gap: 16,
                 marginTop: "2rem",
-                fontFamily: "var(--font-cormorant-sc), serif",
+                fontFamily: "var(--font-sub)",
                 fontSize: 11,
                 letterSpacing: "0.15em",
                 color: "rgba(0,0,0,0.4)",
