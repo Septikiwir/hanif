@@ -16,7 +16,7 @@ export default function Home() {
   const audioSrc = useMemo(
     () =>
       encodeURI(
-        "/KICAU MANIA - NDARBOY GENK x BANDITOZ YAOW 86 (OFFICIAL LYRIC VIDEO) GAS POL NDANGAK.mp3"
+        "/Nadhif Basalamah - Kota Ini Tak Sama Tanpamu (Official Music Video Lyric).mp3"
       ),
     []
   );
@@ -253,6 +253,25 @@ export default function Home() {
 
             <div className="overlay" />
 
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                padding: "60px 20px",
+                display: "flex",
+                justifyContent: "center",
+                zIndex: 10,
+              }}
+            >
+              <img
+                src="/Logo Hanif.png"
+                alt="Logo Hanif"
+                style={{ height: "64px", width: "auto", objectFit: "contain" }}
+              />
+            </div>
+
             <div className="content">
               <p className="wedding-of">The Wedding Of</p>
               <h1 className="names">
@@ -307,6 +326,11 @@ export default function Home() {
         <header className="hero">
 
           <div className="content">
+            <img
+              src="/Logo Hanif.png"
+              alt="Logo Hanif"
+              style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }}
+            />
             <p className="wedding-of">The Wedding Of</p>
             <h1 className="names">
               Fizah <span className="amp">&amp;</span> Hanif
@@ -339,48 +363,14 @@ export default function Home() {
 
         {/* ─── QUOTE ─── */}
         <section className="quote-section">
-          <svg
-            className="quote-flower"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.6">
-              <ellipse cx="32" cy="18" rx="6" ry="14" fill="#B8923A" opacity="0.7" />
-              <ellipse
-                cx="32"
-                cy="18"
-                rx="6"
-                ry="14"
-                fill="#B8923A"
-                opacity="0.7"
-                transform="rotate(45 32 32)"
-              />
-              <ellipse
-                cx="32"
-                cy="18"
-                rx="6"
-                ry="14"
-                fill="#B8923A"
-                opacity="0.7"
-                transform="rotate(90 32 32)"
-              />
-              <ellipse
-                cx="32"
-                cy="18"
-                rx="6"
-                ry="14"
-                fill="#B8923A"
-                opacity="0.7"
-                transform="rotate(135 32 32)"
-              />
-              <circle cx="32" cy="32" r="7" fill="#D4AD68" />
-              <circle cx="32" cy="32" r="4" fill="#EDD9A3" />
-            </g>
-          </svg>
+          <img
+            src="/Logo Hanif.png"
+            alt="Logo Hanif"
+            className="quote-flower reveal"
+            style={{ objectFit: "contain", height: "auto" }}
+          />
 
           <blockquote className="reveal">
-            <span className="quote-mark">&quot;</span>
             <p className="quote-text">
               Dan diantara tanda-tanda kekuasaanNya ialah Dia menciptakan
               untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu
@@ -393,7 +383,14 @@ export default function Home() {
 
         {/* ─── INTRO ─── */}
         <section className="intro-section" style={{ padding: 0 }}>
-          <div style={{ padding: '72px 36px', textAlign: 'center' }}>
+          <div style={{ 
+            padding: '48px 32px', 
+            textAlign: 'center', 
+            background: 'rgba(0, 0, 0, 0.4)', 
+            borderRadius: '6px',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            margin: '40px 24px 60px 24px'
+          }}>
             <div className="ornament-center reveal">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
@@ -866,9 +863,12 @@ export default function Home() {
 
         {/* ─── FOOTER ─── */}
         <footer className="footer-section">
-          <div className="footer-monogram reveal">
-            <span className="footer-monogram-text">Ho</span>
-          </div>
+          <img
+            src="/Logo Hanif.png"
+            alt="Logo Hanif"
+            className="reveal"
+            style={{ height: "80px", width: "auto", margin: "0 auto 2rem", display: "block", objectFit: "contain" }}
+          />
 
           <span className="gold-line" />
 
