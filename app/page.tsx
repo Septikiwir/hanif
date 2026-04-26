@@ -27,6 +27,7 @@ export default function Home() {
     const sp = new URLSearchParams(window.location.search);
     const raw = sp.get("to") ?? sp.get("tamu") ?? sp.get("guest") ?? sp.get("nama");
     const cleaned = (raw ?? "").replace(/\s+/g, " ").trim();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setGuestName(cleaned ? cleaned.slice(0, 60) : "Tamu Undangan");
   }, []);
 
@@ -199,35 +200,70 @@ export default function Home() {
     <>
       {!isInvitationOpen && (
         <section className="opening-screen" aria-label="Opening Screen">
-          <div className="opening-panel">
-            <div className="opening-content">
-              <div className="opening-card">
-                <p className="opening-kicker">Undangan Pernikahan</p>
+          <div className="screen">
+            <div className="bg-photo" />
 
-                <div className="opening-monogram">
-                  <span className="opening-monogram-text">Ho</span>
-                </div>
+            {/* Decorative ornaments */}
+            <svg
+              className="ornament ornament-tl"
+              width="64"
+              height="64"
+              viewBox="0 0 64 64"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" />
+              <path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" />
+              <circle cx="4" cy="4" r="2" fill="white" />
+              <circle cx="28" cy="4" r="1.2" fill="white" />
+              <circle cx="4" cy="28" r="1.2" fill="white" />
+            </svg>
+            <svg
+              className="ornament ornament-tr"
+              width="64"
+              height="64"
+              viewBox="0 0 64 64"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" />
+              <path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" />
+              <circle cx="4" cy="4" r="2" fill="white" />
+              <circle cx="28" cy="4" r="1.2" fill="white" />
+              <circle cx="4" cy="28" r="1.2" fill="white" />
+            </svg>
 
-                <h1 className="opening-names">
-                  Hanif <span className="opening-ampersand">&amp;</span> Opay
-                </h1>
+            <div className="overlay" />
 
-                <span className="gold-line" style={{ marginTop: "1.5rem" }} />
-
-                <p className="opening-to">Nama tamu</p>
-                <p className="opening-guest">{guestName}</p>
-
-                <button
-                  type="button"
-                  className="opening-button"
-                  onClick={() => {
-                    setIsInvitationOpen(true);
-                    setIsPlaying(true);
-                  }}
-                >
-                  Buka Undangan
-                </button>
-              </div>
+            <div className="content">
+              <p className="wedding-of">The Wedding Of</p>
+              <h1 className="names">
+                Putri <span className="ampersand">&amp;</span> Andika
+              </h1>
+              <div className="divider" />
+              <p className="kepada">
+                Kepada Yth.
+                <br />
+                Bapak / Ibu / Saudara/i
+              </p>
+              <p className="tamu">{guestName}</p>
+              <p className="note">
+                *Mohon maaf jika ada kesalahan dalam penulisan nama / gelar.
+              </p>
+              <button
+                className="btn"
+                type="button"
+                onClick={() => {
+                  setIsInvitationOpen(true);
+                  setIsPlaying(true);
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M3 8l1.5-3h15L21 8M3 8v11a1 1 0 001 1h16a1 1 0 001-1V8M3 8h18M9 12h6" />
+                  <path d="M12 12v5" />
+                </svg>
+                Buka Undangan
+              </button>
             </div>
           </div>
         </section>
