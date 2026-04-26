@@ -70,6 +70,9 @@ export default function RootLayout({
       lang="id"
       className={`${ebGaramond.variable} ${cormorantGaramond.variable} ${cormorantSC.variable} ${greatVibes.variable}`}
     >
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Pinyon+Script&family=Jost:wght@100;200;300;400;500&family=Cinzel:wght@400;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+      </head>
       <body>{children}</body>
     </html>
   );

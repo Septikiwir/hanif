@@ -256,7 +256,7 @@ export default function Home() {
             <div className="content">
               <p className="wedding-of">The Wedding Of</p>
               <h1 className="names">
-                Putri <span className="ampersand">&amp;</span> Andika
+                Fizah <span className="ampersand">&amp;</span> Hanif
               </h1>
               <div className="divider" />
               <p className="kepada">
@@ -305,7 +305,7 @@ export default function Home() {
           <div className="content">
             <p className="wedding-of">The Wedding Of</p>
             <h1 className="names">
-              Hanif <span className="amp">&amp;</span> Fizah
+              Fizah <span className="amp">&amp;</span> Hanif
             </h1>
             <p className="date">Minggu · 17 Mei 2026 · Ketapang</p>
           </div>
@@ -388,48 +388,64 @@ export default function Home() {
         </section>
 
         {/* ─── INTRO ─── */}
-        <section className="intro-section">
-          <div className="ornament-center reveal">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z"
-                fill="#B8923A"
-                opacity="0.8"
-              />
-            </svg>
-          </div>
+        <section className="intro-section" style={{ padding: 0, background: '#f8f6f2' }}>
+          <div style={{ padding: '72px 36px', textAlign: 'center' }}>
+            <div className="ornament-center reveal">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z"
+                  fill="#B8923A"
+                  opacity="0.8"
+                />
+              </svg>
+            </div>
 
-          <p className="intro-lead reveal">
-            Dengan memohon Rahmat dan Ridho Allah Subhanahu Wa Ta&apos;ala, kami
-            mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
-          </p>
-
-          <div className="person-block reveal reveal-delay-1">
-            <p className="person-name">Hanif</p>
-            <p className="person-parents">
-              Putri Pertama dari<br />
-              Bapak Hermawan &amp; Ibu Sulastri
+            <p className="intro-lead reveal" style={{ marginBottom: 0 }}>
+              Dengan memohon Rahmat dan Ridho Allah Subhanahu Wa Ta&apos;ala, kami
+              mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
             </p>
           </div>
 
-          <span className="ampersand-divider reveal reveal-delay-2">&amp;</span>
-
-          <div className="person-block reveal reveal-delay-3">
-            <p className="person-name">Fizah</p>
-            <p className="person-parents">
-              Putra Kedua dari<br />
-              Bapak Drs. Ade Resmana &amp; Ibu Fatimah, S.Pd.
-            </p>
+          <div className="v4-card reveal">
+            <div className="v4-photo" style={{ height: '100%', backgroundImage: 'url(/Fizah.JPG)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="v4-photo-fade" style={{ height: '40%' }}></div>
+            </div>
+            <div className="v4-content">
+              <p className="v4-role">The Bride</p>
+              <h2 className="v4-name">Nur Hafizah, S.Pd.</h2>
+              <div className="v4-sub-row">
+                <div className="v4-sub-bar"></div>
+                <div className="v4-sub-text">
+                  <p className="v4-sub-label">Putri Pertama Dari</p>
+                  <p className="v4-sub-parents">Bapak H. Muhammad Salmani, S.Ag. (Alm)<br />&amp; Ibu Hj. Yumita, S.H.</p>
+                </div>
+              </div>
+              <div className="v4-ig">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                NUR_HAFIZAH
+              </div>
+            </div>
           </div>
 
-          <div className="ornament-center reveal reveal-delay-4">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z"
-                fill="#B8923A"
-                opacity="0.8"
-              />
-            </svg>
+          <div className="v4-card reveal">
+            <div className="v4-photo" style={{ height: '100%', backgroundImage: 'url(/Hanif.JPG)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="v4-photo-fade" style={{ height: '40%' }}></div>
+            </div>
+            <div className="v4-content">
+              <p className="v4-role">The Groom</p>
+              <h2 className="v4-name">Hanif Assalam, M.Pd.</h2>
+              <div className="v4-sub-row">
+                <div className="v4-sub-bar"></div>
+                <div className="v4-sub-text">
+                  <p className="v4-sub-label">Putra Pertama Dari</p>
+                  <p className="v4-sub-parents">Bapak H. Pandaya, S.Pd.<br />&amp; Ibu Hj. Rusmiyati, S.Pd.SD.</p>
+                </div>
+              </div>
+              <div className="v4-ig">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                HANIF_ASSALAM
+              </div>
+            </div>
           </div>
         </section>
 
@@ -816,7 +832,7 @@ export default function Home() {
               <div className="comment-item">
                 <p className="comment-name">Annisa Dwi MR</p>
                 <p className="comment-text">
-                  Selamat menempuh perjalanan baru Hanif dan Fizah. Semoga selalu
+                  Selamat menempuh perjalanan baru Fizah dan Hanif. Semoga selalu
                   dilancarkan, happily ever after ✨
                 </p>
                 <p className="comment-meta">4 minggu, 1 hari lalu</p>
@@ -907,7 +923,7 @@ export default function Home() {
           </p>
 
           <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
-          <h2 className="footer-names reveal reveal-delay-3">Hanif &amp; Fizah</h2>
+          <h2 className="footer-names reveal reveal-delay-3">Fizah &amp; Hanif</h2>
 
           <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
         </footer>
