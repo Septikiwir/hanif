@@ -14,10 +14,10 @@ type CountdownState = {
 // ─── SVG Logos ───────────────────────────────────────────────────────────────
 function BCALogo() {
   return (
-    <img 
-      src="/Qris2.jpeg" 
-      alt="BCA Logo" 
-      style={{ height: "40px", width: "auto", objectFit: "contain" }} 
+    <img
+      src="/Qris2.jpeg"
+      alt="BCA Logo"
+      style={{ height: "40px", width: "auto", objectFit: "contain" }}
     />
   );
 }
@@ -80,12 +80,46 @@ function Chip() {
         boxShadow: "0 4px 10px rgba(0,0,0,0.05)"
       }}
     >
-      <img 
-        src="/Qris1.jpeg" 
-        alt="Chip" 
-        style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+      <img
+        src="/Qris1.jpeg"
+        alt="Chip"
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
     </div>
+  );
+}
+
+// ─── Copy Button ─────────────────────────────────────────────────────────────
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(value).catch(() => { });
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        background: copied ? "rgba(25,135,84,0.1)" : "rgba(0,0,0,0.05)",
+        border: "1px solid rgba(0,0,0,0.05)",
+        borderRadius: 9,
+        padding: "7px 13px",
+        fontSize: 12,
+        fontWeight: 600,
+        color: copied ? "#198754" : "#444",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        letterSpacing: 0.3,
+      }}
+    >
+      {copied ? "Tersalin" : "Salin"}
+    </button>
   );
 }
 
@@ -140,7 +174,7 @@ function DownloadButton({ imageUrl }: { imageUrl: string }) {
 }
 
 // ─── Card Component ──────────────────────────────────────────────────────────
-function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, image }: any) {
+function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, image, isAddress, address }: any) {
   return (
     <div
       className="reveal reveal-up"
@@ -183,39 +217,63 @@ function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, i
         }}
       />
 
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "center", 
-        marginBottom: 16, 
-        position: "relative", 
-        zIndex: 1 
+      <div style={{
+        display: "flex",
+        justifyContent: isAddress ? "center" : "space-between",
+        alignItems: "center",
+        marginBottom: 16,
+        position: "relative",
+        zIndex: 1
       }}>
-        <img 
-          src="/Qris3.jpeg" 
-          alt="Logo Left" 
-          style={{ height: "35px", width: "auto", objectFit: "contain" }} 
-        />
+        {!isAddress && (
+          <img
+            src="/Qris3.jpeg"
+            alt="Logo Left"
+            style={{ height: "35px", width: "auto", objectFit: "contain" }}
+          />
+        )}
+        {isAddress && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{bank}</span>
+          </div>
+        )}
         {logo}
       </div>
 
       {isQris ? (
         <div style={{ textAlign: "center", marginBottom: 20, position: "relative", zIndex: 1 }}>
-          <img 
-            src={image} 
-            alt="QRIS Code" 
-            style={{ 
-              width: "100%", 
-              maxWidth: "280px", 
+          <img
+            src={image}
+            alt="QRIS Code"
+            style={{
+              width: "100%",
+              maxWidth: "280px",
               aspectRatio: "1 / 1",
               objectFit: "contain",
-              borderRadius: 12, 
+              borderRadius: 12,
               border: "1px solid #eee",
               display: "block",
               margin: "0 auto",
               background: "#fff"
-            }} 
+            }}
           />
+        </div>
+      ) : isAddress ? (
+        <div style={{ marginBottom: 20, position: "relative", zIndex: 1 }}>
+          <p style={{
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: "#444",
+            marginBottom: 0,
+            fontFamily: "var(--font-body)",
+            textAlign: "center"
+          }}>
+            {address}
+          </p>
         </div>
       ) : (
         <>
@@ -224,12 +282,14 @@ function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, i
         </>
       )}
 
-      <div style={{ 
-        display: "flex", 
-        justifyContent: isQris ? "center" : "space-between", 
-        alignItems: "center", 
-        position: "relative", 
-        zIndex: 1 
+      <div style={{
+        display: "flex",
+        justifyContent: (isQris || isAddress) ? "center" : "space-between",
+        alignItems: "center",
+        position: "relative",
+        zIndex: 1,
+        flexDirection: isAddress ? "column" : "row",
+        gap: isAddress ? 12 : 0
       }}>
         <span
           style={{
@@ -242,7 +302,8 @@ function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, i
         >
           {holderName}
         </span>
-        <DownloadButton imageUrl="/Qris.jpeg" />
+        {!isQris && !isAddress && <DownloadButton imageUrl="/Qris.jpeg" />}
+        {isAddress && <CopyButton value={address} />}
       </div>
     </div>
   );
@@ -292,9 +353,24 @@ export default function Home() {
       id: "bca",
       bank: "BCA",
       accountNumber: "8120677519",
-      holderName: "HANIF ASSALAMM",
+      holderName: "HANIF ASSALAM",
       hasChip: true,
       logo: <BCALogo />,
+    },
+    {
+      id: "address",
+      bank: "Alamat Pengiriman",
+      isAddress: true,
+      address: "Jalan Merak, Gg Dedek, Kelurahan Sampit, Kecamatan Delta Pawan, Kabupaten Ketapang, Kalimantan Barat, 78813 (Rumah Cat Kuning, Belakang Kantor PAN)\n(HP : +62 895-6158-01699)",
+      holderName: "Nur Hafizah",
+      logo: (
+        <div style={{ opacity: 0.2 }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+        </div>
+      ),
     },
   ];
 
@@ -928,11 +1004,11 @@ export default function Home() {
               <br />
               Pukul 08.45 WIB
             </div>
-            <a 
-              href="https://www.instagram.com/hanifassalamm?upcoming_event_id=17882896233394607" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="event-btn" 
+            <a
+              href="https://www.instagram.com/hanifassalamm?upcoming_event_id=17882896233394607"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="event-btn"
               style={{ display: "inline-flex" }}
             >
               <svg

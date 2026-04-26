@@ -479,6 +479,11 @@ main {
   margin-bottom: var(--space-xl);
 }
 
+.gift-section .section-heading {
+  padding-bottom: 32px;
+  margin-bottom: 0;
+}
+
 .section-label {
   font-family: var(--font-sub);
   font-size: var(--sm);
