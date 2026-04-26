@@ -160,7 +160,10 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.15 }
+      { 
+        threshold: 0.1,
+        rootMargin: "0px 0px -20% 0px"
+      }
     );
 
     elements.forEach((el) => observer.observe(el));

@@ -106,8 +106,8 @@ main {
 /* ─── ANIMATION SYSTEM ─── */
 .reveal {
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 1s ease-out,
+    transform 1s ease-out;
   will-change: opacity, transform;
 }
 
@@ -254,7 +254,7 @@ main {
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: var(--space-xs);
-  animation: heroFadeUp 0.9s 0.3s both;
+  animation: heroFadeUp 1.2s 0.3s both;
 }
 
 .hero .names {
@@ -266,7 +266,7 @@ main {
   line-height: 1.08;
   margin-bottom: var(--space-sm);
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-  animation: heroFadeUp 0.9s 0.5s both;
+  animation: heroFadeUp 1.2s 0.5s both;
 }
 
 .hero .names .amp {
@@ -280,7 +280,7 @@ main {
   letter-spacing: 6px;
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--space-md);
-  animation: heroFadeUp 0.9s 0.7s both;
+  animation: heroFadeUp 1.2s 0.7s both;
 }
 
 .hero .countdown-bar {
@@ -294,7 +294,7 @@ main {
   justify-content: space-between;
   padding: 0 20px 12px;
   z-index: 20;
-  animation: heroFadeUp 0.9s 1s both;
+  animation: heroFadeUp 1.2s 1s both;
 }
 
 .hero .count-group {
