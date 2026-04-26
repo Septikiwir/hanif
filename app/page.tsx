@@ -175,7 +175,7 @@ export default function Home() {
             if (target.classList.contains("event-date-number") && !target.dataset.counted) {
               const targetVal = parseInt(target.innerText) || 17;
               let current = 1;
-              const duration = 1200; 
+              const duration = 1200;
               const frameRate = 1000 / 60;
               const totalFrames = duration / frameRate;
               const increment = (targetVal - 1) / totalFrames;
@@ -587,10 +587,10 @@ export default function Home() {
               <p className="event-location-name">Gedung Pancasila</p>
               <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
-            <a 
-              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA"
+              target="_blank"
+              rel="noopener noreferrer"
               className="event-btn"
             >
               <svg
@@ -618,10 +618,10 @@ export default function Home() {
               <p className="event-location-name">Gedung Pancasila</p>
               <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
-            <a 
-              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA"
+              target="_blank"
+              rel="noopener noreferrer"
               className="event-btn"
             >
               <svg
@@ -743,19 +743,6 @@ export default function Home() {
           <div className="section-heading reveal">
             <span className="section-label">Hadiah Pernikahan</span>
             <h2 className="section-title">Wedding Gift</h2>
-          </div>
-
-          <div className="gift-icon-wrap reveal reveal-delay-1">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#B8923A"
-              strokeWidth="1.2"
-            >
-              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
           </div>
 
           <p className="gift-note reveal reveal-delay-2">
