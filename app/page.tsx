@@ -140,15 +140,7 @@ export default function Home() {
     };
   }, [isInvitationOpen]);
 
-  const goPrev = () => {
-    setCarouselIndex((idx) =>
-      (idx - 1 + galleryImages.length) % galleryImages.length
-    );
-  };
 
-  const goNext = () => {
-    setCarouselIndex((idx) => (idx + 1) % galleryImages.length);
-  };
 
   useEffect(() => {
     const elements = Array.from(
