@@ -70,8 +70,8 @@ function Chip() {
   return (
     <div
       style={{
-        width: 140,
-        height: 140,
+        width: 100,
+        height: 100,
         borderRadius: 12,
         position: "relative",
         marginBottom: 20,
@@ -331,12 +331,20 @@ export default function Home() {
 
   const galleryImages = useMemo(
     () => [
-      "https://picsum.photos/seed/hanif-Fizah-01/900/1200",
-      "https://picsum.photos/seed/hanif-Fizah-02/900/1200",
-      "https://picsum.photos/seed/hanif-Fizah-03/900/1200",
-      "https://picsum.photos/seed/hanif-Fizah-04/900/1200",
-      "https://picsum.photos/seed/hanif-Fizah-05/900/1200",
-      "https://picsum.photos/seed/hanif-Fizah-06/900/1200",
+      { src: "/gallery/1.jpg", isLandscape: true },
+      { src: "/gallery/2.jpg", isLandscape: false },
+      { src: "/gallery/3.jpg", isLandscape: false },
+      { src: "/gallery/4.jpg", isLandscape: true },
+      { src: "/gallery/5.JPG", isLandscape: false },
+      { src: "/gallery/6.jpg", isLandscape: false },
+      { src: "/gallery/7.jpg", isLandscape: false },
+      { src: "https://picsum.photos/seed/hanif-Fizah-10/1200/900", isLandscape: true },
+      { src: "https://picsum.photos/seed/hanif-Fizah-12/900/1200", isLandscape: false },
+      { src: "https://picsum.photos/seed/hanif-Fizah-13/900/1200", isLandscape: false },
+      { src: "https://picsum.photos/seed/hanif-Fizah-14/1200/900", isLandscape: true },
+      { src: "https://picsum.photos/seed/hanif-Fizah-16/900/1200", isLandscape: false },
+      { src: "https://picsum.photos/seed/hanif-Fizah-17/900/1200", isLandscape: false },
+      { src: "https://picsum.photos/seed/hanif-Fizah-18/900/1200", isLandscape: false },
     ],
     []
   );
@@ -1047,20 +1055,20 @@ export default function Home() {
             </div>
 
             <div className="gallery-grid">
-              {galleryImages.map((src, idx) => (
+              {galleryImages.map((img, idx) => (
                 <button
-                  key={src}
+                  key={img.src}
                   type="button"
-                  className="gallery-thumb reveal reveal-fade"
+                  className={`gallery-thumb reveal reveal-fade ${img.isLandscape ? "landscape" : ""}`}
                   style={{ transitionDelay: `${(idx % 6) * 100}ms` }}
                   aria-label={`Open photo ${idx + 1}`}
-                  onClick={() => setLightboxImage(src)}
+                  onClick={() => setLightboxImage(img.src)}
                 >
                   <Image
-                    src={src}
+                    src={img.src}
                     alt={`Gallery photo ${idx + 1}`}
                     fill
-                    sizes="(max-width: 430px) 33vw, 140px"
+                    sizes={img.isLandscape ? "(max-width: 430px) 66vw, 300px" : "(max-width: 430px) 33vw, 140px"}
                     className="gallery-img"
                   />
                 </button>

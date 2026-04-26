@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Collina-Regular';
+  src: url('/Collina-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --burgundy: #4a0e1a;
   --burgundy-mid: #6b1828;
@@ -15,8 +22,8 @@
   --text-light: #8b6b58;
 
   /* Typography System */
-  --font-heading: var(--font-cormorant-garamond), serif;
-  --font-sub: var(--font-cormorant-sc), serif;
+  --font-heading: 'Collina-Regular', sans-serif;
+  --font-sub: 'Collina-Regular', sans-serif;
   --font-body: var(--font-eb-garamond), serif;
 
   --h1: clamp(40px, 12vw, 52px);
@@ -814,7 +821,7 @@ main {
   width: 100%;
   aspect-ratio: 16 / 9;
   margin: 0 auto var(--space-md);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
   border-radius: 6px;
   overflow: hidden;
   background: #000;
@@ -830,6 +837,30 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-sm);
+}
+
+.gallery-grid .gallery-thumb {
+  position: relative;
+  width: 100%;
+  height: 160px !important;
+  background: #2222;
+  border-radius: 4px;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  display: block;
+}
+
+.gallery-grid .gallery-thumb.landscape {
+  grid-column: span 2;
+  height: 160px !important;
+}
+
+.gallery-img {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* ─── LIGHTBOX ─── */
@@ -850,6 +881,10 @@ main {
   width: 100%;
   height: 100%;
   max-width: 1000px;
+}
+
+.lightbox-img {
+  object-fit: contain !important;
 }
 
 .lightbox-close {
