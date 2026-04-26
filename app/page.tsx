@@ -11,6 +11,243 @@ type CountdownState = {
   done: boolean;
 };
 
+// ─── SVG Logos ───────────────────────────────────────────────────────────────
+function BCALogo() {
+  return (
+    <img 
+      src="/Qris2.jpeg" 
+      alt="BCA Logo" 
+      style={{ height: "40px", width: "auto", objectFit: "contain" }} 
+    />
+  );
+}
+
+function DANALogo() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="11" fill="#108de0" />
+        <rect x="7" y="8" width="6" height="8" rx="2" fill="#fff" />
+        <rect x="10" y="10" width="4" height="4" rx="1" fill="#108de0" />
+        <rect x="14" y="10" width="3" height="2" rx="0.5" fill="#fff" />
+        <rect x="14" y="14" width="3" height="2" rx="0.5" fill="#fff" />
+      </svg>
+      <span
+        style={{
+          fontSize: 22,
+          fontWeight: 800,
+          color: "#108de0",
+          letterSpacing: 0.5,
+          fontFamily: "'Georgia', serif",
+        }}
+      >
+        DANA
+      </span>
+    </div>
+  );
+}
+
+function QRISLogo() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+      <span
+        style={{
+          fontSize: 22,
+          fontWeight: 900,
+          color: "#1a1a1a",
+          letterSpacing: 1,
+          fontFamily: "sans-serif",
+        }}
+      >
+        QRIS
+      </span>
+    </div>
+  );
+}
+
+// ─── Chip Component ──────────────────────────────────────────────────────────
+function Chip() {
+  return (
+    <div
+      style={{
+        width: 140,
+        height: 140,
+        borderRadius: 12,
+        position: "relative",
+        marginBottom: 20,
+        overflow: "hidden",
+        border: "1px solid #eee",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.05)"
+      }}
+    >
+      <img 
+        src="/Qris1.jpeg" 
+        alt="Chip" 
+        style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+      />
+    </div>
+  );
+}
+
+// ─── Download Button ──────────────────────────────────────────────────────────
+function DownloadButton({ imageUrl }: { imageUrl: string }) {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "QRIS-Wedding-Hanif-Fizah.jpeg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <button
+      onClick={handleDownload}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        background: "rgba(0,0,0,0.05)",
+        border: "1px solid rgba(0,0,0,0.05)",
+        borderRadius: 9,
+        padding: "7px 13px",
+        fontSize: 12,
+        fontWeight: 600,
+        color: "#444",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        letterSpacing: 0.3,
+      }}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ marginRight: 2 }}
+      >
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+      Download QRIS
+    </button>
+  );
+}
+
+// ─── Card Component ──────────────────────────────────────────────────────────
+function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, image }: any) {
+  return (
+    <div
+      className="reveal reveal-up"
+      style={{
+        background: "#ffffff",
+        borderRadius: 20,
+        padding: "20px 22px 16px",
+        border: "1px solid #e0e0e0",
+        position: "relative",
+        overflow: "hidden",
+        width: "100%",
+        boxSizing: "border-box",
+        textAlign: "left",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+      }}
+    >
+      {/* Decorative circles */}
+      <div
+        style={{
+          position: "absolute",
+          right: -50,
+          bottom: -60,
+          width: 170,
+          height: 170,
+          borderRadius: "50%",
+          background: "rgba(0,0,0,0.03)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          right: 15,
+          bottom: -80,
+          width: 130,
+          height: 130,
+          borderRadius: "50%",
+          background: "rgba(0,0,0,0.02)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        marginBottom: 16, 
+        position: "relative", 
+        zIndex: 1 
+      }}>
+        <img 
+          src="/Qris3.jpeg" 
+          alt="Logo Left" 
+          style={{ height: "35px", width: "auto", objectFit: "contain" }} 
+        />
+        {logo}
+      </div>
+
+      {isQris ? (
+        <div style={{ textAlign: "center", marginBottom: 20, position: "relative", zIndex: 1 }}>
+          <img 
+            src={image} 
+            alt="QRIS Code" 
+            style={{ 
+              width: "100%", 
+              maxWidth: "280px", 
+              aspectRatio: "1 / 1",
+              objectFit: "contain",
+              borderRadius: 12, 
+              border: "1px solid #eee",
+              display: "block",
+              margin: "0 auto",
+              background: "#fff"
+            }} 
+          />
+        </div>
+      ) : (
+        <>
+          {hasChip && <Chip />}
+          {!hasChip && <div style={{ height: 18 }} />}
+        </>
+      )}
+
+      <div style={{ 
+        display: "flex", 
+        justifyContent: isQris ? "center" : "space-between", 
+        alignItems: "center", 
+        position: "relative", 
+        zIndex: 1 
+      }}>
+        <span
+          style={{
+            fontSize: 12,
+            letterSpacing: 1.8,
+            color: "#888",
+            fontWeight: 700,
+            textTransform: "uppercase",
+          }}
+        >
+          {holderName}
+        </span>
+        <DownloadButton imageUrl="/Qris.jpeg" />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const weddingDate = useMemo(() => new Date("2026-05-17T00:00:00+07:00"), []);
   const audioSrc = useMemo(
@@ -48,6 +285,18 @@ export default function Home() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isOpeningReady, setIsOpeningReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showGifts, setShowGifts] = useState(false);
+
+  const CARDS = [
+    {
+      id: "bca",
+      bank: "BCA",
+      accountNumber: "8120677519",
+      holderName: "HANIF ASSALAMM",
+      hasChip: true,
+      logo: <BCALogo />,
+    },
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => setIsOpeningReady(true), 100);
@@ -202,7 +451,7 @@ export default function Home() {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [isInvitationOpen]);
+  }, [isInvitationOpen, showGifts]);
 
   useEffect(() => {
     const timeouts: number[] = [];
@@ -679,7 +928,13 @@ export default function Home() {
               <br />
               Pukul 08.45 WIB
             </div>
-            <a href="#" className="event-btn" style={{ display: "inline-flex" }}>
+            <a 
+              href="https://www.instagram.com/hanifassalamm?upcoming_event_id=17882896233394607" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="event-btn" 
+              style={{ display: "inline-flex" }}
+            >
               <svg
                 width="14"
                 height="14"
@@ -750,23 +1005,20 @@ export default function Home() {
             ingin memberikan hadiah, Anda dapat mengirimkan secara cashless.
           </p>
 
-          <button
-            className="event-btn reveal reveal-delay-3"
-            type="button"
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              width: "100%",
+              maxWidth: 400,
+              margin: "2rem auto 0",
+            }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <rect x="3" y="8" width="18" height="13" rx="2" />
-              <path d="M1 8h22M8 8V6a4 4 0 118 0v2" />
-            </svg>
-            Kirim Hadiah
-          </button>
+            {CARDS.map((card) => (
+              <PaymentCard key={card.id} {...card} />
+            ))}
+          </div>
         </section>
 
         {/* ─── WISHES ─── */}
