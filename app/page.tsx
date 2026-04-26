@@ -156,7 +156,28 @@ export default function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            (entry.target as HTMLElement).classList.add("visible");
+            const target = entry.target as HTMLElement;
+            target.classList.add("visible");
+
+            if (target.classList.contains("event-date-number") && !target.dataset.counted) {
+              const targetVal = parseInt(target.innerText) || 17;
+              let current = 1;
+              const duration = 1200; // 1.2s for cinematic feel
+              const frameRate = 1000 / 60;
+              const totalFrames = duration / frameRate;
+              const increment = (targetVal - 1) / totalFrames;
+
+              target.dataset.counted = "true";
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= targetVal) {
+                  target.innerText = targetVal.toString();
+                  clearInterval(timer);
+                } else {
+                  target.innerText = Math.floor(current).toString();
+                }
+              }, frameRate);
+            }
           }
         });
       },
@@ -543,17 +564,14 @@ export default function Home() {
           </div>
 
           <article className="event-card reveal reveal-up delay-1">
-            <p className="event-type">— I —</p>
             <h3 className="event-name">Akad Nikah</h3>
             <div className="event-details">
-              <strong>Minggu, 17 Mei 2026</strong>
-              <br />
-              Pukul 09.00 WIB — Selesai
-              <br />
-              <br />
-              Gedung Pancasila
-              <br />
-              Kabupaten Ketapang
+              <p className="event-day">Minggu</p>
+              <p className="event-date-number reveal">17</p>
+              <p className="event-month">Mei 2026</p>
+              <p className="event-time">09.00 WIB — Selesai</p>
+              <p className="event-location-name">Gedung Pancasila</p>
+              <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
             <a href="#" className="event-btn">
               <svg
@@ -571,28 +589,15 @@ export default function Home() {
             </a>
           </article>
 
-          <div
-            style={{ textAlign: "center", padding: "8px 0", opacity: 0.4 }}
-          >
-            <svg width="32" height="12" viewBox="0 0 32 12" fill="none">
-              <circle cx="4" cy="6" r="2" fill="#B8923A" />
-              <circle cx="16" cy="6" r="3" fill="#B8923A" />
-              <circle cx="28" cy="6" r="2" fill="#B8923A" />
-            </svg>
-          </div>
-
           <article className="event-card reveal reveal-up delay-2">
-            <p className="event-type">— II —</p>
             <h3 className="event-name">Resepsi</h3>
             <div className="event-details">
-              <strong>Minggu, 17 Mei 2026</strong>
-              <br />
-              Pukul 11.00 WIB — Selesai
-              <br />
-              <br />
-              Gedung Pancasila
-              <br />
-              Kabupaten Ketapang
+              <p className="event-day">Minggu</p>
+              <p className="event-date-number reveal">17</p>
+              <p className="event-month">Mei 2026</p>
+              <p className="event-time">16.00 WIB — Selesai</p>
+              <p className="event-location-name">Gedung Pancasila</p>
+              <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
             <a href="#" className="event-btn">
               <svg

@@ -481,7 +481,7 @@ main {
 
 .section-label {
   font-family: var(--font-sub);
-  font-size: var(--xs);
+  font-size: var(--sm);
   letter-spacing: 0.35em;
   color: var(--gold);
   display: block;
@@ -558,7 +558,7 @@ main {
 /* ─── EVENT SECTION ─── */
 .event-section {
   background: transparent;
-  padding: var(--section-padding-y) var(--section-padding-x);
+  padding: 0 var(--section-padding-x) var(--section-padding-y);
   position: relative;
 }
 
@@ -603,24 +603,72 @@ main {
 
 .event-name {
   font-family: var(--font-heading);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 500;
   color: #fff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .event-details {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 2;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.event-details strong {
+.event-day {
   font-family: var(--font-sub);
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 0rem;
+}
+
+.event-date-number {
+  font-family: var(--font-body);
+  font-size: 80px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1;
+  margin: 0rem auto;
+  display: block;
+  text-align: center;
+}
+
+.event-month {
+  font-family: var(--font-sub);
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-top: 1.0rem;
+  margin-bottom: 1.5rem;
+}
+
+.event-time {
+  font-family: var(--font-body);
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.event-divider-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 2.5rem 0;
+}
+
+.event-location-name {
+  font-family: var(--font-heading);
+  font-size: 22px;
   color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.event-location-city {
+  font-family: var(--font-body);
   font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2.5rem;
 }
 
 .event-btn {
