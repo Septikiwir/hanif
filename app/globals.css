@@ -448,7 +448,7 @@ main {
   font-size: 14px;
   color: #fff;
   text-align: center;
-  line-height: 1.0;
+  line-height: 1.1;
   text-shadow: none;
   z-index: 2;
 }
@@ -651,61 +651,70 @@ main {
   margin: 0 auto;
 }
 
-.carousel {
+.gallery-video-wrap {
   position: relative;
-  margin: 0 auto 18px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto 48px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.4);
-  touch-action: pan-y;
+  background: #000;
 }
 
-.carousel-media {
-  position: relative;
+.gallery-video {
   width: 100%;
-  aspect-ratio: 3 / 4;
-}
-
-.carousel-img {
+  height: 100%;
   object-fit: cover;
-}
-
-.carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  border: 1px solid rgba(212, 173, 104, 0.45);
-  background: rgba(74, 14, 26, 0.85);
-  color: var(--gold-pale);
-  font-family: var(--font-cormorant-sc), serif;
-  font-size: 16px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.carousel-arrow:hover {
-  background: rgba(107, 24, 40, 0.9);
-  transform: translateY(-50%) scale(1.05);
-}
-
-.carousel-arrow-left {
-  left: 10px;
-}
-
-.carousel-arrow-right {
-  right: 10px;
 }
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+}
+
+/* ─── LIGHTBOX ─── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.lightbox-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3001;
+  font-size: 24px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .gallery-thumb {

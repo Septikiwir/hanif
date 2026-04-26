@@ -47,7 +47,7 @@ export default function Home() {
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const touchStartX = useRef<number | null>(null);
   const [countdown, setCountdown] = useState<CountdownState>({
     days: "00",
@@ -597,7 +597,7 @@ export default function Home() {
             <p
               style={{
                 fontSize: 14,
-                color: "var(--text-mid)",
+                color: "rgba(255, 255, 255, 0.85)",
                 lineHeight: 1.9,
                 marginBottom: "1.5rem",
               }}
@@ -610,7 +610,7 @@ export default function Home() {
                 fontFamily: "var(--font-cormorant-sc), serif",
                 fontSize: 12,
                 letterSpacing: "0.1em",
-                color: "var(--text-dark)",
+                color: "var(--gold-pale)",
                 marginBottom: "1.5rem",
                 lineHeight: 2,
               }}
@@ -643,51 +643,16 @@ export default function Home() {
           </div>
 
           <div className="gallery-wrap">
-            <div
-              className="carousel reveal reveal-delay-1"
-              onTouchStart={(e) => {
-                touchStartX.current = e.touches[0]?.clientX ?? null;
-              }}
-              onTouchEnd={(e) => {
-                const startX = touchStartX.current;
-                const endX = e.changedTouches[0]?.clientX ?? null;
-                touchStartX.current = null;
-
-                if (startX == null || endX == null) return;
-                const delta = endX - startX;
-                const threshold = 50;
-                if (Math.abs(delta) < threshold) return;
-                if (delta > 0) goPrev();
-                else goNext();
-              }}
-            >
-              <div className="carousel-media">
-                <Image
-                  src={galleryImages[carouselIndex]}
-                  alt={`Carousel photo ${carouselIndex + 1}`}
-                  fill
-                  sizes="(max-width: 430px) 100vw, 430px"
-                  className="carousel-img"
-                  priority
-                />
-              </div>
-
-              <button
-                type="button"
-                className="carousel-arrow carousel-arrow-left"
-                aria-label="Previous photo"
-                onClick={goPrev}
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                className="carousel-arrow carousel-arrow-right"
-                aria-label="Next photo"
-                onClick={goNext}
-              >
-                →
-              </button>
+            <div className="gallery-video-wrap reveal reveal-delay-1">
+              <video
+                src="/WhatsApp%20Video%202026-04-26%20at%2011.27.39.mp4"
+                className="gallery-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
             </div>
 
             <div className="gallery-grid reveal reveal-delay-2">
@@ -697,7 +662,7 @@ export default function Home() {
                   type="button"
                   className="gallery-thumb"
                   aria-label={`Open photo ${idx + 1}`}
-                  onClick={() => setCarouselIndex(idx)}
+                  onClick={() => setLightboxImage(src)}
                 >
                   <Image
                     src={src}
@@ -962,6 +927,32 @@ export default function Home() {
             <circle cx="18" cy="16" r="3" />
           </svg>
         </button>
+      )}
+
+      {/* ─── LIGHTBOX MODAL ─── */}
+      {lightboxImage && (
+        <div className="lightbox" onClick={() => setLightboxImage(null)}>
+          <button
+            className="lightbox-close"
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxImage(null);
+            }}
+          >
+            ✕
+          </button>
+          <div className="lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={lightboxImage}
+              alt="Full size view"
+              fill
+              className="lightbox-img"
+              sizes="100vw"
+              priority
+            />
+          </div>
+        </div>
       )}
     </>
   );
