@@ -25,10 +25,9 @@ const cormorantSC = Cormorant_SC({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://domainkamu.com"),
-  title: "Undangan Pernikahan Wahyu & Pasangan",
-  description:
-    "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
+  metadataBase: new URL("https://inviyu.vercel.app"),
+  title: "Undangan Pernikahan Hanif & Fizah",
+  description: "Mohon doa restu atas pernikahan kami.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Undangan Pernikahan Hanif & Fizah",
     description: "Mohon doa restu atas pernikahan kami.",
-    url: "https://domainkamu.com",
+    url: "https://inviyu.vercel.app",
     siteName: "Wedding Hanif & Fizah",
     images: [
       {
