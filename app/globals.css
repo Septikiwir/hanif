@@ -40,8 +40,8 @@ body {
 main {
   width: 100%;
   max-width: 430px;
-  background: var(--cream);
-  color: var(--text-dark);
+  background: transparent;
+  color: #fff;
   position: relative;
   overflow: hidden;
 }
@@ -114,31 +114,32 @@ main {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #0a0a0a;
+  background: transparent;
   overflow: hidden;
   padding: 0;
 }
 
-.hero .hero-video {
-  position: absolute;
+/* ─── FIXED BACKGROUND VIDEO ─── */
+.fixed-bg-video {
+  position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fixed-bg-video .hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  pointer-events: none;
 }
 
-.hero .overlay {
+.fixed-bg-video .fixed-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom,
-      rgba(0, 0, 0, 0.15) 0%,
-      rgba(0, 0, 0, 0.05) 30%,
-      rgba(0, 0, 0, 0.3) 52%,
-      rgba(0, 0, 0, 0.72) 70%,
-      rgba(0, 0, 0, 0.92) 85%,
-      rgba(0, 0, 0, 0.97) 100%);
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .hero .content {
@@ -150,7 +151,7 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0 28px;
+  padding: 0 28px 40px 28px;
   z-index: 10;
 }
 
@@ -193,7 +194,7 @@ main {
 
 .hero .countdown-bar {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   left: 0;
   right: 0;
   height: 88px;
@@ -255,7 +256,7 @@ main {
 
 /* ─── QUOTE SECTION ─── */
 .quote-section {
-  background: var(--cream-warm);
+  background: transparent;
   padding: 64px 40px;
   text-align: center;
   position: relative;
@@ -281,7 +282,7 @@ main {
   font-size: 17px;
   font-style: italic;
   font-weight: 400;
-  color: var(--text-mid);
+  color: #fff;
   line-height: 1.9;
   margin-bottom: 1.5rem;
 }
@@ -295,7 +296,7 @@ main {
 
 /* ─── INTRO SECTION ─── */
 .intro-section {
-  background: var(--cream);
+  background: transparent;
   padding: 72px 36px;
   text-align: center;
   position: relative;
@@ -303,7 +304,7 @@ main {
 
 .intro-lead {
   font-size: 15px;
-  color: var(--text-light);
+  color: #fff;
   line-height: 1.9;
   margin-bottom: 3rem;
   font-style: italic;
@@ -317,13 +318,13 @@ main {
   font-family: var(--font-cormorant-garamond), serif;
   font-size: 26px;
   font-weight: 500;
-  color: var(--burgundy);
+  color: #fff;
   margin-bottom: 6px;
 }
 
 .person-parents {
   font-size: 13px;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.7;
 }
 
@@ -354,20 +355,20 @@ main {
 .section-title {
   font-family: var(--font-great-vibes), cursive;
   font-size: 42px;
-  color: var(--burgundy);
+  color: #fff;
   line-height: 1;
 }
 
 /* ─── EVENT SECTION ─── */
 .event-section {
-  background: var(--cream-dark);
+  background: transparent;
   padding: 72px 28px;
   position: relative;
 }
 
 .event-card {
-  background: var(--cream);
-  border: 1px solid rgba(184, 146, 58, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   padding: 40px 32px;
   text-align: center;
@@ -408,13 +409,13 @@ main {
   font-family: var(--font-cormorant-garamond), serif;
   font-size: 28px;
   font-weight: 500;
-  color: var(--burgundy);
+  color: #fff;
   margin-bottom: 1.5rem;
 }
 
 .event-details {
   font-size: 14px;
-  color: var(--text-mid);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 2;
 }
 
@@ -422,7 +423,7 @@ main {
   font-family: var(--font-cormorant-sc), serif;
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: var(--text-dark);
+  color: #fff;
   font-size: 15px;
 }
 
@@ -432,8 +433,8 @@ main {
   gap: 8px;
   margin-top: 1.5rem;
   padding: 10px 28px;
-  border: 1px solid var(--burgundy);
-  color: var(--burgundy);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
   font-family: var(--font-cormorant-sc), serif;
   font-size: 11px;
   letter-spacing: 0.2em;
@@ -531,21 +532,22 @@ main {
 
 /* ─── LIVE STREAM ─── */
 .livestream-section {
-  background: var(--cream-warm);
+  background: transparent;
   padding: 64px 36px;
   text-align: center;
 }
 
 .livestream-card {
-  border: 1px solid rgba(184, 146, 58, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
   padding: 40px 28px;
   position: relative;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* ─── PHOTO GALLERY ─── */
 .gallery-section {
-  background: var(--cream-dark);
+  background: transparent;
   padding: 64px 28px;
   text-align: center;
 }
@@ -558,10 +560,10 @@ main {
 .carousel {
   position: relative;
   margin: 0 auto 18px;
-  border: 1px solid rgba(184, 146, 58, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   overflow: hidden;
-  background: var(--cream);
+  background: rgba(0, 0, 0, 0.4);
   touch-action: pan-y;
 }
 
@@ -664,7 +666,7 @@ main {
 
 /* ─── GIFT SECTION ─── */
 .gift-section {
-  background: var(--cream);
+  background: transparent;
   padding: 64px 36px;
   text-align: center;
 }
@@ -682,7 +684,7 @@ main {
 
 .gift-note {
   font-size: 14px;
-  color: var(--text-light);
+  color: #fff;
   line-height: 1.9;
   margin-bottom: 2rem;
   max-width: 280px;
@@ -692,7 +694,7 @@ main {
 
 /* ─── WISHES SECTION ─── */
 .wishes-section {
-  background: var(--burgundy);
+  background: transparent;
   padding: 64px 24px;
   position: relative;
   overflow: hidden;
@@ -853,7 +855,7 @@ main {
 
 /* ─── FOOTER ─── */
 .footer-section {
-  background: var(--cream);
+  background: transparent;
   padding: 80px 36px 48px;
   text-align: center;
   position: relative;
@@ -880,7 +882,7 @@ main {
 
 .footer-note {
   font-size: 14px;
-  color: var(--text-light);
+  color: #fff;
   line-height: 1.9;
   margin-bottom: 1.5rem;
   max-width: 300px;
@@ -892,24 +894,24 @@ main {
   font-family: var(--font-cormorant-sc), serif;
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: var(--text-light);
+  color: #fff;
   margin-bottom: 0.5rem;
 }
 
 .footer-names {
   font-family: var(--font-great-vibes), cursive;
   font-size: 44px;
-  color: var(--burgundy);
+  color: #fff;
   margin-bottom: 3rem;
 }
 
 .footer-credit {
-  border-top: 1px solid rgba(184, 146, 58, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 2rem;
   font-family: var(--font-cormorant-sc), serif;
   font-size: 10px;
   letter-spacing: 0.15em;
-  color: var(--text-light);
+  color: #fff;
   opacity: 0.6;
 }
 

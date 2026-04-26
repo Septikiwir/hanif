@@ -288,8 +288,8 @@ export default function Home() {
       )}
 
       <main>
-        {/* ─── HERO ─── */}
-        <header className="hero">
+        {/* ─── FIXED BACKGROUND VIDEO ─── */}
+        <div className="fixed-bg-video">
           <video
             className="hero-video"
             src="/WhatsApp%20Video%202026-04-26%20at%2011.32.00.mp4"
@@ -300,7 +300,11 @@ export default function Home() {
             preload="auto"
             aria-hidden="true"
           />
-          <div className="overlay" />
+          <div className="fixed-overlay" />
+        </div>
+
+        {/* ─── HERO ─── */}
+        <header className="hero">
 
           <div className="content">
             <p className="wedding-of">The Wedding Of</p>
@@ -388,7 +392,7 @@ export default function Home() {
         </section>
 
         {/* ─── INTRO ─── */}
-        <section className="intro-section" style={{ padding: 0, background: '#f8f6f2' }}>
+        <section className="intro-section" style={{ padding: 0 }}>
           <div style={{ padding: '72px 36px', textAlign: 'center' }}>
             <div className="ornament-center reveal">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -525,56 +529,7 @@ export default function Home() {
           </article>
         </section>
 
-        {/* ─── COUNTDOWN ─── */}
-        <section className="countdown-section">
-          <svg
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              opacity: 0.04,
-            }}
-            viewBox="0 0 430 300"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <g fill="none" stroke="#EDD9A3" strokeWidth="0.5">
-              <path d="M0,150 Q107,50 215,150 Q322,250 430,150" />
-              <path d="M0,180 Q107,80 215,180 Q322,280 430,180" />
-              <path d="M0,120 Q107,20 215,120 Q322,220 430,120" />
-            </g>
-          </svg>
 
-          <p className="countdown-label reveal">Hitung Mundur Menuju Hari Bahagia</p>
-
-          {!countdown.done ? (
-            <div className="countdown-grid reveal" id="countdown">
-              <div className="countdown-unit">
-                <span className="countdown-number">{countdown.days}</span>
-                <span className="countdown-name">Hari</span>
-              </div>
-              <span className="countdown-sep">:</span>
-              <div className="countdown-unit">
-                <span className="countdown-number">{countdown.hours}</span>
-                <span className="countdown-name">Jam</span>
-              </div>
-              <span className="countdown-sep">:</span>
-              <div className="countdown-unit">
-                <span className="countdown-number">{countdown.mins}</span>
-                <span className="countdown-name">Menit</span>
-              </div>
-              <span className="countdown-sep">:</span>
-              <div className="countdown-unit">
-                <span className="countdown-number">{countdown.secs}</span>
-                <span className="countdown-name">Detik</span>
-              </div>
-            </div>
-          ) : (
-            <p className="countdown-done" id="cd-done">
-              Hari yang dinantikan telah tiba ✦
-            </p>
-          )}
-        </section>
 
         {/* ─── LIVE STREAM ─── */}
         <section className="livestream-section">
