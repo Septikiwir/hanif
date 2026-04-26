@@ -38,7 +38,13 @@ export const metadata: Metadata = {
     description: "Minggu, 17 Mei 2026",
     url: "https://inviyu.vercel.app",
     siteName: "Wedding Hanif & Fizah",
-    images: ["/preview (1).jpg"],
+    images: [
+      {
+        url: "/preview (1).jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
     locale: "id_ID",
     type: "website",
   },
