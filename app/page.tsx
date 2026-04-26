@@ -46,7 +46,13 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isOpeningReady, setIsOpeningReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsOpeningReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const touchStartX = useRef<number | null>(null);
   const [countdown, setCountdown] = useState<CountdownState>({
@@ -208,77 +214,84 @@ export default function Home() {
 
   return (
     <>
-      {!isInvitationOpen && (
-        <section className="opening-screen" aria-label="Opening Screen">
-          <div className="screen">
-            <div className="bg-photo" />
 
-            {/* Decorative ornaments */}
-            <svg
-              className="ornament ornament-tl"
-              width="64"
-              height="64"
-              viewBox="0 0 64 64"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" />
-              <path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" />
-              <circle cx="4" cy="4" r="2" fill="white" />
-              <circle cx="28" cy="4" r="1.2" fill="white" />
-              <circle cx="4" cy="28" r="1.2" fill="white" />
-            </svg>
-            <svg
-              className="ornament ornament-tr"
-              width="64"
-              height="64"
-              viewBox="0 0 64 64"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" />
-              <path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" />
-              <circle cx="4" cy="4" r="2" fill="white" />
-              <circle cx="28" cy="4" r="1.2" fill="white" />
-              <circle cx="4" cy="28" r="1.2" fill="white" />
-            </svg>
+      {/* ─── OPENING SCREEN ─── */}
+      <section className={`opening-screen ${isInvitationOpen ? "closed" : ""}`}>
+        <div className="screen">
+          <div className="bg-photo" />
+          <div className="overlay" />
 
-            <div className="overlay" />
+          {/* Decorative ornaments */}
+          <svg className="ornament ornament-tl" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" />
+            <path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" />
+            <circle cx="4" cy="4" r="2" fill="white" />
+            <circle cx="28" cy="4" r="1.2" fill="white" />
+            <circle cx="4" cy="28" r="1.2" fill="white" />
+          </svg>
+          <svg className="ornament ornament-tr" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M60 4 L60 28 M60 4 L36 4" stroke="white" strokeWidth="1" />
+            <path d="M60 4 L46 18" stroke="white" strokeWidth="0.5" />
+            <circle cx="60" cy="4" r="2" fill="white" />
+            <circle cx="36" cy="4" r="1.2" fill="white" />
+            <circle cx="60" cy="28" r="1.2" fill="white" />
+          </svg>
+          <svg className="ornament ornament-bl" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M4 60 L4 36 M4 60 L28 60" stroke="white" strokeWidth="1" />
+            <path d="M4 60 L18 46" stroke="white" strokeWidth="0.5" />
+            <circle cx="4" cy="60" r="2" fill="white" />
+            <circle cx="28" cy="60" r="1.2" fill="white" />
+            <circle cx="4" cy="36" r="1.2" fill="white" />
+          </svg>
+          <svg className="ornament ornament-br" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M60 60 L60 36 M60 60 L36 60" stroke="white" strokeWidth="1" />
+            <path d="M60 60 L46 46" stroke="white" strokeWidth="0.5" />
+            <circle cx="60" cy="60" r="2" fill="white" />
+            <circle cx="36" cy="60" r="1.2" fill="white" />
+            <circle cx="60" cy="36" r="1.2" fill="white" />
+          </svg>
 
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                padding: "60px 20px",
-                display: "flex",
-                justifyContent: "center",
-                zIndex: 10,
-              }}
-            >
-              <img
-                src="/Logo Hanif.png"
-                alt="Logo Hanif"
-                style={{ height: "64px", width: "auto", objectFit: "contain" }}
-              />
-            </div>
+          <div
+            className={`reveal reveal-fade ${isOpeningReady ? "visible" : ""}`}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              padding: "60px 20px",
+              display: "flex",
+              justifyContent: "center",
+              zIndex: 10,
+              transitionDelay: "0.2s"
+            }}
+          >
+            <img
+              src="/Logo Hanif.png"
+              alt="Logo Hanif"
+              style={{ height: "64px", width: "auto", objectFit: "contain" }}
+            />
+          </div>
 
-            <div className="content">
-              <p className="wedding-of">The Wedding Of</p>
-              <h1 className="names">
-                Fizah <span className="ampersand">&amp;</span> Hanif
-              </h1>
-              <div className="divider" />
-              <p className="kepada">
-                Kepada Yth.
-                <br />
-                Bapak / Ibu / Saudara/i
-              </p>
-              <p className="tamu">{guestName}</p>
-              <p className="note">
-                *Mohon maaf jika ada kesalahan dalam penulisan nama / gelar.
-              </p>
+          <div className="content">
+            <p className={`wedding-of reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
+              The Wedding Of
+            </p>
+            <h1 className={`names reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
+              Fizah <span className="ampersand">&amp;</span> Hanif
+            </h1>
+            <div className={`divider reveal reveal-fade ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }} />
+            <p className={`kepada reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "1s" }}>
+              Kepada Yth.
+              <br />
+              Bapak / Ibu / Saudara/i
+            </p>
+            <p className={`tamu reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "1.2s" }}>
+              {guestName}
+            </p>
+            <p className={`note reveal reveal-fade ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "1.4s" }}>
+              *Mohon maaf jika ada kesalahan dalam penulisan nama / gelar.
+            </p>
+            <div className={`reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "1.6s" }}>
               <button
                 className="btn"
                 type="button"
@@ -295,8 +308,8 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       <main>
         {/* ─── FIXED BACKGROUND VIDEO ─── */}
@@ -318,19 +331,21 @@ export default function Home() {
         <header className="hero">
 
           <div className="content">
-            <img
-              src="/Logo Hanif.png"
-              alt="Logo Hanif"
-              style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }}
-            />
-            <p className="wedding-of">The Wedding Of</p>
-            <h1 className="names">
+            <div className="reveal reveal-fade delay-1">
+              <img
+                src="/Logo Hanif.png"
+                alt="Logo Hanif"
+                style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }}
+              />
+            </div>
+            <p className="wedding-of reveal reveal-up delay-2">The Wedding Of</p>
+            <h1 className="names reveal reveal-up delay-3">
               Fizah <span className="amp">&amp;</span> Hanif
             </h1>
-            <p className="date">Minggu · 17 Mei 2026</p>
+            <p className="date reveal reveal-up delay-4">Minggu · 17 Mei 2026</p>
           </div>
 
-          <div className="countdown-bar" aria-label="Hitung mundur">
+          <div className="countdown-bar reveal reveal-up delay-5" aria-label="Hitung mundur">
             <div className="count-group">
               <span className="count-number">{countdown.days}</span>
               <span className="count-label">Hari</span>
@@ -352,7 +367,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="swipe-up-indicator reveal reveal-delay-3" style={{ animationDelay: "1.5s" }}>
+          <div className="swipe-up-indicator reveal reveal-fade" style={{ transitionDelay: "1.2s" }}>
             <span className="swipe-up-text">Swipe Up</span>
             <svg
               className="swipe-up-icon"
@@ -374,11 +389,11 @@ export default function Home() {
           <img
             src="/Logo Hanif.png"
             alt="Logo Hanif"
-            className="quote-flower reveal"
+            className="quote-flower reveal reveal-fade"
             style={{ objectFit: "contain", height: "auto" }}
           />
 
-          <blockquote className="reveal">
+          <blockquote className="reveal reveal-up delay-1">
             <p className="quote-text">
               Dan diantara tanda-tanda kekuasaanNya ialah Dia menciptakan
               untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu
@@ -399,7 +414,7 @@ export default function Home() {
             border: '1px solid rgba(255, 255, 255, 0.15)',
             margin: 'var(--space-lg) var(--section-padding-x) var(--space-xl) var(--section-padding-x)'
           }}>
-            <div className="ornament-center reveal">
+            <div className="ornament-center reveal reveal-fade">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
                   d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z"
@@ -409,13 +424,13 @@ export default function Home() {
               </svg>
             </div>
 
-            <p className="intro-lead reveal" style={{ marginBottom: 0 }}>
+            <p className="intro-lead reveal reveal-up delay-1" style={{ marginBottom: 0 }}>
               Dengan memohon Rahmat dan Ridho Allah Subhanahu Wa Ta&apos;ala, kami
               mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
             </p>
           </div>
 
-          <div className="v4-card reveal">
+          <div className="v4-card reveal reveal-scale">
             <div className="v4-photo" style={{ height: '100%', backgroundImage: 'url(/Fizah.JPG)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <div className="v4-photo-fade" style={{ height: '40%' }}></div>
             </div>
@@ -436,7 +451,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="v4-card reveal">
+          <div className="v4-card reveal reveal-scale delay-1">
             <div className="v4-photo" style={{ height: '100%', backgroundImage: 'url(/Hanif.JPG)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <div className="v4-photo-fade" style={{ height: '40%' }}></div>
             </div>
@@ -460,34 +475,34 @@ export default function Home() {
 
         {/* ─── OUR STORY ─── */}
         <section className="story-section">
-          <div className="section-heading reveal">
+          <div className="section-heading reveal reveal-up">
             <span className="section-label">Perjalanan Cinta</span>
             <h2 className="section-title">Our Story</h2>
           </div>
 
           <div className="cinematic-story">
-            <div className="cinematic-frame reveal">
+            <div className="cinematic-frame reveal reveal-fade">
               <img src="/1.JPG" alt="Story 1" className="cinematic-img" />
               <div className="cinematic-subtitle">
                 Yogyakarta, 8 Mei 2018, kota tempat pertama kali bertemu. Pertemanan sederhana yang berkembang menjadi sesuatu yang lebih dalam.
               </div>
             </div>
 
-            <div className="cinematic-frame reveal reveal-delay-1">
+            <div className="cinematic-frame reveal reveal-fade">
               <img src="/2.JPG" alt="Story 2" className="cinematic-img" />
               <div className="cinematic-subtitle">
                 Waktu membawa kami ke ketinggian Gunung Prau—pendakian pertama kami bersama. Di sanalah, hati kami mulai saling mengenal.
               </div>
             </div>
 
-            <div className="cinematic-frame reveal reveal-delay-2">
+            <div className="cinematic-frame reveal reveal-fade">
               <img src="/3.jpg" alt="Story 3" className="cinematic-img" />
               <div className="cinematic-subtitle">
                 Seiring berjalannya waktu, —hingga cinta dengan lembut menemukan jalannya dalam hidup kami.<br />13 September 2025, kami mengikat janji, dan pada 17 Mei 2026, kami memulai selamanya.
               </div>
             </div>
 
-            <div className="cinematic-frame reveal reveal-delay-3">
+            <div className="cinematic-frame reveal reveal-fade">
               <img src="/4.jpg" alt="Story 4" className="cinematic-img" />
               <div className="cinematic-subtitle">
                 Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami.
@@ -498,12 +513,12 @@ export default function Home() {
 
         {/* ─── EVENTS ─── */}
         <section className="event-section">
-          <div className="section-heading reveal">
+          <div className="section-heading reveal reveal-up">
             <span className="section-label">Rangkaian Acara</span>
             <h2 className="section-title">Menuju Hari Bahagia</h2>
           </div>
 
-          <article className="event-card reveal reveal-delay-1">
+          <article className="event-card reveal reveal-up delay-1">
             <p className="event-type">— I —</p>
             <h3 className="event-name">Akad Nikah</h3>
             <div className="event-details">
@@ -542,7 +557,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <article className="event-card reveal reveal-delay-2">
+          <article className="event-card reveal reveal-up delay-2">
             <p className="event-type">— II —</p>
             <h3 className="event-name">Resepsi</h3>
             <div className="event-details">
@@ -576,12 +591,12 @@ export default function Home() {
 
         {/* ─── LIVE STREAM ─── */}
         <section className="livestream-section">
-          <div className="section-heading reveal">
+          <div className="section-heading reveal reveal-up">
             <span className="section-label">Saksikan Bersama</span>
             <h2 className="section-title">Live Streaming</h2>
           </div>
 
-          <div className="livestream-card reveal reveal-delay-1">
+          <div className="livestream-card reveal reveal-up delay-1">
             <div className="live-badge">
               <span className="live-dot" />
               Live
@@ -629,13 +644,13 @@ export default function Home() {
 
         {/* ─── PHOTO GALLERY ─── */}
         <section className="gallery-section">
-          <div className="section-heading reveal">
+          <div className="section-heading reveal reveal-up">
             <span className="section-label">Kenangan</span>
             <h2 className="section-title">Photo Gallery</h2>
           </div>
 
           <div className="gallery-wrap">
-            <div className="gallery-video-wrap reveal reveal-delay-1">
+            <div className="gallery-video-wrap reveal reveal-scale">
               <video
                 src="/WhatsApp%20Video%202026-04-26%20at%2011.27.39.mp4"
                 className="gallery-video"
@@ -647,12 +662,13 @@ export default function Home() {
               />
             </div>
 
-            <div className="gallery-grid reveal reveal-delay-2">
+            <div className="gallery-grid">
               {galleryImages.map((src, idx) => (
                 <button
                   key={src}
                   type="button"
-                  className="gallery-thumb"
+                  className="gallery-thumb reveal reveal-fade"
+                  style={{ transitionDelay: `${(idx % 6) * 100}ms` }}
                   aria-label={`Open photo ${idx + 1}`}
                   onClick={() => setLightboxImage(src)}
                 >
@@ -734,14 +750,14 @@ export default function Home() {
           </div>
 
           <div className="wishes-inner">
-            <div className="wishes-heading reveal">
+            <div className="wishes-heading reveal reveal-up">
               <h2 className="wishes-title">Wishes</h2>
               <p className="wishes-subtitle">
                 Berikan ucapan &amp; doa untuk kedua mempelai
               </p>
             </div>
 
-            <div className="rsvp-stats reveal reveal-delay-1">
+            <div className="rsvp-stats reveal reveal-up delay-1">
               <div className="rsvp-stat rsvp-hadir">
                 <span className="rsvp-number">9</span>
                 <span className="rsvp-label">Hadir</span>
@@ -753,7 +769,7 @@ export default function Home() {
             </div>
 
             <form
-              className="wishes-form reveal reveal-delay-2"
+              className="wishes-form reveal reveal-up delay-2"
               onSubmit={(e) => e.preventDefault()}
             >
               <input type="text" placeholder="Nama Anda" />
@@ -770,7 +786,7 @@ export default function Home() {
               </button>
             </form>
 
-            <div className="comment-list reveal reveal-delay-3">
+            <div className="comment-list reveal reveal-up delay-2">
               <p
                 style={{
                   fontFamily: "var(--font-sub)",
@@ -877,19 +893,19 @@ export default function Home() {
             <img
               src="/Logo Hanif.png"
               alt="Logo Hanif"
-              className="reveal"
+              className="reveal reveal-fade"
               style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }}
             />
             <span className="gold-line" style={{ margin: "2rem auto" }} />
-            <p className="footer-note reveal reveal-delay-1">
+            <p className="footer-note reveal reveal-up delay-1">
               Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
               Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
             </p>
           </div>
 
           <div>
-            <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
-            <h2 className="footer-names reveal reveal-delay-3" style={{ marginBottom: 0 }}>Fizah &amp; Hanif</h2>
+            <p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p>
+            <h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>Fizah &amp; Hanif</h2>
           </div>
 
           <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
