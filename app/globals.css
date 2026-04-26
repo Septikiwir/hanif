@@ -249,10 +249,10 @@ main {
 .hero .wedding-of {
   font-family: var(--font-sub);
   font-weight: 300;
-  font-size: var(--xs);
+  font-size: 12px;
   letter-spacing: 4.5px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: var(--space-xs);
   animation: heroFadeUp 0.9s 0.3s both;
 }
@@ -276,9 +276,9 @@ main {
 .hero .date {
   font-family: var(--font-sub);
   font-weight: 300;
-  font-size: var(--small);
+  font-size: 15px;
   letter-spacing: 6px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--space-md);
   animation: heroFadeUp 0.9s 0.7s both;
 }
