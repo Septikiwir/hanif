@@ -696,7 +696,7 @@ main {
 
 /* ─── WISHES SECTION ─── */
 .wishes-section {
-  background: transparent;
+  background: var(--cream);
   padding: 64px 24px;
   position: relative;
   overflow: hidden;
@@ -721,12 +721,12 @@ main {
 .wishes-title {
   font-family: var(--font-great-vibes), cursive;
   font-size: 48px;
-  color: var(--gold-pale);
+  color: var(--burgundy);
 }
 
 .wishes-subtitle {
   font-size: 12px;
-  color: rgba(237, 217, 163, 0.6);
+  color: var(--text-mid);
   font-style: italic;
   margin-top: 4px;
 }
@@ -779,9 +779,9 @@ main {
 .wishes-form select {
   width: 100%;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(212, 173, 104, 0.2);
-  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(184, 146, 58, 0.4);
+  color: var(--text-dark);
   font-family: var(--font-eb-garamond), Georgia, serif;
   font-size: 15px;
   border-radius: 2px;
@@ -793,17 +793,17 @@ main {
 .wishes-form input:focus,
 .wishes-form textarea:focus,
 .wishes-form select:focus {
-  border-color: rgba(212, 173, 104, 0.5);
+  border-color: var(--burgundy);
 }
 
 .wishes-form input::placeholder,
 .wishes-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .wishes-form select option {
-  background: var(--burgundy);
-  color: #fff;
+  background: var(--cream);
+  color: var(--text-dark);
 }
 
 .btn-gold {
@@ -829,7 +829,7 @@ main {
 }
 
 .comment-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 20px 0;
 }
 
@@ -837,13 +837,13 @@ main {
   font-family: var(--font-cormorant-garamond), serif;
   font-size: 17px;
   font-weight: 500;
-  color: var(--gold-pale);
+  color: var(--burgundy);
   margin-bottom: 6px;
 }
 
 .comment-text {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-mid);
   line-height: 1.7;
   margin-bottom: 8px;
 }
@@ -852,7 +852,7 @@ main {
   font-family: var(--font-cormorant-sc), serif;
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* ─── FOOTER ─── */
@@ -862,6 +862,10 @@ main {
   text-align: center;
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .footer-monogram {

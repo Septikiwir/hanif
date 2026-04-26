@@ -685,7 +685,6 @@ export default function Home() {
 
           <button
             className="event-btn reveal reveal-delay-3"
-            style={{ borderColor: "var(--burgundy)", color: "var(--burgundy)" }}
             type="button"
           >
             <svg
@@ -766,7 +765,7 @@ export default function Home() {
                   fontFamily: "var(--font-cormorant-sc), serif",
                   fontSize: 10,
                   letterSpacing: "0.2em",
-                  color: "rgba(237,217,163,0.5)",
+                  color: "rgba(0,0,0,0.4)",
                   marginBottom: "1rem",
                 }}
               >
@@ -809,7 +808,7 @@ export default function Home() {
                 fontFamily: "var(--font-cormorant-sc), serif",
                 fontSize: 11,
                 letterSpacing: "0.15em",
-                color: "rgba(237,217,163,0.5)",
+                color: "rgba(0,0,0,0.4)",
               }}
             >
               <button
@@ -823,7 +822,7 @@ export default function Home() {
               >
                 ← Prev
               </button>
-              <span style={{ color: "var(--gold-pale)" }}>1</span>
+              <span style={{ color: "var(--burgundy)" }}>1</span>
               <button
                 type="button"
                 style={{
@@ -863,22 +862,24 @@ export default function Home() {
 
         {/* ─── FOOTER ─── */}
         <footer className="footer-section">
-          <img
-            src="/Logo Hanif.png"
-            alt="Logo Hanif"
-            className="reveal"
-            style={{ height: "80px", width: "auto", margin: "0 auto 2rem", display: "block", objectFit: "contain" }}
-          />
+          <div>
+            <img
+              src="/Logo Hanif.png"
+              alt="Logo Hanif"
+              className="reveal"
+              style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }}
+            />
+            <span className="gold-line" style={{ margin: "2rem auto" }} />
+            <p className="footer-note reveal reveal-delay-1">
+              Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
+              Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+            </p>
+          </div>
 
-          <span className="gold-line" />
-
-          <p className="footer-note reveal reveal-delay-1">
-            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
-            Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
-          </p>
-
-          <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
-          <h2 className="footer-names reveal reveal-delay-3">Fizah &amp; Hanif</h2>
+          <div>
+            <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
+            <h2 className="footer-names reveal reveal-delay-3" style={{ marginBottom: 0 }}>Fizah &amp; Hanif</h2>
+          </div>
 
           <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
         </footer>
