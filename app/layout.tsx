@@ -26,23 +26,23 @@ const cormorantSC = Cormorant_SC({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://inviyu.vercel.app"),
-  title: "Undangan Pernikahan Hanif & Fizah",
-  description: "Mohon doa restu atas pernikahan kami.",
+  title: "The Wedding of Hanif & Fizah",
+  description: "Minggu, 17 Mei 2026",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/icon.png",
   },
   openGraph: {
-    title: "Undangan Pernikahan Hanif & Fizah",
-    description: "Mohon doa restu atas pernikahan kami.",
+    title: "The Wedding of Hanif & Fizah",
+    description: "Minggu, 17 Mei 2026",
     url: "https://inviyu.vercel.app",
     siteName: "Wedding Hanif & Fizah",
     images: [
       {
         url: "/preview.JPG",
         width: 1200,
-        height: 630,
+        height: 1200,
       },
     ],
     locale: "id_ID",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Undangan Pernikahan Hanif & Fizah",
-    description: "Mohon doa restu atas pernikahan kami.",
+    title: "The Wedding of Hanif & Fizah",
+    description: "Minggu, 17 Mei 2026",
     images: ["/preview.JPG"],
   },
 };
