@@ -29,29 +29,31 @@ export const metadata: Metadata = {
   title: "Undangan Pernikahan Wahyu & Pasangan",
   description:
     "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
-  alternates: {
-    canonical: "/",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
   openGraph: {
-    title: "Undangan Pernikahan Wahyu & Pasangan",
-    description:
-      "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
-    url: "/",
-    type: "website",
-    locale: "id_ID",
+    title: "Undangan Pernikahan Hanif & Fizah",
+    description: "Mohon doa restu atas pernikahan kami.",
+    url: "https://domainkamu.com",
+    siteName: "Wedding Hanif & Fizah",
     images: [
       {
-        url: "/preview-wedding.jpeg",
-        alt: "Undangan Pernikahan Wahyu & Pasangan",
+        url: "/preview.JPG",
+        width: 1200,
+        height: 630,
       },
     ],
+    locale: "id_ID",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Undangan Pernikahan Wahyu & Pasangan",
-    description:
-      "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
-    images: ["/preview-wedding.jpeg"],
+    title: "Undangan Pernikahan Hanif & Fizah",
+    description: "Mohon doa restu atas pernikahan kami.",
+    images: ["/preview.JPG"],
   },
 };
 
