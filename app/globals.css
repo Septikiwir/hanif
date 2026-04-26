@@ -1519,7 +1519,7 @@ main {
 }
 
 .v4-sub-parents {
-  font-family: var(--font-sub);
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 14px;
   color: #dcd6ce;
@@ -1534,6 +1534,16 @@ main {
   font-size: 10px;
   letter-spacing: 2px;
   color: #a0967e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.v4-ig:hover {
+  color: #ffffff;
+}
+
+.v4-ig:hover svg {
+  fill: #ffffff;
 }
 
 .v4-ig svg {
