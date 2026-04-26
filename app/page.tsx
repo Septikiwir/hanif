@@ -149,6 +149,19 @@ export default function Home() {
 
 
   useEffect(() => {
+    // Force reset scroll to top on refresh
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Only start observing when invitation is open to ensure clean animations
+    if (!isInvitationOpen) return;
+
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>(".reveal")
     );
@@ -162,7 +175,7 @@ export default function Home() {
             if (target.classList.contains("event-date-number") && !target.dataset.counted) {
               const targetVal = parseInt(target.innerText) || 17;
               let current = 1;
-              const duration = 1200; // 1.2s for cinematic feel
+              const duration = 1200; 
               const frameRate = 1000 / 60;
               const totalFrames = duration / frameRate;
               const increment = (targetVal - 1) / totalFrames;
@@ -189,7 +202,7 @@ export default function Home() {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [isInvitationOpen]);
 
   useEffect(() => {
     const timeouts: number[] = [];
@@ -320,6 +333,7 @@ export default function Home() {
                 className="btn"
                 type="button"
                 onClick={() => {
+                  window.scrollTo(0, 0);
                   setIsInvitationOpen(true);
                   setIsPlaying(true);
                 }}
@@ -573,7 +587,12 @@ export default function Home() {
               <p className="event-location-name">Gedung Pancasila</p>
               <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
-            <a href="#" className="event-btn">
+            <a 
+              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="event-btn"
+            >
               <svg
                 width="14"
                 height="14"
@@ -599,7 +618,12 @@ export default function Home() {
               <p className="event-location-name">Gedung Pancasila</p>
               <p className="event-location-city">Kabupaten Ketapang</p>
             </div>
-            <a href="#" className="event-btn">
+            <a 
+              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="event-btn"
+            >
               <svg
                 width="14"
                 height="14"
