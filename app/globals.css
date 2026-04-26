@@ -46,307 +46,108 @@ main {
   overflow: hidden;
 }
 
-/* ─── OPENING SCREEN ─── */
-.opening-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: #1a0a0f;
+/* ─── ORNAMENTS & HELPERS ─── */
+.gold-line {
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gold-light),
+    transparent
+  );
+  width: 80%;
+  margin: 0 auto;
+}
+
+.ornament-center {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  gap: 12px;
+  margin: 1.5rem 0;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.2em;
 }
 
-.opening-screen::after {
+.ornament-center::before,
+.ornament-center::after {
   content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.6;
-  z-index: 2001;
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-light));
+}
+.ornament-center::after {
+  background: linear-gradient(to left, transparent, var(--gold-light));
 }
 
-.opening-screen .screen {
+/* ─── REVEAL ANIMATION ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 {
+  transition-delay: 0.15s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.45s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.6s;
+}
+
+/* ─── HERO SECTION ─── */
+.hero {
   position: relative;
-  width: 100%;
-  max-width: 430px;
   min-height: 100vh;
-  overflow: hidden;
-  background: var(--cream-dark);
-}
-
-.opening-screen .bg-photo {
-  position: absolute;
-  inset: 0;
-  background-color: var(--cream-dark);
-  background-image: url("/opening.JPG");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.opening-screen .figures {
-  position: absolute;
-  bottom: 280px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 18px;
-  align-items: flex-end;
-}
-
-.opening-screen .figure {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: var(--burgundy);
+  overflow: hidden;
+  padding: 60px 32px;
 }
 
-.opening-screen .magazine {
-  width: 96px;
-  height: 124px;
-  background: var(--cream);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  display: flex;
-  flex-direction: column;
-  padding: 8px 6px 6px;
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.18);
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(30, 5, 10, 0.6) 100%
+  );
+}
+
+.hero-content {
   position: relative;
   z-index: 2;
-}
-
-.opening-screen .magazine.left {
-  transform: rotate(-2deg);
-}
-
-.opening-screen .magazine.right {
-  transform: rotate(1.5deg);
-}
-
-.opening-screen .mag-name {
-  font-family: var(--font-cormorant-sc), serif;
-  font-weight: 400;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: rgba(44, 24, 16, 0.9);
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  border-bottom: 0.5px solid rgba(44, 24, 16, 0.45);
-  padding-bottom: 3px;
-}
-
-.opening-screen .mag-photo {
-  flex: 1;
-  background: var(--cream-dark);
-  position: relative;
-  overflow: hidden;
-}
-
-.opening-screen .mag-photo-inner-l {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    var(--cream-warm) 0%,
-    var(--text-light) 100%
-  );
-}
-
-.opening-screen .mag-photo-inner-r {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    160deg,
-    var(--gold-light) 0%,
-    var(--text-mid) 100%
-  );
-}
-
-.opening-screen .body-l {
-  width: 70px;
-  height: 120px;
-  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%);
-  margin-top: 0;
-  position: relative;
-  z-index: 1;
-  clip-path: polygon(15% 0, 85% 0, 90% 100%, 10% 100%);
-}
-
-.opening-screen .body-r {
-  width: 70px;
-  height: 120px;
-  background: linear-gradient(
-    180deg,
-    rgba(26, 10, 15, 0.92) 0%,
-    rgba(26, 10, 15, 1) 100%
-  );
-  margin-top: 0;
-  position: relative;
-  z-index: 1;
-  clip-path: polygon(12% 0, 88% 0, 92% 100%, 8% 100%);
-}
-
-.opening-screen .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.12) 30%,
-    rgba(0, 0, 0, 0.38) 54%,
-    rgba(0, 0, 0, 0.72) 78%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-}
-
-.opening-screen .content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 32px 52px;
   text-align: center;
-  z-index: 10;
+  width: 100%;
 }
 
-.opening-screen .wedding-of {
+.hero-eyebrow {
   font-family: var(--font-cormorant-sc), serif;
-  font-weight: 300;
-  font-size: 10px;
-  letter-spacing: 4px;
+  font-size: 11px;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 6px;
-  animation: openingFadeUp 0.8s 0.2s both;
-}
-
-.opening-screen .names {
-  font-family: var(--font-cormorant-garamond), serif;
-  font-size: 42px;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-  margin-bottom: 26px;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
-  animation: openingFadeUp 0.8s 0.4s both;
-}
-
-.opening-screen .ampersand {
-  font-style: italic;
-  font-weight: 400;
-}
-
-.opening-screen .divider {
-  width: 40px;
-  height: 0.5px;
-  background: rgba(255, 255, 255, 0.5);
-  margin: 0 auto 24px;
-  animation: openingFadeUp 0.8s 0.5s both;
-}
-
-.opening-screen .kepada {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.8;
-  margin-bottom: 10px;
-  animation: openingFadeUp 0.8s 0.6s both;
-}
-
-.opening-screen .tamu {
-  font-family: var(--font-cormorant-garamond), serif;
-  font-size: 20px;
-  font-weight: 500;
-  color: #ffffff;
-  margin-bottom: 12px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  animation: openingFadeUp 0.8s 0.7s both;
-}
-
-.opening-screen .note {
-  font-family: var(--font-eb-garamond), Georgia, serif;
-  font-weight: 300;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.55);
-  font-style: italic;
-  margin-bottom: 32px;
-  line-height: 1.6;
-  animation: openingFadeUp 0.8s 0.8s both;
-}
-
-.opening-screen .btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 13px 32px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  background: transparent;
-  color: #ffffff;
-  font-family: var(--font-cormorant-sc), serif;
-  font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: openingFadeUp 0.8s 1s both;
-}
-
-.opening-screen .btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
-.opening-screen .btn svg {
-  width: 15px;
-  height: 15px;
-  opacity: 0.8;
-}
-
-.opening-screen .ornament {
-  position: absolute;
-  opacity: 0.25;
-  animation: openingFadeIn 1.2s 0.3s both;
-}
-
-.opening-screen .ornament-tl {
-  top: 22px;
-  left: 22px;
-}
-
-.opening-screen .ornament-tr {
-  top: 22px;
-  right: 22px;
-  transform: scaleX(-1);
-}
-
-@keyframes openingFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes openingFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.25;
-  }
+  color: var(--gold-pale);
+  margin-bottom: 2.5rem;
 }
 
 .monogram-ring {
@@ -1160,11 +961,6 @@ main {
   max-width: 430px;
   min-height: 100vh;
   position: relative;
-  background-color: var(--burgundy);
-  background-image: url("/opening.JPG");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   padding: 72px 24px;
   text-align: center;
   display: flex;
