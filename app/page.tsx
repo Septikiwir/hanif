@@ -33,17 +33,18 @@ export default function Home() {
 
   const galleryImages = useMemo(
     () => [
-      "https://picsum.photos/seed/hanif-opay-01/900/1200",
-      "https://picsum.photos/seed/hanif-opay-02/900/1200",
-      "https://picsum.photos/seed/hanif-opay-03/900/1200",
-      "https://picsum.photos/seed/hanif-opay-04/900/1200",
-      "https://picsum.photos/seed/hanif-opay-05/900/1200",
-      "https://picsum.photos/seed/hanif-opay-06/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-01/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-02/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-03/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-04/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-05/900/1200",
+      "https://picsum.photos/seed/hanif-Fizah-06/900/1200",
     ],
     []
   );
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -84,6 +85,23 @@ export default function Home() {
       cancelled = true;
     };
   }, [isInvitationOpen, isPlaying]);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    if (isInvitationOpen) {
+      const playPromise = video.play();
+      if (playPromise) {
+        playPromise.catch(() => {
+          /* Ignore autoplay restrictions; user can tap to play if needed */
+        });
+      }
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }, [isInvitationOpen]);
 
   useEffect(() => {
     const stopAudio = () => {
@@ -272,105 +290,45 @@ export default function Home() {
       <main>
         {/* ─── HERO ─── */}
         <header className="hero">
-          {/* Background SVG floral pattern */}
-          <svg
-            className="hero-bg"
-            viewBox="0 0 430 900"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <g fill="none" stroke="#C5A059" strokeWidth="0.5" opacity="0.8">
-              <path d="M-20,80 Q40,20 100,60 Q60,100 -20,80Z" />
-              <path d="M10,40 Q60,-10 110,30 Q70,70 10,40Z" />
-              <line x1="50" y1="10" x2="50" y2="100" />
-              <ellipse
-                cx="30"
-                cy="60"
-                rx="20"
-                ry="30"
-                transform="rotate(-30 30 60)"
-              />
-              <ellipse
-                cx="80"
-                cy="30"
-                rx="15"
-                ry="25"
-                transform="rotate(20 80 30)"
-              />
-              <path d="M450,100 Q390,30 330,70 Q370,110 450,100Z" />
-              <path d="M420,50 Q370,-5 320,35 Q360,70 420,50Z" />
-              <line x1="375" y1="10" x2="380" y2="100" />
-              <ellipse
-                cx="400"
-                cy="65"
-                rx="20"
-                ry="30"
-                transform="rotate(30 400 65)"
-              />
-              <path d="M-20,820 Q40,760 100,800 Q60,840 -20,820Z" />
-              <ellipse
-                cx="50"
-                cy="850"
-                rx="25"
-                ry="15"
-                transform="rotate(20 50 850)"
-              />
-              <path d="M450,830 Q390,770 330,810 Q370,850 450,830Z" />
-              <ellipse
-                cx="380"
-                cy="855"
-                rx="25"
-                ry="15"
-                transform="rotate(-20 380 855)"
-              />
-              <path d="M-30,450 Q20,400 70,440 Q30,480 -30,450Z" />
-              <path d="M460,460 Q410,410 360,450 Q400,490 460,460Z" />
-              <circle cx="150" cy="150" r="2" fill="#C5A059" stroke="none" />
-              <circle
-                cx="280"
-                cy="120"
-                r="1.5"
-                fill="#C5A059"
-                stroke="none"
-              />
-              <circle cx="200" cy="750" r="2" fill="#C5A059" stroke="none" />
-              <circle
-                cx="100"
-                cy="700"
-                r="1.5"
-                fill="#C5A059"
-                stroke="none"
-              />
-              <circle cx="330" cy="780" r="2" fill="#C5A059" stroke="none" />
-            </g>
-          </svg>
+          <video
+            className="hero-video"
+            src="/WhatsApp%20Video%202026-04-26%20at%2011.32.00.mp4"
+            ref={heroVideoRef}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+          <div className="overlay" />
 
-          <div className="hero-overlay" />
+          <div className="content">
+            <p className="wedding-of">The Wedding Of</p>
+            <h1 className="names">
+              Hanif <span className="amp">&amp;</span> Fizah
+            </h1>
+            <p className="date">Minggu · 17 Mei 2026 · Ketapang</p>
+          </div>
 
-          <div className="hero-content">
-            <p className="hero-eyebrow reveal">The Wedding of</p>
-
-            <div className="monogram-ring reveal reveal-delay-1">
-              <span className="monogram-text">Ho</span>
+          <div className="countdown-bar" aria-label="Hitung mundur">
+            <div className="count-group">
+              <span className="count-number">{countdown.days}</span>
+              <span className="count-label">Hari</span>
             </div>
-
-            <div className="reveal reveal-delay-2">
-              <h1 className="hero-names">
-                Hanif
-                <span className="hero-ampersand">&amp;</span>
-                Opay
-              </h1>
+            <span className="count-sep">·</span>
+            <div className="count-group">
+              <span className="count-number">{countdown.hours}</span>
+              <span className="count-label">Jam</span>
             </div>
-
-            <div className="hero-divider reveal reveal-delay-3" />
-
-            <p className="hero-date reveal reveal-delay-3">
-              Kamis &nbsp;·&nbsp; 26 Maret 2026 &nbsp;·&nbsp; Ketapang
-            </p>
-
-            <div className="hero-scroll reveal reveal-delay-4">
-              <div className="scroll-line" />
-              <span>Scroll</span>
+            <span className="count-sep">·</span>
+            <div className="count-group">
+              <span className="count-number">{countdown.mins}</span>
+              <span className="count-label">Menit</span>
+            </div>
+            <span className="count-sep">·</span>
+            <div className="count-group">
+              <span className="count-number">{countdown.secs}</span>
+              <span className="count-label">Detik</span>
             </div>
           </div>
         </header>
@@ -457,7 +415,7 @@ export default function Home() {
           <span className="ampersand-divider reveal reveal-delay-2">&amp;</span>
 
           <div className="person-block reveal reveal-delay-3">
-            <p className="person-name">Opay</p>
+            <p className="person-name">Fizah</p>
             <p className="person-parents">
               Putra Kedua dari<br />
               Bapak Drs. Ade Resmana &amp; Ibu Fatimah, S.Pd.
@@ -486,7 +444,7 @@ export default function Home() {
             <p className="event-type">— I —</p>
             <h3 className="event-name">Akad Nikah</h3>
             <div className="event-details">
-              <strong>Kamis, 26 Maret 2026</strong>
+              <strong>Minggu, 17 Mei 2026</strong>
               <br />
               Pukul 09.00 WIB — Selesai
               <br />
@@ -525,7 +483,7 @@ export default function Home() {
             <p className="event-type">— II —</p>
             <h3 className="event-name">Resepsi</h3>
             <div className="event-details">
-              <strong>Kamis, 26 Maret 2026</strong>
+              <strong>Minggu, 17 Mei 2026</strong>
               <br />
               Pukul 11.00 WIB — Selesai
               <br />
@@ -635,7 +593,7 @@ export default function Home() {
                 lineHeight: 2,
               }}
             >
-              Kamis, 26 Maret 2026
+              Minggu, 17 Mei 2026
               <br />
               Pukul 08.45 WIB
             </div>
@@ -858,7 +816,7 @@ export default function Home() {
               <div className="comment-item">
                 <p className="comment-name">Annisa Dwi MR</p>
                 <p className="comment-text">
-                  Selamat menempuh perjalanan baru Hanif dan Opay. Semoga selalu
+                  Selamat menempuh perjalanan baru Hanif dan Fizah. Semoga selalu
                   dilancarkan, happily ever after ✨
                 </p>
                 <p className="comment-meta">4 minggu, 1 hari lalu</p>
@@ -949,7 +907,7 @@ export default function Home() {
           </p>
 
           <p className="footer-byline reveal reveal-delay-2">Kami yang berbahagia,</p>
-          <h2 className="footer-names reveal reveal-delay-3">Hanif &amp; Opay</h2>
+          <h2 className="footer-names reveal reveal-delay-3">Hanif &amp; Fizah</h2>
 
           <div className="footer-credit">Made with ♥ by inviyu.vercel.app</div>
         </footer>
