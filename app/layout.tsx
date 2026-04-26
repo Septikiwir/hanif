@@ -30,8 +30,34 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Hanif & Opay — Wedding Invitation",
-  description: "Wedding invitation for Hanif & Opay",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://domainkamu.com"),
+  title: "Undangan Pernikahan Wahyu & Pasangan",
+  description:
+    "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Undangan Pernikahan Wahyu & Pasangan",
+    description:
+      "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
+    url: "/",
+    type: "website",
+    locale: "id_ID",
+    images: [
+      {
+        url: "/preview-wedding.jpeg",
+        alt: "Undangan Pernikahan Wahyu & Pasangan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Undangan Pernikahan Wahyu & Pasangan",
+    description:
+      "Dengan penuh kebahagiaan kami mengundang Anda untuk hadir di hari bahagia kami.",
+    images: ["/preview-wedding.jpeg"],
+  },
 };
 
 export default function RootLayout({
