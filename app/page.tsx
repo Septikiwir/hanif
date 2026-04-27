@@ -29,9 +29,9 @@ const Toast = ({ message, type, onClose }: { message: string; type: 'success' | 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 20, scale: 0.9 }}
+      initial={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+      exit={{ opacity: 0, y: -10, x: "-50%", scale: 0.95 }}
       className={`custom-toast ${type}`}
     >
       <div className="toast-icon">
