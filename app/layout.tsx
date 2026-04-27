@@ -25,7 +25,7 @@ const cormorantSC = Cormorant_SC({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://inviyu.vercel.app"),
+  metadataBase: new URL("https://nimantra.vercel.app"),
   title: "The Wedding of Hanif & Fizah",
   description: "Minggu, 17 Mei 2026",
   icons: {
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Wedding of Hanif & Fizah",
     description: "Minggu, 17 Mei 2026",
-    url: "https://inviyu.vercel.app",
+    url: "https://nimantra.vercel.app",
     siteName: "Wedding Hanif & Fizah",
     images: [
       {
