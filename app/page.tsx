@@ -429,7 +429,7 @@ function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, i
           {holderName}
         </span>
         {!isQris && !isAddress && <DownloadButton imageUrl="/Qris.jpeg" />}
-        {isAddress && <CopyButton value={address} />}
+        {isAddress && address && <CopyButton value={address} />}
       </div>
     </div>
   );
