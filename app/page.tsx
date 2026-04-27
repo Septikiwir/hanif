@@ -90,7 +90,7 @@ const ScrollTypewriter = ({ text, progress }: { text: string; progress: MotionVa
   );
 };
 
-const CinematicStoryItem = ({ src, alt, subtitle }: { src: string; alt: string; subtitle: string }) => {
+const CinematicStoryItem = ({ src, alt, subtitle, isLast = false }: { src: string; alt: string; subtitle: string, isLast?: boolean }) => {
   const containerRef = useRef(null);
   
   // Tracking scroll position di lintasan yang sangat panjang (sticky track)
@@ -112,10 +112,11 @@ const CinematicStoryItem = ({ src, alt, subtitle }: { src: string; alt: string; 
   const textProgress = useTransform(scrollYProgress, [0.35, 0.85], [0, 1]);
 
   // PHASE 3: Seluruh konten memudar di akhir lintasan (0.9 -> 1.0)
+  // Untuk item terakhir, kita buat fade out lebih halus atau biarkan saja
   const contentFade = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
 
   return (
-    <div ref={containerRef} className="story-track">
+    <div ref={containerRef} className={`story-track ${isLast ? 'last-track' : ''}`}>
       <div className="sticky-content">
         <motion.div 
           className="cinematic-frame"
@@ -970,6 +971,7 @@ export default function Home() {
               src="/4.jpg"
               alt="Story 4"
               subtitle="Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami."
+              isLast={true}
             />
           </div>
         </section>

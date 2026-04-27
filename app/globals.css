@@ -79,9 +79,14 @@ main {
 /* ─── STICKY STORY SYSTEM ─── */
 .story-track {
   position: relative;
-  height: 250vh;
+  height: 140vh;
   /* Panjang lintasan scroll per satu cerita */
   width: 100%;
+}
+
+.story-track.last-track {
+  height: 120vh;
+  /* Lintasan lebih pendek untuk cerita terakhir agar cepat pindah section */
 }
 
 .sticky-content {
