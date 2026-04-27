@@ -1,7 +1,8 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
 
 type CountdownState = {
@@ -10,6 +11,43 @@ type CountdownState = {
   mins: string;
   secs: string;
   done: boolean;
+};
+
+type Wish = {
+  id: string;
+  name: string;
+  message: string;
+  created_at: string;
+};
+
+// ─── CUSTOM TOAST ─────────────────────────────────────────────────────────────
+const Toast = ({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) => {
+  useEffect(() => {
+    const timer = setTimeout(onClose, 3000); // Muncul selama 3 detik saja
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 20, scale: 0.9 }}
+      className={`custom-toast ${type}`}
+    >
+      <div className="toast-icon">
+        {type === 'success' ? (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        )}
+      </div>
+      <span className="toast-message">{message}</span>
+    </motion.div>
+  );
 };
 
 // ─── SVG Logos ───────────────────────────────────────────────────────────────
@@ -92,19 +130,19 @@ const ScrollTypewriter = ({ text, progress }: { text: string; progress: MotionVa
 
 const CinematicStoryItem = ({ src, alt, subtitle, isLast = false }: { src: string; alt: string; subtitle: string, isLast?: boolean }) => {
   const containerRef = useRef(null);
-  
+
   // Tracking scroll position di lintasan yang sangat panjang (sticky track)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"] 
+    offset: ["start start", "end end"]
   });
 
   // PHASE 1: Gambar muncul (0.0 -> 0.3)
   const imgOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
   const imgScale = useTransform(scrollYProgress, [0, 0.25], [1.1, 1]);
   const imgFilter = useTransform(
-    scrollYProgress, 
-    [0, 0.25], 
+    scrollYProgress,
+    [0, 0.25],
     ["grayscale(100%) brightness(0.2)", "grayscale(0%) brightness(0.9)"]
   );
 
@@ -118,7 +156,7 @@ const CinematicStoryItem = ({ src, alt, subtitle, isLast = false }: { src: strin
   return (
     <div ref={containerRef} className={`story-track ${isLast ? 'last-track' : ''}`}>
       <div className="sticky-content">
-        <motion.div 
+        <motion.div
           className="cinematic-frame"
           style={{ opacity: contentFade }}
         >
@@ -250,7 +288,19 @@ function DownloadButton({ imageUrl }: { imageUrl: string }) {
 }
 
 // ─── Card Component ──────────────────────────────────────────────────────────
-function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, image, isAddress, address }: any) {
+interface PaymentCardProps {
+  bank: string;
+  accountNumber?: string;
+  holderName: string;
+  hasChip?: boolean;
+  logo: React.ReactNode;
+  isQris?: boolean;
+  image?: string;
+  isAddress?: boolean;
+  address?: string;
+}
+
+function PaymentCard({ bank, accountNumber, holderName, hasChip, logo, isQris, image, isAddress, address }: PaymentCardProps) {
   return (
     <div
       className="reveal reveal-up"
@@ -396,6 +446,95 @@ export default function Home() {
   );
 
   const [guestName, setGuestName] = useState("Tamu Undangan");
+  // ─── SUPABASE INTEGRATION ───
+  const [wishes, setWishes] = useState<Wish[]>([]);
+  const [rsvpStats, setRsvpStats] = useState({ hadir: 0, tidakHadir: 0 });
+  const [isSubmittingWishes, setIsSubmittingWishes] = useState(false);
+  const [isSubmittingRSVP, setIsSubmittingRSVP] = useState(false);
+
+  // Toast state
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+  };
+
+  const hideToast = useCallback(() => {
+    setToast(null);
+  }, []);
+
+  const [rsvpName, setRsvpName] = useState("");
+  const [rsvpStatus, setRsvpStatus] = useState("");
+  const [wishName, setWishName] = useState("");
+  const [wishText, setWishText] = useState("");
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
+
+  const totalPages = Math.ceil(wishes.length / ITEMS_PER_PAGE);
+  const currentWishes = wishes.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const fetchWishes = async () => {
+    const { data, error } = await supabase
+      .from("wishes")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) setWishes(data);
+  };
+
+  const fetchRSVPStats = async () => {
+    const { data, error } = await supabase.from("rsvp").select("attendance");
+    if (!error && data) {
+      const hadir = data.filter((r) => r.attendance === "Hadir").length;
+      const tidakHadir = data.filter((r) => r.attendance === "Tidak Hadir").length;
+      setRsvpStats({ hadir, tidakHadir });
+    }
+  };
+
+  useEffect(() => {
+    const initData = async () => {
+      await fetchWishes();
+      await fetchRSVPStats();
+    };
+    void initData();
+  }, []);
+
+  const handleRSVPSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!rsvpName || !rsvpStatus) return showToast("Mohon isi nama dan status kehadiran.", "error");
+    setIsSubmittingRSVP(true);
+    const { error } = await supabase.from("rsvp").insert([{ name: rsvpName, attendance: rsvpStatus }]);
+    setIsSubmittingRSVP(false);
+    if (error) {
+      showToast("Gagal mengirim RSVP.", "error");
+    } else {
+      setRsvpName("");
+      setRsvpStatus("");
+      fetchRSVPStats();
+      showToast("Terima kasih atas konfirmasinya!");
+    }
+  };
+
+  const handleWishesSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!wishName || !wishText) return showToast("Mohon isi nama dan ucapan.", "error");
+    setIsSubmittingWishes(true);
+    const { error } = await supabase.from("wishes").insert([{ name: wishName, message: wishText }]);
+    setIsSubmittingWishes(false);
+    if (error) {
+      showToast("Gagal mengirim ucapan.", "error");
+    } else {
+      setWishName("");
+      setWishText("");
+      fetchWishes();
+      showToast("Ucapan berhasil dikirim!");
+      setCurrentPage(1); // Kembali ke halaman pertama untuk melihat ucapan baru
+    }
+  };
 
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
@@ -1178,6 +1317,70 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ─── RSVP ─── */}
+        <section className="rsvp-section">
+          <div className="wishes-bg">
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 430 600"
+              preserveAspectRatio="xMidYMid slice"
+            >
+              <g fill="none" stroke="#EDD9A3" strokeWidth="0.5">
+                <path
+                  d="M0,300 Q215,100 430,300 Q215,500 0,300Z"
+                  opacity="0.3"
+                />
+                <circle cx="215" cy="300" r="180" opacity="0.2" />
+                <circle cx="215" cy="300" r="220" opacity="0.1" />
+              </g>
+            </svg>
+          </div>
+
+          <div className="wishes-inner">
+            <div className="wishes-heading reveal reveal-up">
+              <h2 className="wishes-title">RSVP</h2>
+              <p className="wishes-subtitle">Konfirmasi Kehadiran</p>
+            </div>
+
+            <div className="rsvp-stats reveal reveal-up delay-1">
+              <div className="rsvp-stat rsvp-hadir">
+                <span className="rsvp-number">{rsvpStats.hadir}</span>
+                <span className="rsvp-label">Hadir</span>
+              </div>
+              <div className="rsvp-stat rsvp-tidak">
+                <span className="rsvp-number">{rsvpStats.tidakHadir}</span>
+                <span className="rsvp-label">Tidak Hadir</span>
+              </div>
+            </div>
+
+            <form
+              className="wishes-form reveal reveal-up delay-2"
+              onSubmit={handleRSVPSubmit}
+            >
+              <input 
+                type="text" 
+                placeholder="Nama Anda" 
+                value={rsvpName}
+                onChange={(e) => setRsvpName(e.target.value)}
+              />
+              <select 
+                value={rsvpStatus}
+                onChange={(e) => setRsvpStatus(e.target.value)}
+              >
+                <option value="" disabled>
+                  — Konfirmasi Kehadiran —
+                </option>
+                <option value="Hadir">Hadir</option>
+                <option value="Tidak Hadir">Tidak Hadir</option>
+              </select>
+              <button type="submit" className="btn-gold" disabled={isSubmittingRSVP}>
+                {isSubmittingRSVP ? "Mengirim..." : "Konfirmasi"}
+              </button>
+            </form>
+          </div>
+        </section>
+
         {/* ─── WISHES ─── */}
         <section className="wishes-section">
           <div className="wishes-bg">
@@ -1206,32 +1409,24 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rsvp-stats reveal reveal-up delay-1">
-              <div className="rsvp-stat rsvp-hadir">
-                <span className="rsvp-number">9</span>
-                <span className="rsvp-label">Hadir</span>
-              </div>
-              <div className="rsvp-stat rsvp-tidak">
-                <span className="rsvp-number">11</span>
-                <span className="rsvp-label">Tidak Hadir</span>
-              </div>
-            </div>
-
             <form
-              className="wishes-form reveal reveal-up delay-2"
-              onSubmit={(e) => e.preventDefault()}
+              className="wishes-form reveal reveal-up delay-1"
+              onSubmit={handleWishesSubmit}
             >
-              <input type="text" placeholder="Nama Anda" />
-              <textarea rows={3} placeholder="Tuliskan ucapan & doa Anda…" />
-              <select defaultValue="">
-                <option value="" disabled>
-                  — Konfirmasi Kehadiran —
-                </option>
-                <option>Hadir</option>
-                <option>Tidak Hadir</option>
-              </select>
-              <button type="button" className="btn-gold">
-                Kirim Ucapan
+              <input 
+                type="text" 
+                placeholder="Nama Anda" 
+                value={wishName}
+                onChange={(e) => setWishName(e.target.value)}
+              />
+              <textarea 
+                rows={3} 
+                placeholder="Tuliskan ucapan & doa Anda…" 
+                value={wishText}
+                onChange={(e) => setWishText(e.target.value)}
+              />
+              <button type="submit" className="btn-gold" disabled={isSubmittingWishes}>
+                {isSubmittingWishes ? "Mengirim..." : "Kirim Ucapan"}
               </button>
             </form>
 
@@ -1245,94 +1440,90 @@ export default function Home() {
                   marginBottom: "1rem",
                 }}
               >
-                24 Ucapan
+                {wishes.length} Ucapan
               </p>
 
-              <div className="comment-item">
-                <p className="comment-name">Moh Nasir dan keluarga</p>
-                <p className="comment-text">
-                  Selamat bang Hanif... samawa, cepat dapat momongan 😘
-                </p>
-                <p className="comment-meta">3 minggu, 6 hari lalu</p>
-              </div>
-
-              <div className="comment-item">
-                <p className="comment-name">Annisa Dwi MR</p>
-                <p className="comment-text">
-                  Selamat menempuh perjalanan baru Fizah dan Hanif. Semoga selalu
-                  dilancarkan, happily ever after ✨
-                </p>
-                <p className="comment-meta">4 minggu, 1 hari lalu</p>
-              </div>
-
-              <div className="comment-item">
-                <p className="comment-name">Keluarga Besar Hermawan</p>
-                <p className="comment-text">
-                  Barakallahu lakuma wa baraka &apos;alaikuma wa jama&apos;a bainakuma
-                  fii khair. Aamiin.
-                </p>
-                <p className="comment-meta">1 bulan lalu</p>
-              </div>
+              {currentWishes.map((item, idx) => (
+                <div key={item.id || idx} className="comment-item">
+                  <p className="comment-name">{item.name}</p>
+                  <p className="comment-text">{item.message}</p>
+                  <p className="comment-meta">
+                    {item.created_at ? new Date(item.created_at).toLocaleDateString("id-ID", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    }) : "Baru saja"}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: 16,
-                marginTop: "2rem",
-                fontFamily: "var(--font-sub)",
-                fontSize: 11,
-                letterSpacing: "0.15em",
-                color: "rgba(0,0,0,0.4)",
-              }}
-            >
-              <button
-                type="button"
+            {totalPages > 1 && (
+              <div
+                className="comment-pagination"
                 style={{
-                  background: "none",
-                  border: "none",
-                  color: "inherit",
-                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 12,
+                  marginTop: "2rem",
+                  fontFamily: "var(--font-sub)",
+                  fontSize: 11,
+                  letterSpacing: "0.15em",
+                  color: "rgba(0,0,0,0.4)",
                 }}
               >
-                ← Prev
-              </button>
-              <span style={{ color: "var(--burgundy)" }}>1</span>
-              <button
-                type="button"
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "inherit",
-                  cursor: "pointer",
-                }}
-              >
-                2
-              </button>
-              <button
-                type="button"
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "inherit",
-                  cursor: "pointer",
-                }}
-              >
-                3
-              </button>
-              <button
-                type="button"
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "inherit",
-                  cursor: "pointer",
-                }}
-              >
-                Next →
-              </button>
-            </div>
+                <button
+                  type="button"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(v => Math.max(1, v - 1))}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: currentPage === 1 ? "#ddd" : "inherit",
+                    cursor: currentPage === 1 ? "default" : "pointer",
+                  }}
+                >
+                  ← Prev
+                </button>
+                
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNum = i + 1;
+                  // Logika sederhana: tampilkan semua angka jika sedikit, atau limit jika banyak
+                  return (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      onClick={() => setCurrentPage(pageNum)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: currentPage === pageNum ? "var(--burgundy)" : "inherit",
+                        fontWeight: currentPage === pageNum ? "bold" : "normal",
+                        cursor: "pointer",
+                        minWidth: "24px"
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                <button
+                  type="button"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(v => Math.min(totalPages, v + 1))}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: currentPage === totalPages ? "#ddd" : "inherit",
+                    cursor: currentPage === totalPages ? "default" : "pointer",
+                  }}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -1411,6 +1602,16 @@ export default function Home() {
           </div>
         </div>
       )}
+      {/* ─── TOAST NOTIFICATION ─── */}
+      <AnimatePresence>
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={hideToast}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

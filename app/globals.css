@@ -1083,69 +1083,99 @@ main {
   margin-top: 4px;
 }
 
+/* ─── RSVP SECTION ─── */
+.rsvp-section {
+  background: #ffffff;
+  padding: var(--section-padding-y) var(--section-padding-x);
+  position: relative;
+  overflow: hidden;
+}
+
 .rsvp-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 2rem;
+  margin-bottom: 0rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 0.75rem;
 }
 
 .rsvp-stat {
-  padding: 16px;
-  border-radius: 2px;
+  padding: 18px 8px;
+  border-radius: 0;
   text-align: center;
+  transition: all 0.3s ease;
 }
 
 .rsvp-hadir {
-  background: rgba(20, 83, 45, 0.7);
+  background: #f0fdf4;
+  border: 1px solid rgba(22, 101, 52, 0.15);
+}
+
+.rsvp-hadir .rsvp-number {
+  color: #166534;
 }
 
 .rsvp-tidak {
-  background: rgba(127, 29, 29, 0.7);
+  background: #fef2f2;
+  border: 1px solid rgba(153, 27, 27, 0.15);
+}
+
+.rsvp-tidak .rsvp-number {
+  color: #991b1b;
 }
 
 .rsvp-number {
   font-family: var(--font-heading);
-  font-size: 36px;
-  font-weight: 300;
-  color: #fff;
+  font-size: 28px;
+  font-weight: 600;
   display: block;
   line-height: 1;
+  margin-bottom: 4px;
 }
 
 .rsvp-label {
   font-family: var(--font-sub);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 4px;
+  color: var(--text-mid);
   display: block;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
+.rsvp-form-container,
 .wishes-form {
   margin-bottom: 2.5rem;
 }
 
+.rsvp-form-container input,
+.rsvp-form-container select,
 .wishes-form input,
 .wishes-form textarea,
 .wishes-form select {
   width: 100%;
   padding: 14px 16px;
-  background: transparent;
-  border: 1px solid rgba(184, 146, 58, 0.4);
+  background: #fcfbf8;
+  border: 1px solid rgba(184, 146, 58, 0.25);
   color: var(--text-dark);
   font-family: var(--font-body);
   font-size: 15px;
   border-radius: 2px;
   margin-bottom: 12px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 }
 
+.rsvp-form-container input:focus,
+.rsvp-form-container select:focus,
 .wishes-form input:focus,
 .wishes-form textarea:focus,
 .wishes-form select:focus {
   border-color: var(--burgundy);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .wishes-form input::placeholder,
@@ -2177,4 +2207,62 @@ main {
   .comment-text {
     font-size: 12.5px;
   }
+}
+
+/* ─── TOAST NOTIFICATION ─── */
+.custom-toast {
+  position: fixed;
+  top: 40px;
+  /* Pindah ke atas agar lebih terlihat */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  /* Paling depan */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  background: #ffffff;
+  border-radius: 100px;
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.25),
+    0 10px 15px -5px rgba(0, 0, 0, 0.1);
+  min-width: 280px;
+  max-width: 90vw;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.custom-toast.success {
+  border-bottom: 3px solid #10b981;
+}
+
+.custom-toast.error {
+  border-left: 4px solid #ef4444;
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.success .toast-icon {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
+.error .toast-icon {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.toast-message {
+  font-family: var(--font-sub);
+  font-size: 13px;
+  font-weight: 500;
+  color: #1f2937;
+  letter-spacing: 0.01em;
 }
