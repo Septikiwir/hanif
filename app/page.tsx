@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useInView, AnimatePresence, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
 
 type CountdownState = {
   days: string;
@@ -64,6 +65,80 @@ function QRISLogo() {
     </div>
   );
 }
+
+// ─── ANIMATED STORY COMPONENTS ──────────────────────────────────────────────
+
+const ScrollTypewriter = ({ text, progress }: { text: string; progress: MotionValue<number> }) => {
+  const [visibleChars, setVisibleChars] = useState(0);
+
+  // Mengontrol progres secara real-time berdasarkan posisi scroll
+  useMotionValueEvent(progress, "change", (latest) => {
+    // Rumus: visibleCharacters = progress × total karakter teks
+    const count = Math.floor(latest * text.length);
+    if (count !== visibleChars) {
+      setVisibleChars(count);
+    }
+  });
+
+  return (
+    <div className="typewriter-wrap">
+      {/* Ghost text untuk menjaga stabilitas tata letak (font elegan/serif) */}
+      <p className="typewriter-ghost" aria-hidden="true">{text}</p>
+      {/* Teks utama yang muncul/hilang mengikuti scroll (slice logic) */}
+      <p className="typewriter-visible">{text.slice(0, visibleChars)}</p>
+    </div>
+  );
+};
+
+const CinematicStoryItem = ({ src, alt, subtitle }: { src: string; alt: string; subtitle: string }) => {
+  const containerRef = useRef(null);
+  
+  // Tracking scroll position di lintasan yang sangat panjang (sticky track)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"] 
+  });
+
+  // PHASE 1: Gambar muncul (0.0 -> 0.3)
+  const imgOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
+  const imgScale = useTransform(scrollYProgress, [0, 0.25], [1.1, 1]);
+  const imgFilter = useTransform(
+    scrollYProgress, 
+    [0, 0.25], 
+    ["grayscale(100%) brightness(0.2)", "grayscale(0%) brightness(0.9)"]
+  );
+
+  // PHASE 2: Teks mulai diketik saat gambar sudah diam (0.35 -> 0.85)
+  const textProgress = useTransform(scrollYProgress, [0.35, 0.85], [0, 1]);
+
+  // PHASE 3: Seluruh konten memudar di akhir lintasan (0.9 -> 1.0)
+  const contentFade = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
+
+  return (
+    <div ref={containerRef} className="story-track">
+      <div className="sticky-content">
+        <motion.div 
+          className="cinematic-frame"
+          style={{ opacity: contentFade }}
+        >
+          <motion.img
+            src={src}
+            alt={alt}
+            className="cinematic-img"
+            style={{
+              opacity: imgOpacity,
+              scale: imgScale,
+              filter: imgFilter
+            }}
+          />
+          <div className="cinematic-subtitle">
+            <ScrollTypewriter text={subtitle} progress={textProgress} />
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
 
 // ─── Chip Component ──────────────────────────────────────────────────────────
 function Chip() {
@@ -869,37 +944,33 @@ export default function Home() {
         <section className="story-section">
           <div className="section-heading reveal reveal-up">
             <span className="section-label">Perjalanan Cinta</span>
-            <h2 className="section-title">Our Story</h2>
+            <h2 className="section-title">Our Love Story</h2>
           </div>
 
           <div className="cinematic-story">
-            <div className="cinematic-frame reveal reveal-fade">
-              <img src="/1.JPG" alt="Story 1" className="cinematic-img" />
-              <div className="cinematic-subtitle">
-                Yogyakarta, 8 Mei 2018, kota tempat pertama kali bertemu. Pertemanan sederhana yang berkembang menjadi sesuatu yang lebih dalam.
-              </div>
-            </div>
+            <CinematicStoryItem
+              src="/1.JPG"
+              alt="Story 1"
+              subtitle="Yogyakarta, 8 Mei 2018, kota tempat pertama kali bertemu. Pertemanan sederhana yang berkembang menjadi sesuatu yang lebih dalam."
+            />
 
-            <div className="cinematic-frame reveal reveal-fade">
-              <img src="/2.JPG" alt="Story 2" className="cinematic-img" />
-              <div className="cinematic-subtitle">
-                Waktu membawa kami ke ketinggian Gunung Prau—pendakian pertama kami bersama. Di sanalah, hati kami mulai saling mengenal.
-              </div>
-            </div>
+            <CinematicStoryItem
+              src="/2.JPG"
+              alt="Story 2"
+              subtitle="Waktu membawa kami ke ketinggian Gunung Prau—pendakian pertama kami bersama. Di sanalah, hati kami mulai saling mengenal."
+            />
 
-            <div className="cinematic-frame reveal reveal-fade">
-              <img src="/3.jpg" alt="Story 3" className="cinematic-img" />
-              <div className="cinematic-subtitle">
-                Seiring berjalannya waktu, —hingga cinta dengan lembut menemukan jalannya dalam hidup kami.<br />13 September 2025, kami mengikat janji, dan pada 17 Mei 2026, kami memulai selamanya.
-              </div>
-            </div>
+            <CinematicStoryItem
+              src="/3.jpg"
+              alt="Story 3"
+              subtitle="Seiring berjalannya waktu, —hingga cinta dengan lembut menemukan jalannya dalam hidup kami. 13 September 2025, kami mengikat janji, dan pada 17 Mei 2026, kami memulai selamanya."
+            />
 
-            <div className="cinematic-frame reveal reveal-fade">
-              <img src="/4.jpg" alt="Story 4" className="cinematic-img" />
-              <div className="cinematic-subtitle">
-                Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami.
-              </div>
-            </div>
+            <CinematicStoryItem
+              src="/4.jpg"
+              alt="Story 4"
+              subtitle="Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami."
+            />
           </div>
         </section>
 
