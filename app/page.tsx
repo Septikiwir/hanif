@@ -687,7 +687,7 @@ export default function Home() {
         <div className="fixed-bg-video">
           <video
             className="hero-video"
-            src="/WhatsApp%20Video%202026-04-26%20at%2011.32.00.mp4"
+            src="/Undangan%20Digital%20Video.mp4"
             ref={heroVideoRef}
             muted
             loop
@@ -1044,7 +1044,7 @@ export default function Home() {
           <div className="gallery-wrap">
             <div className="gallery-video-wrap reveal reveal-scale">
               <video
-                src="/WhatsApp%20Video%202026-04-26%20at%2011.27.39.mp4"
+                src="/Video%20Landscape%20Galery.mp4"
                 className="gallery-video"
                 autoPlay
                 muted
