@@ -942,9 +942,10 @@ export default function Home() {
           }}>
             <p className="reveal reveal-up" style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '24px',
+              fontSize: 'clamp(18px, 5.5vw, 24px)',
               color: 'var(--gold)',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              whiteSpace: 'nowrap'
             }}>
               Assalamu&apos;alaikum Wr. Wb.
             </p>

@@ -1608,11 +1608,12 @@ main {
 
 .v4-name {
   font-family: var(--font-heading);
-  font-size: 36px;
+  font-size: clamp(24px, 8.5vw, 36px);
   font-weight: 400;
   color: #f8f6f2;
   line-height: 1.0;
   margin-bottom: 14px;
+  white-space: nowrap;
 }
 
 .v4-sub-row {
