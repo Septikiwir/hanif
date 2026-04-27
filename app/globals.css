@@ -1639,3 +1639,490 @@ main {
   height: 13px;
   fill: #a0967e;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE TEXT SIZING — Mobile L / M / S
+   Only font-size adjustments for readability. Layout stays unchanged.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Mobile L (≤425px) ─── */
+@media (max-width: 425px) {
+  :root {
+    --h1: clamp(36px, 11vw, 48px);
+    --h2: clamp(28px, 7.5vw, 38px);
+    --h3: clamp(22px, 5.5vw, 26px);
+    --body: 15px;
+    --small: 12.5px;
+  }
+
+  .hero .wedding-of {
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+
+  .hero .date {
+    font-size: 14px;
+    letter-spacing: 5px;
+  }
+
+  .hero .count-number {
+    font-size: 32px;
+  }
+
+  .hero .count-label {
+    font-size: 9px;
+  }
+
+  .opening-screen .names {
+    font-size: 38px;
+  }
+
+  .opening-screen .wedding-of {
+    font-size: 9.5px;
+  }
+
+  .opening-screen .kepada {
+    font-size: 12px;
+  }
+
+  .opening-screen .tamu {
+    font-size: 18px;
+  }
+
+  .opening-screen .note {
+    font-size: 9.5px;
+  }
+
+  .opening-screen .btn {
+    font-size: 12px;
+    letter-spacing: 1.8px;
+  }
+
+  .quote-text {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  .quote-ref {
+    font-size: 10.5px;
+  }
+
+  .intro-lead {
+    font-size: 14px;
+  }
+
+  .cinematic-subtitle {
+    font-size: 12px;
+  }
+
+  .event-name {
+    font-size: 28px;
+  }
+
+  .event-day {
+    font-size: 16px;
+  }
+
+  .event-date-number {
+    font-size: 72px;
+  }
+
+  .event-month {
+    font-size: 13px;
+  }
+
+  .event-time {
+    font-size: 15px;
+  }
+
+  .event-location-name {
+    font-size: 20px;
+  }
+
+  .event-location-city {
+    font-size: 14px;
+  }
+
+  .event-btn {
+    font-size: 10.5px;
+  }
+
+  .gift-note {
+    font-size: 13px;
+  }
+
+  .v4-role {
+    font-size: 22px;
+  }
+
+  .v4-name {
+    font-size: 32px;
+  }
+
+  .v4-sub-parents {
+    font-size: 13px;
+  }
+
+  .footer-names {
+    font-size: 40px;
+  }
+
+  .footer-note {
+    font-size: 13px;
+  }
+
+  .footer-byline {
+    font-size: 10.5px;
+  }
+}
+
+/* ─── Mobile M (≤375px) ─── */
+@media (max-width: 375px) {
+  :root {
+    --h1: clamp(32px, 10vw, 42px);
+    --h2: clamp(26px, 7vw, 34px);
+    --h3: clamp(20px, 5vw, 24px);
+    --body: 14px;
+    --small: 12px;
+  }
+
+  .hero .wedding-of {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+  }
+
+  .hero .names {
+    letter-spacing: -1px;
+  }
+
+  .hero .date {
+    font-size: 13px;
+    letter-spacing: 4.5px;
+  }
+
+  .hero .count-number {
+    font-size: 28px;
+  }
+
+  .hero .count-label {
+    font-size: 8.5px;
+  }
+
+  .hero .count-sep {
+    font-size: 17px;
+  }
+
+  .opening-screen .names {
+    font-size: 34px;
+  }
+
+  .opening-screen .wedding-of {
+    font-size: 9px;
+    letter-spacing: 3.5px;
+  }
+
+  .opening-screen .kepada {
+    font-size: 11.5px;
+    letter-spacing: 1.2px;
+  }
+
+  .opening-screen .tamu {
+    font-size: 17px;
+  }
+
+  .opening-screen .note {
+    font-size: 9px;
+  }
+
+  .opening-screen .btn {
+    font-size: 11.5px;
+    padding: 12px 26px;
+  }
+
+  .quote-text {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .quote-ref {
+    font-size: 10px;
+  }
+
+  .intro-lead {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+
+  .cinematic-subtitle {
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .event-name {
+    font-size: 26px;
+  }
+
+  .event-day {
+    font-size: 15px;
+    letter-spacing: 3.5px;
+  }
+
+  .event-date-number {
+    font-size: 64px;
+  }
+
+  .event-month {
+    font-size: 12px;
+    letter-spacing: 3.5px;
+  }
+
+  .event-time {
+    font-size: 14px;
+  }
+
+  .event-location-name {
+    font-size: 18px;
+  }
+
+  .event-location-city {
+    font-size: 13px;
+  }
+
+  .event-btn {
+    font-size: 10px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+  }
+
+  .gift-note {
+    font-size: 12.5px;
+  }
+
+  .v4-role {
+    font-size: 20px;
+  }
+
+  .v4-name {
+    font-size: 28px;
+  }
+
+  .v4-sub-label {
+    font-size: 8.5px;
+    letter-spacing: 3px;
+  }
+
+  .v4-sub-parents {
+    font-size: 12.5px;
+  }
+
+  .v4-ig {
+    font-size: 9.5px;
+  }
+
+  .footer-names {
+    font-size: 36px;
+  }
+
+  .footer-note {
+    font-size: 12.5px;
+  }
+
+  .footer-byline {
+    font-size: 10px;
+  }
+
+  .footer-credit {
+    font-size: 9px;
+  }
+}
+
+/* ─── Mobile S (≤320px) ─── */
+@media (max-width: 320px) {
+  :root {
+    --h1: clamp(28px, 9vw, 36px);
+    --h2: clamp(22px, 6.5vw, 30px);
+    --h3: clamp(18px, 4.5vw, 22px);
+    --body: 13px;
+    --small: 11px;
+    --xs: 9.5px;
+  }
+
+  .hero .wedding-of {
+    font-size: 9px;
+    letter-spacing: 3px;
+  }
+
+  .hero .names {
+    letter-spacing: -1.5px;
+  }
+
+  .hero .date {
+    font-size: 11.5px;
+    letter-spacing: 4px;
+  }
+
+  .hero .count-number {
+    font-size: 24px;
+  }
+
+  .hero .count-label {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .hero .count-sep {
+    font-size: 14px;
+  }
+
+  .hero .count-group {
+    min-width: 54px;
+  }
+
+  .opening-screen .names {
+    font-size: 30px;
+  }
+
+  .opening-screen .wedding-of {
+    font-size: 8.5px;
+    letter-spacing: 3px;
+  }
+
+  .opening-screen .kepada {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .opening-screen .tamu {
+    font-size: 15px;
+  }
+
+  .opening-screen .note {
+    font-size: 8.5px;
+  }
+
+  .opening-screen .btn {
+    font-size: 11px;
+    padding: 11px 22px;
+    letter-spacing: 1.5px;
+  }
+
+  .quote-text {
+    font-size: 13.5px;
+    line-height: 1.75;
+  }
+
+  .quote-ref {
+    font-size: 9.5px;
+  }
+
+  .intro-lead {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .cinematic-subtitle {
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  .event-name {
+    font-size: 22px;
+  }
+
+  .event-day {
+    font-size: 14px;
+    letter-spacing: 3px;
+  }
+
+  .event-date-number {
+    font-size: 56px;
+  }
+
+  .event-month {
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+
+  .event-time {
+    font-size: 13px;
+  }
+
+  .event-location-name {
+    font-size: 16px;
+  }
+
+  .event-location-city {
+    font-size: 12px;
+  }
+
+  .event-btn {
+    font-size: 9.5px;
+    padding: 9px 22px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+  }
+
+  .gift-note {
+    font-size: 12px;
+  }
+
+  .live-badge {
+    font-size: 8px;
+  }
+
+  .v4-role {
+    font-size: 18px;
+  }
+
+  .v4-name {
+    font-size: 24px;
+  }
+
+  .v4-sub-label {
+    font-size: 8px;
+    letter-spacing: 2.5px;
+  }
+
+  .v4-sub-parents {
+    font-size: 12px;
+  }
+
+  .v4-ig {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .footer-names {
+    font-size: 30px;
+  }
+
+  .footer-note {
+    font-size: 11.5px;
+  }
+
+  .footer-byline {
+    font-size: 9.5px;
+  }
+
+  .footer-credit {
+    font-size: 8.5px;
+  }
+
+  .wishes-title {
+    font-size: 36px;
+  }
+
+  .comment-name {
+    font-size: 15px;
+  }
+
+  .comment-text {
+    font-size: 12.5px;
+  }
+}
