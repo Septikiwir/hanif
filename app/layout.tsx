@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Wedding of Hanif & Fizah",
     description: "Minggu, 17 Mei 2026",
-    url: "https://nimantra.vercel.app",
+    url: "https://nimantra.vercel.app/fizah-hanif",
     siteName: "Wedding Hanif & Fizah",
     images: [
       {
