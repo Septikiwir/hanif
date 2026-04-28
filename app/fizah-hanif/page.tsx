@@ -108,7 +108,7 @@ function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(value).catch(() => {});
+    navigator.clipboard.writeText(value).catch(() => { });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -1072,16 +1072,15 @@ export default function Home() {
         </section>
 
         <section className="intro-section" style={{ padding: 0 }}>
-          <div
-            style={{
-              padding: "var(--space-lg) var(--space-md)",
-              textAlign: "center",
-              background: "rgba(0, 0, 0, 0.4)",
-              borderRadius: "6px",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              margin: "var(--space-lg) var(--section-padding-x) var(--space-xl) var(--section-padding-x)",
-            }}
-          >
+
+          <article className="event-card reveal reveal-up delay-2" style={{
+            padding: "var(--space-lg) var(--space-md)",
+            textAlign: "center",
+            background: "rgba(0, 0, 0, 0.4)",
+            borderRadius: "6px",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            margin: "var(--space-lg) var(--section-padding-x) var(--space-xl) var(--section-padding-x)",
+          }}>
             <p
               className="reveal reveal-up"
               style={{
@@ -1108,7 +1107,7 @@ export default function Home() {
               Dengan memohon Rahmat dan Ridho Allah Subhanahu Wa Ta&apos;ala, kami
               mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
             </p>
-          </div>
+          </article>
 
           <div className="v4-card reveal reveal-scale">
             <div className="v4-photo" style={{ height: "100%", backgroundImage: "url(/Fizah.JPG)", backgroundSize: "cover", backgroundPosition: "center" }}>
@@ -1277,7 +1276,8 @@ export default function Home() {
             <h2 className="section-title">Live Streaming</h2>
           </div>
 
-          <div className="livestream-card reveal reveal-up delay-1">
+
+          <article className="event-card reveal reveal-up delay-2">
             <div className="live-badge">
               <span className="live-dot" />
               Live
@@ -1326,7 +1326,7 @@ export default function Home() {
               </svg>
               Tonton di Sini
             </a>
-          </div>
+          </article>
         </section>
 
         <section className="gallery-section">
@@ -1502,10 +1502,10 @@ export default function Home() {
                   <p className="comment-meta">
                     {item.created_at
                       ? new Date(item.created_at).toLocaleDateString("id-ID", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
                       : "Baru saja"}
                   </p>
                 </div>
@@ -1617,12 +1617,6 @@ export default function Home() {
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
                 <span>nimantra.id</span>
-              </div>
-              <div className="social-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1 21.821c-3.565-.436-6.495-2.91-7.531-6.183h2.645c.421 1.772 1.348 4.027 4.886 6.183zm0-8.821h-5.918c-.053-.647-.082-1.312-.082-2s.029-1.353.082-2h5.918v4zm0-6h-5.33c1.036-3.273 3.966-5.747 7.531-6.183-3.538 2.156-4.465 4.411-4.886 6.183zm7.531 6.183h-2.645c-.421-1.772-1.348-4.027-4.886-6.183 3.565.436 6.495 2.91 7.531 6.183zm-6.531-6.183c.404-1.733 1.258-3.753 5.33-6.183-1.036 3.273-3.966 5.747-7.531 6.183 2.532 1.096 4.316 2.378 5.33 6.183zm0 14.821c-4.072-2.43-4.926-4.45-5.33-6.183h5.33v6.183zm0-10.183v-4h5.918c.053.647.082 1.312.082 2s-.029 1.353-.082 2h-5.918zm0 10.183v-6.183h5.33c-1.036 3.273-3.966 5.747-7.531 6.183 4.072-2.43 4.926-4.45 5.33-6.183z" />
-                </svg>
-                <span>nimantra.vercel.app</span>
               </div>
             </div>
 

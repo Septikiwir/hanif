@@ -1301,7 +1301,7 @@ main {
   letter-spacing: 0.02em;
 }
 
-@media (min-width: 380px) {
+@media (min-width: 320px) {
   .credit-socials {
     flex-direction: row;
     justify-content: center;
@@ -1860,7 +1860,7 @@ main {
   }
 
   .footer-byline {
-    font-size: 10.5px;
+    font-size: 15px;
   }
 }
 
