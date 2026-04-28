@@ -407,16 +407,6 @@ export default function Home() {
           width: `${baseWidth}px`,
           height: `${baseHeight}px`,
         },
-        onClone: (doc) => {
-          const root = doc.querySelector(".qr-modal-root") as HTMLElement | null;
-          const clonedCard = doc.querySelector(".card") as HTMLElement | null;
-          if (root) root.style.setProperty("--modal-scale", "1");
-          if (clonedCard) {
-            clonedCard.style.transform = "none";
-            clonedCard.style.width = `${baseWidth}px`;
-            clonedCard.style.height = `${baseHeight}px`;
-          }
-        },
       });
 
       const a = document.createElement("a");
