@@ -15,6 +15,121 @@ type CountdownState = {
   done: boolean;
 };
 
+// --- DATA CONFIGURATION ------------------------------------------------------
+const DATA = {
+  couple: {
+    bride: {
+      shortName: "Fizah",
+      fullName: "Nur Hafizah, S.Pd.",
+      parents: {
+        father: "Bapak H. Muhammad Salmani, S.Ag. (Alm)",
+        mother: "Ibu Hj. Yumita, S.H.",
+      },
+      instagram: {
+        username: "NRHFZH22",
+        url: "https://www.instagram.com/nrhfzh22?igsh=eXp6N2dja25ua294",
+      },
+      photo: "/fizah-hanif/Fizah.JPG",
+    },
+    groom: {
+      shortName: "Hanif",
+      fullName: "Hanif Assalam, M.Pd.",
+      parents: {
+        father: "Bapak H. Pandaya, S.Pd.",
+        mother: "Ibu Hj. Rusmiyati, S.Pd.SD.",
+      },
+      instagram: {
+        username: "HANIFASSALAMM",
+        url: "https://www.instagram.com/hanifassalamm?igsh=Z3psZGN3YzcwOXd1&utm_source=qr",
+      },
+      photo: "/fizah-hanif/Hanif.JPG",
+    },
+  },
+  event: {
+    date: "2026-05-17T00:00:00+07:00",
+    displayDate: "17 Mei 2026",
+    day: "Minggu",
+    locationName: "Gedung Pancasila",
+    locationCity: "Kabupaten Ketapang",
+    mapsUrl: "https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA",
+    akad: {
+      time: "09.00 WIB — Selesai",
+    },
+    resepsi: {
+      time: "16.00 WIB — Selesai",
+    },
+    livestream: {
+      time: "08.45 WIB",
+      url: "https://www.instagram.com/hanifassalamm?upcoming_event_id=17882896233394607",
+    },
+  },
+  media: {
+    music: "/fizah-hanif/Nadhif Basalamah - Kota Ini Tak Sama Tanpamu (Official Music Video Lyric).mp3",
+    heroVideo: "/fizah-hanif/Undangan Digital Video.mp4",
+    logo: "/fizah-hanif/logo_hanif.png",
+    galleryVideo: "/fizah-hanif/Video Landscape Galery.mp4",
+    story: [
+      {
+        src: "/fizah-hanif/1.JPG",
+        subtitle: "Yogyakarta, 8 Mei 2018, kota tempat pertama kali bertemu. Pertemanan sederhana yang berkembang menjadi sesuatu yang lebih dalam.",
+      },
+      {
+        src: "/fizah-hanif/2.JPG",
+        subtitle: "Waktu membawa kami ke ketinggian Gunung Prau—pendakian pertama kami bersama. Di sanalah, hati kami mulai saling mengenal.",
+      },
+      {
+        src: "/fizah-hanif/3.jpg",
+        subtitle: "Seiring berjalannya waktu, —hingga cinta dengan lembut menemukan jalannya dalam hidup kami. 13 September 2025, kami mengikat janji, dan pada 17 Mei 2026, kami memulai selamanya.",
+      },
+      {
+        src: "/fizah-hanif/4.jpg",
+        subtitle: "Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami.",
+      },
+    ],
+    gallery: [
+      { src: "/fizah-hanif/gallery/1.jpg", isLandscape: true },
+      { src: "/fizah-hanif/gallery/2.jpg", isLandscape: false },
+      { src: "/fizah-hanif/gallery/3.jpg", isLandscape: false },
+      { src: "/fizah-hanif/gallery/4.jpg", isLandscape: true },
+      { src: "/fizah-hanif/gallery/5.JPG", isLandscape: false },
+      { src: "/fizah-hanif/gallery/6.jpg", isLandscape: false },
+      { src: "/fizah-hanif/gallery/7.jpg", isLandscape: false },
+      { src: "/fizah-hanif/gallery/8.JPG", isLandscape: true },
+      { src: "/fizah-hanif/gallery/9.JPG", isLandscape: false },
+      { src: "/fizah-hanif/gallery/10.png", isLandscape: false },
+      { src: "/fizah-hanif/gallery/11.JPG", isLandscape: true },
+      { src: "/fizah-hanif/gallery/12.JPG", isLandscape: false },
+      { src: "/fizah-hanif/gallery/13.JPG", isLandscape: false },
+      { src: "/fizah-hanif/gallery/14.JPG", isLandscape: false },
+    ],
+  },
+  payment: [
+    {
+      id: "bca",
+      bank: "BCA",
+      holderName: "HANIF ASSALAM",
+      hasChip: true,
+      logo: <BCALogo />,
+    },
+    {
+      id: "address",
+      bank: "Alamat Pengiriman",
+      isAddress: true,
+      address:
+        "Jalan Merak, Gg Dedek, Kelurahan Sampit, Kecamatan Delta Pawan, Kabupaten Ketapang, Kalimantan Barat, 78813 (Rumah Cat Kuning, Belakang Kantor PAN)\n(HP : +62 895-6158-01699)",
+      holderName: "Nur Hafizah",
+      logo: (
+        <div style={{ opacity: 0.2 }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+        </div>
+      ),
+    },
+  ],
+};
+
 type Wish = {
   id: string;
   name: string;
@@ -57,8 +172,8 @@ const Toast = ({ message, type, onClose }: { message: string; type: "success" | 
 function BCALogo() {
   return (
     <img
-      src="/Qris2.jpeg"
-      alt="BCA Logo"
+      src={DATA.media.logo}
+      alt="Bank Logo"
       style={{ height: "40px", width: "auto", objectFit: "contain" }}
     />
   );
@@ -95,7 +210,7 @@ function Chip() {
       }}
     >
       <img
-        src="/Qris1.jpeg"
+        src="/fizah-hanif/Qris1.jpeg"
         alt="Chip"
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
@@ -253,7 +368,7 @@ function PaymentCard({ bank, holderName, hasChip, logo, isQris, image, isAddress
       >
         {!isAddress && (
           <img
-            src="/Qris3.jpeg"
+            src="/fizah-hanif/Qris3.jpeg"
             alt="Logo Left"
             style={{ height: "35px", width: "auto", objectFit: "contain" }}
           />
@@ -332,7 +447,7 @@ function PaymentCard({ bank, holderName, hasChip, logo, isQris, image, isAddress
         >
           {holderName}
         </span>
-        {!isQris && !isAddress && <DownloadButton imageUrl="/Qris.jpeg" />}
+        {!isQris && !isAddress && <DownloadButton imageUrl="/fizah-hanif/Qris.jpeg" />}
         {isAddress && address && <CopyButton value={address} />}
       </div>
     </div>
@@ -340,14 +455,8 @@ function PaymentCard({ bank, holderName, hasChip, logo, isQris, image, isAddress
 }
 
 export default function Home() {
-  const weddingDate = useMemo(() => new Date("2026-05-17T00:00:00+07:00"), []);
-  const audioSrc = useMemo(
-    () =>
-      encodeURI(
-        "/Nadhif Basalamah - Kota Ini Tak Sama Tanpamu (Official Music Video Lyric).mp3"
-      ),
-    []
-  );
+  const weddingDate = useMemo(() => new Date(DATA.event.date), []);
+  const audioSrc = useMemo(() => encodeURI(DATA.media.music), []);
 
   const [showQrModal, setShowQrModal] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
@@ -501,22 +610,7 @@ export default function Home() {
   };
 
   const galleryImages = useMemo(
-    () => [
-      { src: "/gallery/1.jpg", isLandscape: true },
-      { src: "/gallery/2.jpg", isLandscape: false },
-      { src: "/gallery/3.jpg", isLandscape: false },
-      { src: "/gallery/4.jpg", isLandscape: true },
-      { src: "/gallery/5.JPG", isLandscape: false },
-      { src: "/gallery/6.jpg", isLandscape: false },
-      { src: "/gallery/7.jpg", isLandscape: false },
-      { src: "/gallery/8.JPG", isLandscape: true },
-      { src: "/gallery/9.JPG", isLandscape: false },
-      { src: "/gallery/10.png", isLandscape: false },
-      { src: "/gallery/11.JPG", isLandscape: true },
-      { src: "/gallery/12.JPG", isLandscape: false },
-      { src: "/gallery/13.JPG", isLandscape: false },
-      { src: "/gallery/14.JPG", isLandscape: false },
-    ],
+    () => DATA.media.gallery,
     []
   );
 
@@ -527,31 +621,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showGifts] = useState(false);
 
-  const CARDS = [
-    {
-      id: "bca",
-      bank: "BCA",
-      holderName: "HANIF ASSALAM",
-      hasChip: true,
-      logo: <BCALogo />,
-    },
-    {
-      id: "address",
-      bank: "Alamat Pengiriman",
-      isAddress: true,
-      address:
-        "Jalan Merak, Gg Dedek, Kelurahan Sampit, Kecamatan Delta Pawan, Kabupaten Ketapang, Kalimantan Barat, 78813 (Rumah Cat Kuning, Belakang Kantor PAN)\n(HP : +62 895-6158-01699)",
-      holderName: "Nur Hafizah",
-      logo: (
-        <div style={{ opacity: 0.2 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-        </div>
-      ),
-    },
-  ];
+  const CARDS = DATA.payment;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsOpeningReady(true), 100);
@@ -813,16 +883,16 @@ export default function Home() {
                 <div className="banner-content">
                   <div className="banner-pretitle">The Wedding Of</div>
                   <div className="banner-names">
-                    <span className="banner-name">Fizah</span>
+                    <span className="banner-name">{DATA.couple.bride.shortName}</span>
                     <span className="banner-amp">&amp;</span>
-                    <span className="banner-name">Hanif</span>
+                    <span className="banner-name">{DATA.couple.groom.shortName}</span>
                   </div>
                   <div className="banner-meta">
-                    <span className="banner-meta-item">17 Mei 2026</span>
+                    <span className="banner-meta-item">{DATA.event.displayDate}</span>
                     <div className="banner-meta-dot" />
-                    <span className="banner-meta-item">Minggu</span>
+                    <span className="banner-meta-item">{DATA.event.day}</span>
                     <div className="banner-meta-dot" />
-                    <span className="banner-meta-item">Gedung Pancasila</span>
+                    <span className="banner-meta-item">{DATA.event.locationName}</span>
                   </div>
                 </div>
               </div>
@@ -830,8 +900,8 @@ export default function Home() {
               <div className="body">
                 <div className="info">
                   <div className="info-pretitle">The Wedding of</div>
-                  <div className="info-couple">Fizah &amp; Hanif</div>
-                  <div className="info-date">Minggu, 17 Mei 2026</div>
+                  <div className="info-couple">{DATA.couple.bride.shortName} &amp; {DATA.couple.groom.shortName}</div>
+                  <div className="info-date">{DATA.event.day}, {DATA.event.displayDate}</div>
                   <div className="info-divider" />
                   <div className="info-to">Kepada Yth.</div>
                   <div className="info-to">Bapak/Ibu/Saudara/i:</div>
@@ -918,8 +988,8 @@ export default function Home() {
             }}
           >
             <img
-              src="/Logo Hanif.png"
-              alt="Logo Hanif"
+              src={DATA.media.logo}
+              alt="Logo Couple"
               style={{ height: "64px", width: "auto", objectFit: "contain" }}
             />
           </div>
@@ -929,7 +999,7 @@ export default function Home() {
               The Wedding Of
             </p>
             <h1 className={`names reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "0.6s" }}>
-              Fizah <span className="ampersand">&amp;</span> Hanif
+              {DATA.couple.bride.shortName} <span className="ampersand">&amp;</span> {DATA.couple.groom.shortName}
             </h1>
             <div className={`divider reveal reveal-fade ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "0.8s" }} />
             <p className={`kepada reveal reveal-up ${isOpeningReady ? "visible" : ""}`} style={{ transitionDelay: "1s" }}>
@@ -986,7 +1056,7 @@ export default function Home() {
         <div className="fixed-bg-video">
           <video
             className="hero-video"
-            src="/Undangan%20Digital%20Video.mp4"
+            src={DATA.media.heroVideo}
             ref={heroVideoRef}
             muted
             loop
@@ -1001,7 +1071,7 @@ export default function Home() {
           <div className="content">
             <div className="reveal reveal-fade delay-1">
               <img
-                src="/Logo Hanif.png"
+                src="/fizah-hanif/logo_hanif.png"
                 alt="Logo Hanif"
                 style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }}
               />
@@ -1072,8 +1142,8 @@ export default function Home() {
 
         <section className="quote-section">
           <img
-            src="/Logo Hanif.png"
-            alt="Logo Hanif"
+            src={DATA.media.logo}
+            alt="Logo Couple"
             className="quote-flower reveal reveal-fade"
             style={{ objectFit: "contain", height: "auto" }}
           />
@@ -1128,21 +1198,21 @@ export default function Home() {
           </article>
 
           <div className="v4-card reveal reveal-scale">
-            <div className="v4-photo" style={{ height: "100%", backgroundImage: "url(/Fizah.JPG)", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="v4-photo" style={{ height: "100%", backgroundImage: `url(${DATA.couple.bride.photo})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="v4-photo-fade" style={{ height: "40%" }}></div>
             </div>
             <div className="v4-content">
               <p className="v4-role">The Bride</p>
-              <h2 className="v4-name">Nur Hafizah, S.Pd.</h2>
+              <h2 className="v4-name">{DATA.couple.bride.fullName}</h2>
               <div className="v4-sub-row">
                 <div className="v4-sub-bar"></div>
                 <div className="v4-sub-text">
                   <p className="v4-sub-label">Putri Pertama Dari</p>
-                  <p className="v4-sub-parents">Bapak H. Muhammad Salmani, S.Ag. (Alm)<br />&amp; Ibu Hj. Yumita, S.H.</p>
+                  <p className="v4-sub-parents">{DATA.couple.bride.parents.father}<br />&amp; {DATA.couple.bride.parents.mother}</p>
                 </div>
               </div>
               <a
-                href="https://www.instagram.com/nrhfzh22?igsh=eXp6N2dja25ua294"
+                href={DATA.couple.bride.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="v4-ig"
@@ -1151,27 +1221,27 @@ export default function Home() {
                 <svg viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
-                NRHFZH22
+                {DATA.couple.bride.instagram.username}
               </a>
             </div>
           </div>
 
           <div className="v4-card reveal reveal-scale delay-1">
-            <div className="v4-photo" style={{ height: "100%", backgroundImage: "url(/Hanif.JPG)", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="v4-photo" style={{ height: "100%", backgroundImage: `url(${DATA.couple.groom.photo})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="v4-photo-fade" style={{ height: "40%" }}></div>
             </div>
             <div className="v4-content">
               <p className="v4-role">The Groom</p>
-              <h2 className="v4-name">Hanif Assalam, M.Pd.</h2>
+              <h2 className="v4-name">{DATA.couple.groom.fullName}</h2>
               <div className="v4-sub-row">
                 <div className="v4-sub-bar"></div>
                 <div className="v4-sub-text">
                   <p className="v4-sub-label">Putra Pertama Dari</p>
-                  <p className="v4-sub-parents">Bapak H. Pandaya, S.Pd.<br />&amp; Ibu Hj. Rusmiyati, S.Pd.SD.</p>
+                  <p className="v4-sub-parents">{DATA.couple.groom.parents.father}<br />&amp; {DATA.couple.groom.parents.mother}</p>
                 </div>
               </div>
               <a
-                href="https://www.instagram.com/hanifassalamm?igsh=Z3psZGN3YzcwOXd1&utm_source=qr"
+                href={DATA.couple.groom.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="v4-ig"
@@ -1180,7 +1250,7 @@ export default function Home() {
                 <svg viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
-                HANIFASSALAMM
+                {DATA.couple.groom.instagram.username}
               </a>
             </div>
           </div>
@@ -1193,29 +1263,14 @@ export default function Home() {
           </div>
 
           <div className="simple-story-container">
-            <StoryItem
-              src="/1.JPG"
-              alt="Story 1"
-              subtitle="Yogyakarta, 8 Mei 2018, kota tempat pertama kali bertemu. Pertemanan sederhana yang berkembang menjadi sesuatu yang lebih dalam."
-            />
-
-            <StoryItem
-              src="/2.JPG"
-              alt="Story 2"
-              subtitle="Waktu membawa kami ke ketinggian Gunung Prau—pendakian pertama kami bersama. Di sanalah, hati kami mulai saling mengenal."
-            />
-
-            <StoryItem
-              src="/3.jpg"
-              alt="Story 3"
-              subtitle="Seiring berjalannya waktu, —hingga cinta dengan lembut menemukan jalannya dalam hidup kami. 13 September 2025, kami mengikat janji, dan pada 17 Mei 2026, kami memulai selamanya."
-            />
-
-            <StoryItem
-              src="/4.jpg"
-              alt="Story 4"
-              subtitle="Pertemuan yang menjadi perjalanan seumur hidup—ini adalah kisah kami, cerita kami, cinta kami."
-            />
+            {DATA.media.story.map((item, idx) => (
+              <StoryItem
+                key={idx}
+                src={item.src}
+                alt={`Story ${idx + 1}`}
+                subtitle={item.subtitle}
+              />
+            ))}
           </div>
         </section>
 
@@ -1228,15 +1283,15 @@ export default function Home() {
           <article className="event-card reveal reveal-up delay-1">
             <h3 className="event-name">Akad Nikah</h3>
             <div className="event-details">
-              <p className="event-day">Minggu</p>
-              <p className="event-date-number reveal">17</p>
-              <p className="event-month">Mei 2026</p>
-              <p className="event-time">09.00 WIB — Selesai</p>
-              <p className="event-location-name">Gedung Pancasila</p>
-              <p className="event-location-city">Kabupaten Ketapang</p>
+              <p className="event-day">{DATA.event.day}</p>
+              <p className="event-date-number reveal">{DATA.event.displayDate.split(" ")[0]}</p>
+              <p className="event-month">{DATA.event.displayDate.split(" ").slice(1).join(" ")}</p>
+              <p className="event-time">{DATA.event.akad.time}</p>
+              <p className="event-location-name">{DATA.event.locationName}</p>
+              <p className="event-location-city">{DATA.event.locationCity}</p>
             </div>
             <a
-              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA"
+              href={DATA.event.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="event-btn"
@@ -1259,15 +1314,15 @@ export default function Home() {
           <article className="event-card reveal reveal-up delay-2">
             <h3 className="event-name">Resepsi</h3>
             <div className="event-details">
-              <p className="event-day">Minggu</p>
-              <p className="event-date-number reveal">17</p>
-              <p className="event-month">Mei 2026</p>
-              <p className="event-time">16.00 WIB — Selesai</p>
-              <p className="event-location-name">Gedung Pancasila</p>
-              <p className="event-location-city">Kabupaten Ketapang</p>
+              <p className="event-day">{DATA.event.day}</p>
+              <p className="event-date-number reveal">{DATA.event.displayDate.split(" ")[0]}</p>
+              <p className="event-month">{DATA.event.displayDate.split(" ").slice(1).join(" ")}</p>
+              <p className="event-time">{DATA.event.resepsi.time}</p>
+              <p className="event-location-name">{DATA.event.locationName}</p>
+              <p className="event-location-city">{DATA.event.locationCity}</p>
             </div>
             <a
-              href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x2e05185c3dff60d5:0x224a938d719caf80?entry=s&sa=X&ved=2ahUKEwiFseeC4_qPAxVy3jgGHXElL1QQ4kB6BAgUEAA"
+              href={DATA.event.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="event-btn"
@@ -1321,12 +1376,12 @@ export default function Home() {
                 lineHeight: 2,
               }}
             >
-              Minggu, 17 Mei 2026
+              {DATA.event.day}, {DATA.event.displayDate}
               <br />
-              Pukul 08.45 WIB
+              Pukul {DATA.event.livestream.time}
             </div>
             <a
-              href="https://www.instagram.com/hanifassalamm?upcoming_event_id=17882896233394607"
+              href={DATA.event.livestream.url}
               target="_blank"
               rel="noopener noreferrer"
               className="event-btn"
@@ -1356,7 +1411,7 @@ export default function Home() {
           <div className="gallery-wrap">
             <div className="gallery-video-wrap reveal reveal-scale">
               <video
-                src="/Video%20Landscape%20Galery.mp4"
+                src={DATA.media.galleryVideo}
                 className="gallery-video"
                 autoPlay
                 muted
@@ -1601,8 +1656,8 @@ export default function Home() {
         <footer className="footer-section">
           <div>
             <img
-              src="/Logo Hanif.png"
-              alt="Logo Hanif"
+              src={DATA.media.logo}
+              alt="Logo Couple"
               className="reveal reveal-fade"
               style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }}
             />
@@ -1616,7 +1671,7 @@ export default function Home() {
           <div>
             <p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p>
             <h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>
-              Fizah &amp; Hanif
+              {DATA.couple.bride.shortName} &amp; {DATA.couple.groom.shortName}
             </h2>
           </div>
 

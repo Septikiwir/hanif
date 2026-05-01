@@ -462,7 +462,7 @@ main {
 
 /* ─── QUOTE SECTION ─── */
 .quote-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Doa.JPG');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/fizah-hanif/Doa.JPG?v=2');
   background-size: cover;
   background-position: center;
   padding: 64px 40px;
@@ -1404,7 +1404,7 @@ main {
   position: absolute;
   inset: 0;
   background-color: var(--cream-dark);
-  background-image: url("/opening.JPG");
+  background-image: url("/fizah-hanif/opening.JPG?v=2");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
