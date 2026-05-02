@@ -33,13 +33,13 @@ const cormorantSC = Cormorant_SC({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nimara.id"),
-  title: "Nimara.id – Undangan Pernikahan Premium",
+  metadataBase: new URL("https://nimantra.id"),
+  title: "Nimantra – Undangan Pernikahan Premium",
   description: "Abadikan momen terindah dengan undangan digital elegan. Desain premium, pengerjaan cepat, dan revisi tanpa batas hingga hari H.",
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "/Nimantra S - White.png",
+    shortcut: "/Nimantra S - White.png",
+    apple: "/Nimantra S - White.png",
   },
   openGraph: {
     title: "The Wedding of Hanif & Fizah",

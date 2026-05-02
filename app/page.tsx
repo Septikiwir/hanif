@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import styles from "./page.module.css";
 
 /* ─ Theme data ─ */
@@ -80,8 +81,14 @@ export default function Home() {
       <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : ""}`}>
         <div className={styles.navInner}>
           <a href="#" className={styles.navLogo}>
-            <div className={styles.navLogoIcon}>✦</div>
-            Nimara<span>.id</span>
+            <Image 
+              src="/Nimantra S - Gold.png" 
+              alt="Nimantra Logo" 
+              width={140} 
+              height={40} 
+              className={styles.navLogoImg}
+              priority
+            />
           </a>
           <ul className={styles.navLinks}>
             <li><a href="#fitur">Fitur</a></li>
@@ -188,7 +195,7 @@ export default function Home() {
       </section>
 
       {/* ─── FEATURES ─────────────────────────────────── */}
-      <section className={`${styles.section} ${styles.sectionWhite}`} id="fitur">
+      <section className={`${styles.section} ${styles.sectionWhite} ${styles.hideOnMobile}`} id="fitur">
         <div className={styles.reveal}>
           <div className={styles.eyebrow}>Kenapa Kami?</div>
           <h2 className={styles.sectionTitle}>Fitur <em>Terlengkap</em><br />untuk Momen Spesialmu</h2>
@@ -418,7 +425,7 @@ export default function Home() {
       {/* ─── CTA BANNER ───────────────────────────────── */}
       <section className={styles.ctaBanner}>
         <h2>Wujudkan Undangan Impianmu <em>Sekarang</em></h2>
-        <p>Bergabung dengan 4.000+ pasangan yang sudah mempercayai Nimara.id</p>
+        <p>Bergabung dengan 4.000+ pasangan yang sudah mempercayai Nimantra</p>
         <a href="https://wa.me/628123456789" className={styles.btnWhite}>💬 Chat WhatsApp Sekarang</a>
       </section>
 
@@ -427,8 +434,13 @@ export default function Home() {
         <div className={styles.footerGrid}>
           <div>
             <div className={styles.footerLogo}>
-              <div className={styles.footerLogoIcon}>✦</div>
-              Nimara.id
+              <Image 
+                src="/Nimantra S - White.png" 
+                alt="Nimantra Logo" 
+                width={150} 
+                height={45} 
+                style={{ objectFit: 'contain' }}
+              />
             </div>
             <p className={styles.footerDesc}>Layanan undangan pernikahan digital premium yang membantu kamu berbagi momen spesial dengan elegan dan mudah.</p>
             <div className={styles.footerSocials}>
@@ -481,7 +493,7 @@ export default function Home() {
         </div>
 
         <div className={styles.footerBottom}>
-          <div>© 2026 Nimara.id. All rights reserved.</div>
+          <div>© 2026 Nimantra. All rights reserved.</div>
           <div>Dibuat dengan ♥ di Yogyakarta</div>
         </div>
       </footer>

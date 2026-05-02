@@ -111,12 +111,19 @@
   font-size: 1.2rem; font-weight: 600; color: var(--ink);
   text-decoration: none; flex-shrink: 0;
 }
-.navLogoIcon {
-  width: 34px; height: 34px; background: var(--rose);
-  border-radius: 9px; display: flex; align-items: center;
-  justify-content: center; color: white; font-size: 15px;
+.navLogoImg {
+  height: 28px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
-.navLogo span { color: var(--rose); }
+
+@media (min-width: 640px) {
+  .navLogoImg {
+    height: 36px;
+  }
+}
+
 
 .navLinks {
   display: none;
@@ -780,3 +787,13 @@
 .bgTc6 { background: linear-gradient(140deg, #9BA8BA, #5A6A82); }
 .bgTc7 { background: linear-gradient(140deg, #C4B8A8, #8B7A68); }
 .bgTc8 { background: linear-gradient(140deg, #8B5A5A, #5A2A2A); }
+
+.hideOnMobile {
+  display: none !important;
+}
+
+@media (min-width: 900px) {
+  .hideOnMobile {
+    display: block !important;
+  }
+}
