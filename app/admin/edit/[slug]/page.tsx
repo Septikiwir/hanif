@@ -592,7 +592,7 @@ export default function EditInvitationPage() {
   );
 }
 
-const labelStyle = { display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "#4b5563", marginBottom: "0.5rem" };
+const labelStyle: React.CSSProperties = { display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "#4b5563", marginBottom: "0.5rem" };
 const previewWrapperStyle: React.CSSProperties = { position: "relative", width: 80, height: 80, borderRadius: 12, overflow: "hidden", marginTop: 10, border: "1px solid #eee", backgroundColor: "#f3f4f6", cursor: "zoom-in" };
 const previewImgStyle: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover" };
 const removeBtnStyle: React.CSSProperties = { position: "absolute", top: 2, right: 2, width: 18, height: 18, borderRadius: "50%", backgroundColor: "rgba(239, 68, 68, 0.9)", color: "white", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, zIndex: 5 };

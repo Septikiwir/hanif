@@ -25,7 +25,7 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      <div className="admin-card" style={{ height: "300px", display: "flex", alignItems: "center", justifyCenter: "center", color: "var(--admin-text-muted)" }}>
+      <div className="admin-card" style={{ height: "300px", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--admin-text-muted)" }}>
         <p style={{ textAlign: "center", width: "100%" }}>Chart visualization will appear here.</p>
       </div>
     </div>
