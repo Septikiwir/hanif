@@ -460,9 +460,8 @@ main {
   }
 }
 
-/* ─── QUOTE SECTION ─── */
+/* ─── QUOTE SECTION (Updated: 2026-05-02 14:48) ─── */
 .quote-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/fizah-hanif/Doa.JPG?v=2');
   background-size: cover;
   background-position: center;
   padding: 64px 40px;

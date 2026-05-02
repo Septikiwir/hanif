@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next"; 
 import {
   Cormorant_Garamond,
   Cormorant_SC,

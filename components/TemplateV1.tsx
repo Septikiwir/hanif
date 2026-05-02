@@ -47,7 +47,9 @@ export interface InvitationData {
     galleryVideo: string;
     paymentLogoLeft?: string;
     qrBannerPhoto?: string;
-    quote?: { text: string; ref: string };
+    quote?: { text: string; ref: string; background?: string };
+    greetingText?: string;
+    introText?: string;
     story: { src: string; subtitle: string }[];
     gallery: { src: string; isLandscape: boolean }[];
   };
@@ -63,6 +65,7 @@ export interface InvitationData {
       qrisImage?: string;
       chipImage?: string;
       logo?: string;
+      logoLeft?: string;
     };
   }[];
 }
@@ -187,13 +190,23 @@ function CopyButton({ value }: { value: string }) {
 
 // --- Download Button ---------------------------------------------------------
 function DownloadButton({ imageUrl }: { imageUrl: string }) {
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = "QRIS-Wedding-Payment.jpeg";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "QRIS-Wedding-Payment.jpg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+      // Fallback to direct link if fetch fails (e.g. CORS)
+      window.open(imageUrl, "_blank");
+    }
   };
   return (
     <button
@@ -240,27 +253,69 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
     <div className="reveal reveal-up" style={{ background: "#ffffff", borderRadius: 20, padding: "20px 22px 16px", border: "1px solid #e0e0e0", position: "relative", overflow: "hidden", width: "100%", boxSizing: "border-box", textAlign: "left", boxShadow: "0 10px 30px rgba(0,0,0,0.05)" }}>
       <div style={{ position: "absolute", right: -50, bottom: -60, width: 170, height: 170, borderRadius: "50%", background: "rgba(0,0,0,0.03)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", right: 15, bottom: -80, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.02)", pointerEvents: "none" }} />
-      <div style={{ display: "flex", justifyContent: isAddress ? "center" : "space-between", alignItems: "center", marginBottom: 16, position: "relative", zIndex: 1 }}>
-        {!isAddress && paymentLogoLeft && <img src={paymentLogoLeft} alt="Logo Left" style={{ height: "35px", width: "auto", objectFit: "contain" }} />}
-        {isAddress && <div style={{ display: "flex", alignItems: "center", gap: 8 }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg><span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{bank}</span></div>}
-        {!isAddress && logoUrl && <img src={logoUrl} alt={bank} style={{ height: "40px", width: "auto", objectFit: "contain" }} />}
+      
+      {/* Top Header: Logos */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, position: "relative", zIndex: 1 }}>
+        {/* Logo Left: Only for QRIS */}
+        {isQris && paymentLogoLeft ? (
+          <img src={paymentLogoLeft} alt="Logo Left" style={{ height: "30px", width: "auto", objectFit: "contain" }} />
+        ) : <div />}
+        
+        {/* Logo Right: Always for Bank/QRIS (not address) */}
+        {!isAddress && logoUrl && (
+          <img src={logoUrl} alt={bank} style={{ height: "35px", width: "auto", objectFit: "contain" }} />
+        )}
+        
+        {/* Address Label */}
+        {isAddress && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center" }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{bank}</span>
+          </div>
+        )}
       </div>
-      {isQris ? (
-        <div style={{ textAlign: "center", marginBottom: 20, position: "relative", zIndex: 1 }}><img src={qrisImage} alt="QRIS" style={{ width: "100%", maxWidth: "280px", aspectRatio: "1/1", objectFit: "contain", borderRadius: 12, border: "1px solid #eee", display: "block", margin: "0 auto", background: "#fff" }} /></div>
-      ) : isAddress ? (
-        <div style={{ marginBottom: 20, position: "relative", zIndex: 1 }}><p style={{ fontSize: 14, lineHeight: 1.6, color: "#444", marginBottom: 0, fontFamily: "var(--font-body)", textAlign: "center" }}>{address}</p></div>
-      ) : (
-        <><Chip src={chipImage} /><div style={{ marginBottom: 20, position: "relative", zIndex: 1 }}><p style={{ fontFamily: "var(--font-heading)", fontSize: 22, color: "#1a1a1a", letterSpacing: "0.15em", marginBottom: 4 }}>{accountNumber}</p></div></>
-      )}
-      <div style={{ display: "flex", justifyContent: isQris || isAddress ? "center" : "space-between", alignItems: "center", position: "relative", zIndex: 1, flexDirection: isAddress ? "column" : "row", gap: isAddress ? 12 : 0 }}>
-        <span style={{ fontSize: 12, letterSpacing: 1.8, color: "#888", fontWeight: 700, textTransform: "uppercase" }}>{holderName}</span>
-        {!isQris && !isAddress && qrisImage && <DownloadButton imageUrl={qrisImage} />}
-        {!isQris && !isAddress && accountNumber && <CopyButton value={accountNumber} />}
-        {isAddress && address && <CopyButton value={address} />}
+
+      {/* Main Content */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        {isQris ? (
+          <>
+            <Chip src={chipImage} />
+            {/* QRIS Image is hidden from UI but kept in props for download button */}
+          </>
+        ) : isAddress ? (
+          <div style={{ marginBottom: 20 }}>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: "#444", marginBottom: 0, fontFamily: "var(--font-body)", textAlign: "center" }}>{address}</p>
+          </div>
+        ) : (
+          <>
+            <Chip src={chipImage} />
+            <div style={{ marginBottom: 20 }}>
+              <p style={{ fontFamily: "var(--font-heading)", fontSize: 22, color: "#1a1a1a", letterSpacing: "0.15em", marginBottom: 4 }}>{accountNumber}</p>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Footer: Holder & Actions */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <span style={{ fontSize: 10, letterSpacing: 1.2, color: "#aaa", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Card Holder</span>
+          <span style={{ fontSize: 13, letterSpacing: 1, color: "#444", fontWeight: 700, textTransform: "uppercase" }}>{holderName}</span>
+        </div>
+        
+        <div style={{ display: "flex", gap: 8 }}>
+          {isQris && qrisImage && <DownloadButton imageUrl={qrisImage} />}
+          {!isQris && !isAddress && accountNumber && <CopyButton value={accountNumber} />}
+          {isAddress && address && <CopyButton value={address} />}
+        </div>
       </div>
     </div>
   );
 }
+
 
 // --- MAIN TEMPLATE COMPONENT -------------------------------------------------
 
@@ -581,18 +636,19 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
             <div className="count-group"><span className="count-number">{countdown.secs}</span><span className="count-label">Detik</span></div>
           </div>
 
-          <div className="reveal reveal-up delay-5" style={{ position: "absolute", bottom: "86px", left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 30 }}>
+          <div className={`reveal reveal-up delay-5 ${isInvitationOpen ? "visible" : ""}`} style={{ position: "absolute", bottom: "86px", left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 30 }}>
             <a href={`https://www.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+${data.couple.bride.shortName}+%26+${data.couple.groom.shortName}&dates=${data.event.date.replace(/[-:]/g, "").split(".")[0]}Z/${data.event.date.replace(/[-:]/g, "").split(".")[0]}Z`} target="_blank" rel="noopener noreferrer" className="save-date-btn" style={{ textDecoration: "none" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 8 }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Save the Date
             </a>
           </div>
 
-          <div className="swipe-up-indicator reveal reveal-fade" style={{ transitionDelay: "1.2s" }}><span className="swipe-up-text">Swipe Up</span><svg className="swipe-up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 15l-6-6-6 6" /></svg></div>
+          <div className={`swipe-up-indicator reveal reveal-fade ${isInvitationOpen ? "visible" : ""}`} style={{ transitionDelay: "1.2s" }}><span className="swipe-up-text">Swipe Up</span><svg className="swipe-up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 15l-6-6-6 6" /></svg></div>
         </header>
 
-        <section className="quote-section">
-          <img src={data.media.logo} alt="Logo" className="quote-flower reveal reveal-fade" style={{ objectFit: "contain", height: "auto" }} />
-          <blockquote className="reveal reveal-up delay-1">
+        <section className="quote-section" style={data.media.quote?.background ? { backgroundImage: `url(${data.media.quote.background})`, backgroundSize: "cover", backgroundPosition: "center", position: "relative" } : {}}>
+          {data.media.quote?.background && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1 }} />}
+          <img src={data.media.logo} alt="Logo" className="quote-flower reveal reveal-fade" style={{ objectFit: "contain", height: "auto", position: "relative", zIndex: 2 }} />
+          <blockquote className="reveal reveal-up delay-1" style={{ position: "relative", zIndex: 2 }}>
             <p className="quote-text">{data.media.quote?.text || "Dan diantara tanda-tanda kekuasaanNya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri..."}</p>
             <footer className="quote-ref">{data.media.quote?.ref || "QS. Ar-Rum : 21"}</footer>
           </blockquote>
@@ -600,9 +656,9 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
 
         <section className="intro-section" style={{ padding: 0 }}>
           <article className="event-card reveal reveal-up delay-2" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.15)", margin: "40px 24px", textAlign: "center" }}>
-            <p className="reveal reveal-up" style={{ color: "var(--gold)", fontSize: 22, fontFamily: "var(--font-heading)" }}>Assalamu&apos;alaikum Wr. Wb.</p>
+            <p className="reveal reveal-up" style={{ color: "var(--gold)", fontSize: 22, fontFamily: "var(--font-heading)" }}>{data.media.greetingText || "Assalamu'alaikum Wr. Wb."}</p>
             <div className="ornament-center reveal reveal-fade" style={{ margin: "10px 0" }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z" fill="#B8923A" opacity="0.8" /></svg></div>
-            <p className="intro-lead reveal reveal-up delay-1">Dengan memohon Rahmat dan Ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami</p>
+            <p className="intro-lead reveal reveal-up delay-1" style={{ marginBottom: 0 }}>{data.media.introText || "Dengan memohon Rahmat dan Ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami"}</p>
           </article>
 
           <div className="v4-card reveal reveal-scale">
@@ -664,7 +720,14 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
             <div className="gallery-grid">
               {data.media.gallery.map((img, idx) => (
                 <button key={idx} className={`gallery-thumb reveal reveal-fade ${img.isLandscape ? "landscape" : ""}`} onClick={() => setLightboxImage(img.src)}>
-                  <Image src={img.src} alt="Gallery" fill sizes={img.isLandscape ? "(max-width: 430px) 66vw, 300px" : "(max-width: 430px) 33vw, 140px"} className="gallery-img" />
+                  <Image 
+                    src={img.src} 
+                    alt="Gallery" 
+                    fill 
+                    unoptimized
+                    sizes={img.isLandscape ? "(max-width: 430px) 66vw, 300px" : "(max-width: 430px) 33vw, 140px"} 
+                    className="gallery-img" 
+                  />
                 </button>
               ))}
             </div>
@@ -676,7 +739,19 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
           <p className="gift-note reveal">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Jika ingin memberikan hadiah, Anda dapat mengirimkan secara cashless.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%", maxWidth: 400, margin: "2rem auto 0" }}>
             {data.payment.map((p, idx) => (
-              <PaymentCard key={idx} bank={p.bank} holderName={p.holderName} logoUrl={p.images?.logo} isQris={p.isQris} qrisImage={p.images?.qrisImage} chipImage={p.images?.chipImage} isAddress={p.isAddress} address={p.address} accountNumber={p.accountNumber} paymentLogoLeft={data.media.paymentLogoLeft} />
+              <PaymentCard
+                key={idx}
+                bank={p.bank}
+                holderName={p.holderName}
+                logoUrl={p.images?.logo}
+                isQris={p.isQris}
+                qrisImage={p.images?.qrisImage}
+                chipImage={p.images?.chipImage}
+                isAddress={p.isAddress}
+                address={p.address}
+                accountNumber={p.accountNumber}
+                paymentLogoLeft={p.images?.logoLeft}
+              />
             ))}
           </div>
         </section>
