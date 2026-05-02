@@ -796,7 +796,14 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
         <footer className="footer-section">
           <div><img src={data.media.logo} alt="Logo" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
           <div><p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p><h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h2></div>
-          <div className="nimantra-credit"><p className="credit-title">Invitation by Nimantra</p><div className="credit-socials"><div className="social-item"><span>+62 813-1888-1635</span></div><div className="social-item"><span>nimantra.id</span></div></div><p className="credit-copy">© 2026 Nimantra, All rights reserved.</p></div>
+          <div className="nimantra-credit">
+            <img src="/Nimantra S - White.png" alt="Nimantra Monogram" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "24px" }}>
+              <p className="credit-title" style={{ marginBottom: 0 }}>Invitation by</p>
+              <img src="/Nimantra L - White.png" alt="Nimantra Logo" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
+            </div>
+            <div className="credit-socials"><div className="social-item"><span>+62 813-1888-1635</span></div><div className="social-item"><span>nimantra.id</span></div></div><p className="credit-copy">© 2026 Nimantra, All rights reserved.</p>
+          </div>
         </footer>
       </main>
 
