@@ -66,13 +66,6 @@ body {
   line-height: 1.8;
 }
 
-body.landing-body {
-  background: #f7fcfb;
-  display: block;
-  justify-content: initial;
-  font-family: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  color: #163830;
-}
 
 main {
   width: 100%;

@@ -3,6 +3,7 @@ import {
   Cormorant_Garamond,
   Cormorant_SC,
   EB_Garamond,
+  Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
 
@@ -14,6 +15,13 @@ const ebGaramond = EB_Garamond({
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const cormorantSC = Cormorant_SC({
@@ -25,9 +33,9 @@ const cormorantSC = Cormorant_SC({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nimantra.vercel.app"),
-  title: "The Wedding of Hanif & Fizah",
-  description: "Minggu, 17 Mei 2026",
+  metadataBase: new URL("https://nimara.id"),
+  title: "Nimara.id – Undangan Pernikahan Premium",
+  description: "Abadikan momen terindah dengan undangan digital elegan. Desain premium, pengerjaan cepat, dan revisi tanpa batas hingga hari H.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -64,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${ebGaramond.variable} ${cormorantGaramond.variable} ${cormorantSC.variable}`}
+      className={`${ebGaramond.variable} ${cormorantGaramond.variable} ${cormorantSC.variable} ${plusJakartaSans.variable}`}
     >
       <head>
 
