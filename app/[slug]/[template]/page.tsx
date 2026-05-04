@@ -29,8 +29,8 @@ export async function generateMetadata(
   const title = `The Wedding of ${bride} & ${groom}`;
   const description = content.event?.displayDate || "Undangan Pernikahan Digital";
   
-  // Use opening photo or bride photo for OG image
-  const ogImage = content.media?.openingPhoto || content.couple?.bride?.photo || "/preview (1).jpg";
+  // Use dedicated ogImage, otherwise fallback to opening photo or bride photo
+  const ogImage = content.media?.ogImage || content.media?.openingPhoto || content.couple?.bride?.photo || "/preview (1).jpg";
 
   return {
     title,

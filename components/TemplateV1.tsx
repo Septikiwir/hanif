@@ -50,6 +50,7 @@ export interface InvitationData {
     quote?: { text: string; ref: string; background?: string };
     greetingText?: string;
     introText?: string;
+    ogImage?: string;
     story: { src: string; subtitle: string }[];
     gallery: { src: string; isLandscape: boolean }[];
   };

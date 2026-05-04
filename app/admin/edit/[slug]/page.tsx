@@ -34,7 +34,7 @@ export default function EditInvitationPage() {
   const [media, setMedia] = useState({
     music: "", heroVideo: "", logo: "", galleryVideo: "", openingPhoto: "",
     qrBannerPhoto: "", quoteText: "", quoteRef: "", quoteBackground: "",
-    greetingText: "", introText: ""
+    greetingText: "", introText: "", ogImage: ""
   });
 
   const [gallery, setGallery] = useState<{ src: string; isLandscape: boolean }[]>([]);
@@ -120,7 +120,8 @@ export default function EditInvitationPage() {
         quoteRef: m.quote?.ref || "",
         quoteBackground: m.quote?.background || "",
         greetingText: m.greetingText || "",
-        introText: m.introText || ""
+        introText: m.introText || "",
+        ogImage: m.ogImage || ""
       });
 
       setGallery((m.gallery || []).map((img: any) => typeof img === 'string' ? { src: img, isLandscape: false } : img));
@@ -258,6 +259,7 @@ export default function EditInvitationPage() {
         }, 
         greetingText: media.greetingText,
         introText: media.introText,
+        ogImage: media.ogImage,
         story: stories, gallery: gallery
       },
       payment: paymentCards.map(p => ({
@@ -439,6 +441,12 @@ export default function EditInvitationPage() {
                   <label style={labelStyle}>QR Banner</label>
                   <input type="file" className="admin-input" onChange={e => handleFileUpload(e, "qrBannerPhoto", "media")} />
                   {media.qrBannerPhoto && <div style={previewWrapperStyle} onClick={() => setLightbox({ src: media.qrBannerPhoto, type: "image" })}><img src={media.qrBannerPhoto} style={previewImgStyle} /></div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>Link Preview (Social Media)</label>
+                  <input type="file" className="admin-input" onChange={e => handleFileUpload(e, "ogImage", "media")} />
+                  {media.ogImage && <div style={previewWrapperStyle} onClick={() => setLightbox({ src: media.ogImage, type: "image" })}><img src={media.ogImage} style={previewImgStyle} /></div>}
+                  <span className="admin-helper">This image will appear when the link is shared on WhatsApp/IG.</span>
                 </div>
               </div>
             </div>
