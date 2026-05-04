@@ -34,7 +34,10 @@ const cormorantSC = Cormorant_SC({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nimantra.id"),
-  title: "Nimantra – Undangan Pernikahan Premium",
+  title: {
+    default: "Nimantra – Undangan Pernikahan Digital Premium",
+    template: "%s | Nimantra"
+  },
   description: "Abadikan momen terindah dengan undangan digital elegan. Desain premium, pengerjaan cepat, dan revisi tanpa batas hingga hari H.",
   icons: {
     icon: "/Nimantra S - White.png",
@@ -42,13 +45,13 @@ export const metadata: Metadata = {
     apple: "/Nimantra S - White.png",
   },
   openGraph: {
-    title: "The Wedding of Hanif & Fizah",
-    description: "Minggu, 17 Mei 2026",
-    url: "https://nimantra.vercel.app/fizah-hanif",
-    siteName: "Wedding Hanif & Fizah",
+    title: "Nimantra – Undangan Pernikahan Digital",
+    description: "Buat undangan pernikahan digital premium dengan mudah dan cepat.",
+    url: "https://nimantra.id",
+    siteName: "Nimantra",
     images: [
       {
-        url: "/preview (1).jpg",
+        url: "/opengraph-image.jpg",
         width: 1200,
         height: 630,
       },
@@ -58,9 +61,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Wedding of Hanif & Fizah",
-    description: "Minggu, 17 Mei 2026",
-    images: ["/preview (1).jpg"],
+    title: "Nimantra – Undangan Pernikahan Digital",
+    description: "Buat undangan pernikahan digital premium dengan mudah dan cepat.",
+    images: ["/opengraph-image.jpg"],
   },
 };
 

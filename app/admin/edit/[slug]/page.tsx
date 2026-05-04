@@ -291,48 +291,68 @@ export default function EditInvitationPage() {
   };
 
   const isVideo = (url: string) => url.toLowerCase().endsWith(".mp4") || url.toLowerCase().endsWith(".mov");
+  const currentTabIdx = tabs.findIndex(t => t.id === activeTab);
 
-  if (loading) return <div style={{ display: "flex", justifyContent: "center", padding: "5rem" }}>Loading...</div>;
+  if (loading) return (
+    <div className="w-full max-w-[1200px] mx-auto animate-fade-in">
+      <div className="admin-skeleton h-8 w-48 mb-2"/>
+      <div className="admin-skeleton h-4 w-64 mb-6"/>
+      <div className="admin-skeleton h-16 w-full rounded-2xl mb-6"/>
+      <div className="admin-card"><div className="admin-skeleton h-6 w-32 mb-4"/><div className="grid grid-cols-2 gap-6"><div className="admin-skeleton h-10 w-full rounded-lg"/><div className="admin-skeleton h-10 w-full rounded-lg"/></div></div>
+    </div>
+  );
 
   return (
-    <div style={{ width: "100%", maxWidth: "1200px", margin: "0 auto" }}>
-      <header style={{ marginBottom: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div><h1 className="admin-h1">Edit Invitation</h1><p className="admin-p">Server-side sync enabled</p></div>
-        <div style={{ display: "flex", gap: "1rem" }}>
-          <Link href="/admin" className="admin-btn admin-btn-ghost">Cancel</Link>
-          <button onClick={handleSubmit} disabled={saving} className="admin-btn admin-btn-primary" style={{ padding: "0.75rem 2rem" }}>{saving ? "Saving..." : "Update Changes"}</button>
+    <div className="w-full max-w-[1200px] mx-auto animate-fade-in">
+      <header className="mb-4 md:mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-lg md:text-2xl font-bold text-admin-text">Edit Invitation</h1>
+            <p className="admin-p text-xs md:text-sm">Editing <strong className="text-admin-text">/{slug}</strong></p>
+          </div>
+          <div className="hidden md:flex gap-3">
+            <Link href="/admin" className="admin-btn admin-btn-ghost">Cancel</Link>
+            <button onClick={handleSubmit} disabled={saving} className="admin-btn admin-btn-primary">
+              {saving ? (<><span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full" style={{animation:"spin .6s linear infinite"}}/> Saving...</>) : (<><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg> Update Changes</>)}
+            </button>
+          </div>
         </div>
       </header>
 
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", backgroundColor: "white", padding: "0.5rem", borderRadius: "16px", border: "1px solid var(--admin-border)", overflowX: "auto" }}>
-        {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ flex: 1, padding: "0.75rem 1rem", borderRadius: "12px", border: "none", cursor: "pointer", transition: "all 0.2s", backgroundColor: activeTab === tab.id ? "#e6f7ef" : "transparent", color: activeTab === tab.id ? "#059669" : "#64748b", fontWeight: 600, fontSize: "0.875rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", minWidth: "140px" }}>
-            <span>{tab.icon}</span>{tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ minHeight: "600px" }}>
-        {activeTab === "basic" && (
-          <div className="admin-card">
-            <h2 className="admin-h2" style={{ marginBottom: "2rem" }}>Configuration</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-              <div><label style={labelStyle}>URL Slug</label><input type="text" className="admin-input" value={slug || ""} onChange={e => setSlug(e.target.value)} /></div>
-              <div><label style={labelStyle}>Template</label><select className="admin-input" value={template || "v1"} onChange={e => setTemplate(e.target.value)}><option value="v1">Template V1</option></select></div>
+      {/* Main Form Content - Single Page Scroll */}
+      <div className="flex flex-col gap-6 md:gap-8 pb-24">
+        {/* Configuration Section */}
+        <div className="admin-card">
+            <div className="admin-section-header"><h2 className="admin-h2">Configuration</h2></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <div className="admin-form-group">
+                <label className="admin-label">URL Slug</label>
+                <input type="text" className="admin-input" value={slug || ""} onChange={e => setSlug(e.target.value)} />
+                <span className="admin-helper">nimantra.id/<strong>{slug || '...'}</strong></span>
+              </div>
+              <div className="admin-form-group">
+                <label className="admin-label">Template</label>
+                <select className="admin-input" value={template || "v1"} onChange={e => setTemplate(e.target.value)}><option value="v1">Template V1 (Modern Emerald)</option></select>
+              </div>
             </div>
-            <div style={{ marginTop: "2rem" }}><button onClick={() => setIsActive(!isActive)} className={`admin-badge ${isActive ? "admin-badge-success" : "admin-badge-gray"}`} style={{ border: "none", cursor: "pointer" }}>{isActive ? "Active" : "Inactive"}</button></div>
+            <div className="mt-6 pt-5" style={{borderTop:"1px solid #f1f5f9"}}>
+              <label className="admin-toggle">
+                <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)} />
+                <div className="admin-toggle-track"/>
+                <span className="admin-toggle-label">{isActive ? "Active — invitation is live" : "Inactive — invitation is hidden"}</span>
+              </label>
+            </div>
           </div>
-        )}
 
-        {activeTab === "couple" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+        {/* The Couple Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <div className="admin-card">
               <h2 className="admin-h2" style={{ marginBottom: "1.5rem" }}>The Bride</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 <div><label style={labelStyle}>Full Name</label><input type="text" className="admin-input" value={bride.fullName || ""} onChange={e => setBride({...bride, fullName: e.target.value})} /></div>
                 <div><label style={labelStyle}>Short Name</label><input type="text" className="admin-input" value={bride.shortName || ""} onChange={e => setBride({...bride, shortName: e.target.value})} /></div>
                 <div><label style={labelStyle}>Label</label><input type="text" className="admin-input" value={bride.label || ""} onChange={e => setBride({...bride, label: e.target.value})} /></div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   <div><label style={labelStyle}>Father</label><input type="text" className="admin-input" value={bride.parentsFather || ""} onChange={e => setBride({...bride, parentsFather: e.target.value})} /></div>
                   <div><label style={labelStyle}>Mother</label><input type="text" className="admin-input" value={bride.parentsMother || ""} onChange={e => setBride({...bride, parentsMother: e.target.value})} /></div>
                 </div>
@@ -350,7 +370,7 @@ export default function EditInvitationPage() {
                 <div><label style={labelStyle}>Full Name</label><input type="text" className="admin-input" value={groom.fullName || ""} onChange={e => setGroom({...groom, fullName: e.target.value})} /></div>
                 <div><label style={labelStyle}>Short Name</label><input type="text" className="admin-input" value={groom.shortName || ""} onChange={e => setGroom({...groom, shortName: e.target.value})} /></div>
                 <div><label style={labelStyle}>Label</label><input type="text" className="admin-input" value={groom.label || ""} onChange={e => setGroom({...groom, label: e.target.value})} /></div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   <div><label style={labelStyle}>Father</label><input type="text" className="admin-input" value={groom.parentsFather || ""} onChange={e => setGroom({...groom, parentsFather: e.target.value})} /></div>
                   <div><label style={labelStyle}>Mother</label><input type="text" className="admin-input" value={groom.parentsMother || ""} onChange={e => setGroom({...groom, parentsMother: e.target.value})} /></div>
                 </div>
@@ -363,35 +383,33 @@ export default function EditInvitationPage() {
               </div>
             </div>
           </div>
-        )}
 
-        {activeTab === "event" && (
-          <div className="admin-card">
+        {/* Event Section */}
+        <div className="admin-card">
             <h2 className="admin-h2" style={{ marginBottom: "2rem" }}>Event Details</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "2rem" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-6">
               <div><label style={labelStyle}>Date</label><input type="date" className="admin-input" value={event.date || ""} onChange={e => setEvent({...event, date: e.target.value})} /></div>
               <div><label style={labelStyle}>Display Date</label><input type="text" className="admin-input" value={event.displayDate || ""} onChange={e => setEvent({...event, displayDate: e.target.value})} /></div>
               <div><label style={labelStyle}>Day</label><input type="text" className="admin-input" value={event.day || ""} onChange={e => setEvent({...event, day: e.target.value})} /></div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.5fr", gap: "1.5rem", marginBottom: "2rem" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-6">
               <div><label style={labelStyle}>Location Name</label><input type="text" className="admin-input" value={event.locationName || ""} onChange={e => setEvent({...event, locationName: e.target.value})} /></div>
               <div><label style={labelStyle}>Location City</label><input type="text" className="admin-input" value={event.locationCity || ""} onChange={e => setEvent({...event, locationCity: e.target.value})} /></div>
               <div><label style={labelStyle}>Google Maps URL</label><input type="text" className="admin-input" value={event.mapsUrl || ""} onChange={e => setEvent({...event, mapsUrl: e.target.value})} /></div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               <div><label style={labelStyle}>Akad</label><input type="text" className="admin-input" value={event.akadTime || ""} onChange={e => setEvent({...event, akadTime: e.target.value})} /></div>
               <div><label style={labelStyle}>Resepsi</label><input type="text" className="admin-input" value={event.resepsiTime || ""} onChange={e => setEvent({...event, resepsiTime: e.target.value})} /></div>
               <div><label style={labelStyle}>Live Stream Time</label><input type="text" className="admin-input" value={event.livestreamTime || ""} onChange={e => setEvent({...event, livestreamTime: e.target.value})} /></div>
               <div><label style={labelStyle}>Live Stream URL</label><input type="text" className="admin-input" value={event.livestreamUrl || ""} onChange={e => setEvent({...event, livestreamUrl: e.target.value})} /></div>
             </div>
           </div>
-        )}
 
-        {activeTab === "media" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+        {/* Media & Assets Section */}
+        <div className="flex flex-col gap-6 md:gap-8">
             <div className="admin-card">
               <h2 className="admin-h2" style={{ marginBottom: "1.5rem" }}>Aset File</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <div>
                   <label style={labelStyle}>Background Music</label>
                   <input type="file" className="admin-input" onChange={e => handleFileUpload(e, "music", "media")} />
@@ -426,7 +444,7 @@ export default function EditInvitationPage() {
             </div>
             <div className="admin-card">
               <h2 className="admin-h2" style={{ marginBottom: "1.5rem" }}>Quotes & Other</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                 <div>
                   <label style={labelStyle}>Greeting Text</label>
                   <input type="text" className="admin-input" placeholder="e.g. Assalamu'alaikum Wr. Wb." value={media.greetingText} onChange={e => setMedia({...media, greetingText: e.target.value})} />
@@ -454,10 +472,9 @@ export default function EditInvitationPage() {
               </div>
             </div>
           </div>
-        )}
 
-        {activeTab === "gallery" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+        {/* Gallery & Stories Section */}
+        <div className="flex flex-col gap-6 md:gap-8">
             <div className="admin-card">
               <h2 className="admin-h2" style={{ marginBottom: "1.5rem" }}>Gallery</h2>
               <input type="file" multiple className="admin-input" onChange={handleMultipleUpload} />
@@ -490,7 +507,7 @@ export default function EditInvitationPage() {
               <button className="admin-btn admin-btn-ghost" onClick={() => setStories([...stories, { src: "", subtitle: "" }])}>+ Add Story Item</button>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginTop: "1.5rem" }}>
                 {stories.map((s, i) => (
-                  <div key={i} style={{ display: "grid", gridTemplateColumns: "140px 1fr 40px", gap: "1.5rem", alignItems: "start", border: "1px solid #eee", padding: "1.25rem", borderRadius: "16px", backgroundColor: "#f9fafb" }}>
+                  <div key={i} className="grid grid-cols-1 md:grid-cols-[140px_1fr_40px] gap-4 md:gap-6" style={{ border: "1px solid #eee", padding: "1rem", borderRadius: "16px", backgroundColor: "#f9fafb" }}>
                     <div>
                       <label style={labelStyle}>Photo</label>
                       <input type="file" onChange={e => handleFileUpload(e, `storyPhoto_${i}`, "story")} style={{ fontSize: "11px", marginBottom: 8 }} />
@@ -506,14 +523,13 @@ export default function EditInvitationPage() {
               </div>
             </div>
           </div>
-        )}
 
-        {activeTab === "payment" && (
-          <div className="admin-card">
+        {/* Payment Section */}
+        <div className="admin-card">
             <h2 className="admin-h2" style={{ marginBottom: "1.5rem" }}>Payments</h2>
             {paymentCards.map((p, i) => (
               <div key={i} style={{ border: "1px solid #eee", padding: 15, marginBottom: 15, borderRadius: 12 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   <div><label style={labelStyle}>Bank / Title</label><input type="text" className="admin-input" value={p.bank || ""} onChange={e => { setPaymentCards(prev => { const nc = [...prev]; nc[i] = { ...nc[i], bank: e.target.value }; return nc; }); }} /></div>
                   <div><label style={labelStyle}>Holder Name</label><input type="text" className="admin-input" value={p.holderName || ""} onChange={e => { setPaymentCards(prev => { const nc = [...prev]; nc[i] = { ...nc[i], holderName: e.target.value }; return nc; }); }} /></div>
                   {!p.isAddress && <div><label style={labelStyle}>Account Number</label><input type="text" className="admin-input" value={p.accountNumber || ""} onChange={e => { setPaymentCards(prev => { const nc = [...prev]; nc[i] = { ...nc[i], accountNumber: e.target.value }; return nc; }); }} /></div>}
@@ -565,13 +581,15 @@ export default function EditInvitationPage() {
             ))}
             <button className="admin-btn admin-btn-ghost" onClick={() => setPaymentCards([...paymentCards, { bank: "", holderName: "", accountNumber: "", isQris: false, isAddress: false, address: "", images: { logo: "", logoLeft: "", qrisImage: "", chipImage: "" } }])}>+ Add Method</button>
           </div>
-        )}
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "3rem", paddingBottom: "3rem" }}>
-         <button type="button" onClick={() => { const i = tabs.findIndex(t => t.id === activeTab); if (i > 0) setActiveTab(tabs[i - 1].id); }} disabled={activeTab === "basic"} className="admin-btn admin-btn-ghost">Previous</button>
-         <button type="button" onClick={() => { const i = tabs.findIndex(t => t.id === activeTab); if (i < tabs.length - 1) setActiveTab(tabs[i + 1].id); else handleSubmit({ preventDefault: () => {} } as any); }} className="admin-btn admin-btn-primary" style={{ padding: "0.75rem 2.5rem" }}>
-           {activeTab === "payment" ? "Update Changes" : "Next Step"}
+      {/* Sticky Action Bar */}
+      <div className="admin-sticky-bar">
+         <Link href="/admin" className="admin-btn admin-btn-ghost" style={{ minHeight: 44 }}>
+           Cancel
+         </Link>
+         <button type="button" onClick={handleSubmit} disabled={saving} className="admin-btn admin-btn-primary" style={{ minHeight: 44, width: "100%", maxWidth: "300px" }}>
+            {saving ? (<><span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full" style={{animation:"spin .6s linear infinite"}}/> Saving...</>) : (<><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg> Update Changes</>)}
          </button>
       </div>
 
@@ -592,7 +610,7 @@ export default function EditInvitationPage() {
   );
 }
 
-const labelStyle: React.CSSProperties = { display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "#4b5563", marginBottom: "0.5rem" };
+const labelStyle: React.CSSProperties = { display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "#475569", marginBottom: "0.375rem" };
 const previewWrapperStyle: React.CSSProperties = { position: "relative", width: 80, height: 80, borderRadius: 12, overflow: "hidden", marginTop: 10, border: "1px solid #eee", backgroundColor: "#f3f4f6", cursor: "zoom-in" };
 const previewImgStyle: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover" };
 const removeBtnStyle: React.CSSProperties = { position: "absolute", top: 2, right: 2, width: 18, height: 18, borderRadius: "50%", backgroundColor: "rgba(239, 68, 68, 0.9)", color: "white", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, zIndex: 5 };
