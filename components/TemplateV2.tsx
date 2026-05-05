@@ -320,7 +320,7 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
 
 // --- MAIN TEMPLATE COMPONENT -------------------------------------------------
 
-export default function TemplateV1({ data, slug }: { data: InvitationData; slug: string }) {
+export default function TemplateV2({ data, slug }: { data: InvitationData; slug: string }) {
   const weddingDate = useMemo(() => new Date(data.event.date), [data.event.date]);
   const audioSrc = useMemo(() => {
     // Encode spaces and special characters like parentheses
@@ -817,6 +817,7 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
                 <span>nimantra.id</span>
               </a>
             </div>
+            <p className="credit-copy">© 2026 Nimantra, All rights reserved.</p>
           </div>
         </footer>
       </main>
