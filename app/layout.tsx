@@ -4,6 +4,7 @@ import {
   Cormorant_SC,
   EB_Garamond,
   Plus_Jakarta_Sans,
+  Jost,
 } from "next/font/google";
 import "./globals.css";
 
@@ -26,6 +27,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 const cormorantSC = Cormorant_SC({
   variable: "--font-cormorant-sc",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+});
+
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
 });
@@ -75,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${ebGaramond.variable} ${cormorantGaramond.variable} ${cormorantSC.variable} ${plusJakartaSans.variable}`}
+      className={`${ebGaramond.variable} ${cormorantGaramond.variable} ${cormorantSC.variable} ${plusJakartaSans.variable} ${jost.variable}`}
     >
       <head>
 
