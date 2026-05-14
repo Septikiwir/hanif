@@ -191,8 +191,11 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
   useEffect(() => {
     fetchWishes();
     fetchRSVPStats();
+  }, [fetchWishes, fetchRSVPStats]);
+
+  useEffect(() => {
     if (guestName !== "Tamu Undangan") { setRsvpName(guestName); setWishName(guestName); }
-  }, [fetchWishes, fetchRSVPStats, guestName]);
+  }, [guestName]);
 
   // Audio Logic
   useEffect(() => {
@@ -314,7 +317,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
           <svg className="ornament ornament-br" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M60 60 L60 36 M60 60 L36 60" stroke="white" strokeWidth="1" /><path d="M60 60 L46 46" stroke="white" strokeWidth="0.5" /><circle cx="60" cy="60" r="2" fill="white" /></svg>
 
           <div className={`reveal reveal-fade ${isOpeningReady ? "visible" : ""}`} style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "60px 20px", display: "flex", justifyContent: "center", zIndex: 10, transitionDelay: "0.2s" }}>
-            <img src={data.media.logo} alt="Logo" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
+            <Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
           </div>
 
           <div className="content">
@@ -374,7 +377,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
 
           <motion.div variants={fs} className="hero-img-wrap">
             <div className="hero-arch-img arch">
-              <img src={data.media.openingPhoto || data.couple.bride.photo} className="w-full h-full object-cover" alt="Hero" />
+              <Image src={data.media.openingPhoto || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Hero" />
             </div>
           </motion.div>
 
@@ -419,7 +422,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
 
           <div className="mt-14 mb-10 reveal reveal-up">
             <div className="couple-arch arch">
-              <img src={data.couple.bride.photo} className="w-full h-full object-cover" alt="Bride" />
+              <Image src={data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Bride" />
             </div>
             <motion.h3 variants={fi} className="couple-name">{data.couple.bride.fullName}</motion.h3>
             <motion.p variants={fi} className="couple-parents">
@@ -439,7 +442,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
 
           <div className="mt-10 reveal reveal-up">
             <div className="couple-arch arch">
-              <img src={data.couple.groom.photo} className="w-full h-full object-cover" alt="Groom" />
+              <Image src={data.couple.groom.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Groom" />
             </div>
             <h3 className="couple-name">{data.couple.groom.fullName}</h3>
             <p className="couple-parents">
@@ -463,9 +466,9 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
           </div>
 
           <div className="collage-grid reveal reveal-scale">
-            <motion.div variants={fs} className="c1"><img src={data.media.gallery[0]?.src} className="w-full h-full object-cover" alt="G1" /></motion.div>
-            <motion.div variants={fs} className="c2"><img src={data.media.gallery[1]?.src} className="w-full h-full object-cover" alt="G2" /></motion.div>
-            <motion.div variants={fs} className="c3"><img src={data.media.gallery[2]?.src} className="w-full h-full object-cover" alt="G3" /></motion.div>
+            <motion.div variants={fs} className="c1"><Image src={data.media.gallery[0]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G1" /></motion.div>
+            <motion.div variants={fs} className="c2"><Image src={data.media.gallery[1]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G2" /></motion.div>
+            <motion.div variants={fs} className="c3"><Image src={data.media.gallery[2]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G3" /></motion.div>
           </div>
 
           <div className="collage-quote">
@@ -564,7 +567,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
           </div>
 
           <div className="story-main-arch arch reveal reveal-scale">
-            <img src={data.media.gallery[3]?.src || data.media.openingPhoto} className="w-full h-full object-cover" alt="Story" />
+            <Image src={data.media.gallery[3]?.src || data.media.openingPhoto || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Story" />
           </div>
 
           <div className="timeline mt-16 reveal reveal-up">
@@ -690,15 +693,15 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
           </div>
 
           <div className="moment-grid-2 reveal reveal-up">
-            <motion.div variants={fs}><img src={data.media.gallery[4]?.src} className="w-full h-full object-cover" alt="M1" /></motion.div>
-            <motion.div variants={fs}><img src={data.media.gallery[5]?.src} className="w-full h-full object-cover" alt="M2" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[4]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M1" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[5]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M2" /></motion.div>
           </div>
 
           <div className="moment-grid-4 reveal reveal-up">
-            <motion.div variants={fs}><img src={data.media.gallery[0]?.src} className="w-full h-full object-cover" alt="M3" /></motion.div>
-            <motion.div variants={fs}><img src={data.media.gallery[1]?.src} className="w-full h-full object-cover" alt="M4" /></motion.div>
-            <motion.div variants={fs}><img src={data.media.gallery[2]?.src} className="w-full h-full object-cover" alt="M5" /></motion.div>
-            <motion.div variants={fs}><img src={data.media.gallery[3]?.src} className="w-full h-full object-cover" alt="M6" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[0]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M3" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[1]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M4" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[2]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M5" /></motion.div>
+            <motion.div variants={fs}><Image src={data.media.gallery[3]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M6" /></motion.div>
           </div>
         </section>
 
@@ -737,7 +740,7 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
         >
 
           <div className="closing-arch arch reveal reveal-scale my-10">
-            <img src={data.couple.groom.photo} className="w-full h-full object-cover" alt="Closing" />
+            <Image src={data.couple.groom.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Closing" />
           </div>
 
           <p className="closing-note reveal reveal-up">
@@ -750,10 +753,10 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
             <p>The Wedding of</p>
             <h4 className="serif italic text-2xl my-2">{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h4>
             <div className="nimantra-credit">
-              <img src="/Nimantra S - Gold.png" alt="Nimantra Monogram" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
+              <Image src="/Nimantra S - Gold.png" alt="Nimantra Monogram" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "24px" }}>
                 <p className="credit-title" style={{ marginBottom: 0 }}>Invitation by</p>
-                <img src="/Nimantra L - Gold.png" alt="Nimantra Logo" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
+                <Image src="/Nimantra L - Gold.png" alt="Nimantra Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
               </div>
               <div className="credit-socials">
                 <a href="https://wa.me/6285169770397" target="_blank" rel="noopener noreferrer" className="social-item" style={{ textDecoration: 'none' }}>

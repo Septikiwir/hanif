@@ -121,8 +121,8 @@ const Toast = ({ message, type, onClose }: { message: string; type: "success" | 
 const StoryItem = ({ src, alt, subtitle }: { src: string; alt: string; subtitle: string }) => {
   return (
     <div className="simple-story-item reveal reveal-up">
-      <div className="story-image-wrap">
-        <img src={src} alt={alt} className="story-img" />
+      <div className="story-image-wrap" style={{ position: "relative" }}>
+        <Image src={src} alt={alt} fill className="story-img" style={{ objectFit: "cover" }} />
       </div>
       <div className="story-content-wrap">
         <p className="story-text">{subtitle}</p>
@@ -147,10 +147,11 @@ function Chip({ src }: { src?: string }) {
       }}
     >
       {src && (
-        <img
+        <Image
           src={src}
           alt="Chip"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          fill
+          style={{ objectFit: "cover" }}
         />
       )}
     </div>
@@ -259,12 +260,12 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, position: "relative", zIndex: 1 }}>
         {/* Logo Left: Only for QRIS */}
         {isQris && paymentLogoLeft ? (
-          <img src={paymentLogoLeft} alt="Logo Left" style={{ height: "30px", width: "auto", objectFit: "contain" }} />
+          <Image src={paymentLogoLeft} alt="Logo Left" width={0} height={0} sizes="100vw" style={{ height: "30px", width: "auto", objectFit: "contain" }} />
         ) : <div />}
 
         {/* Logo Right: Always for Bank/QRIS (not address) */}
         {!isAddress && logoUrl && (
-          <img src={logoUrl} alt={bank} style={{ height: "35px", width: "auto", objectFit: "contain" }} />
+          <Image src={logoUrl} alt={bank} width={0} height={0} sizes="100vw" style={{ height: "35px", width: "auto", objectFit: "contain" }} />
         )}
 
         {/* Address Label */}
@@ -370,7 +371,7 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
   const fetchWishes = useCallback(async () => {
     const { data: list, error } = await supabase.from("wishes").select("*").eq("invitation_slug", slug).order("created_at", { ascending: false });
     if (!error && list) setWishes(list);
-  }, []);
+  }, [slug]);
   const fetchRSVPStats = useCallback(async () => {
     const { data: list, error } = await supabase.from("rsvp").select("attendance").eq("invitation_slug", slug);
     if (!error && list) {
@@ -378,15 +379,21 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
       const tidakHadir = list.filter((r) => r.attendance === "Tidak Hadir").length;
       setRsvpStats({ hadir, tidakHadir });
     }
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     const initData = async () => { await fetchWishes(); await fetchRSVPStats(); };
     void initData();
+  }, [fetchWishes, fetchRSVPStats]);
+
+  useEffect(() => {
     if (guestName !== "Tamu Undangan") { setRsvpName(guestName); setWishName(guestName); }
+  }, [guestName]);
+
+  useEffect(() => {
     const timer = setTimeout(() => setIsOpeningReady(true), 100);
     return () => clearTimeout(timer);
-  }, [fetchWishes, fetchRSVPStats, guestName]);
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current; if (!audio) return;
@@ -577,7 +584,7 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
           <svg className="ornament ornament-br" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M60 60 L60 36 M60 60 L36 60" stroke="white" strokeWidth="1" /><path d="M60 60 L46 46" stroke="white" strokeWidth="0.5" /><circle cx="60" cy="60" r="2" fill="white" /></svg>
 
           <div className={`reveal reveal-fade ${isOpeningReady ? "visible" : ""}`} style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "60px 20px", display: "flex", justifyContent: "center", zIndex: 10, transitionDelay: "0.2s" }}>
-            <img src={data.media.logo} alt="Logo" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
+            <Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
           </div>
 
           <div className="content">
@@ -620,7 +627,7 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
         <header className="hero">
           <div className="content">
             <div className="reveal reveal-fade delay-1">
-              <img src={data.media.logo} alt="Logo" style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }} />
+              <Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" style={{ height: "64px", width: "auto", marginBottom: "1.5rem", objectFit: "contain" }} />
             </div>
             <p className="wedding-of reveal reveal-up delay-2">The Wedding Of</p>
             <h1 className="names reveal reveal-up delay-3">{data.couple.bride.shortName} <span className="amp">&amp;</span> {data.couple.groom.shortName}</h1>
@@ -648,7 +655,7 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
 
         <section className="quote-section" style={data.media.quote?.background ? { backgroundImage: `url(${data.media.quote.background})`, backgroundSize: "cover", backgroundPosition: "center", position: "relative" } : {}}>
           {data.media.quote?.background && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1 }} />}
-          <img src={data.media.logo} alt="Logo" className="quote-flower reveal reveal-fade" style={{ objectFit: "contain", height: "auto", position: "relative", zIndex: 2 }} />
+          <Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" className="quote-flower reveal reveal-fade" style={{ objectFit: "contain", height: "auto", position: "relative", zIndex: 2 }} />
           <blockquote className="reveal reveal-up delay-1" style={{ position: "relative", zIndex: 2 }}>
             <p className="quote-text">{data.media.quote?.text || "Dan diantara tanda-tanda kekuasaanNya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri..."}</p>
             <footer className="quote-ref">{data.media.quote?.ref || "QS. Ar-Rum : 21"}</footer>
@@ -725,7 +732,6 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
                     src={img.src}
                     alt="Gallery"
                     fill
-                    unoptimized
                     sizes={img.isLandscape ? "(max-width: 430px) 66vw, 300px" : "(max-width: 430px) 33vw, 140px"}
                     className="gallery-img"
                   />
@@ -795,13 +801,13 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
         </section>
 
         <footer className="footer-section">
-          <div><img src={data.media.logo} alt="Logo" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
+          <div><Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
           <div><p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p><h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h2></div>
           <div className="nimantra-credit">
-            <img src="/Nimantra S - White.png" alt="Nimantra Monogram" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
+            <Image src="/Nimantra S - White.png" alt="Nimantra Monogram" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "24px" }}>
               <p className="credit-title" style={{ marginBottom: 0 }}>Invitation by</p>
-              <img src="/Nimantra L - White.png" alt="Nimantra Logo" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
+              <Image src="/Nimantra L - White.png" alt="Nimantra Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
             </div>
             <div className="credit-socials">
               <a href="https://wa.me/6285169770397" target="_blank" rel="noopener noreferrer" className="social-item" style={{ textDecoration: 'none' }}>
