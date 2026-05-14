@@ -208,6 +208,21 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
     }
   }, [isInvitationOpen, isPlaying]);
 
+  // Pause audio when tab is inactive (Visibility API)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (document.hidden) {
+        audio.pause();
+      } else if (isInvitationOpen && isPlaying) {
+        audio.play().catch(() => { });
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [isInvitationOpen, isPlaying]);
+
   // Countdown Logic
   useEffect(() => {
     const update = () => {

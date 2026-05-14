@@ -420,6 +420,21 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
     void sync(); return () => { cancelled = true; };
   }, [isInvitationOpen, isPlaying]);
 
+  // Pause audio when tab is inactive (Visibility API)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (document.hidden) {
+        audio.pause();
+      } else if (isInvitationOpen && isPlaying) {
+        audio.play().catch(() => { });
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [isInvitationOpen, isPlaying]);
+
   useEffect(() => {
     const video = heroVideoRef.current; if (!video) return;
     if (isInvitationOpen) { video.play().catch(() => { }); }
