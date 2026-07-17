@@ -467,7 +467,6 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
               </div>
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.6 }} className="v3-hero-scroll-indicator">
-                <span>SCROLL</span>
                 <motion.div
                   animate={{ y: [0, 10, 0] }}
                   transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
