@@ -591,7 +591,9 @@ export default function TemplateV1({ data, slug }: { data: InvitationData; slug:
 
       <section className={`opening-screen ${isInvitationOpen ? "closed" : ""}`}>
         <div className="screen">
-          <div className="bg-photo" style={{ backgroundImage: `url(${data.media.openingPhoto || data.couple.bride.photo})` }} />
+          {data.media.openingPhoto && (
+            <div className="bg-photo" style={{ backgroundImage: `url(${data.media.openingPhoto})` }} />
+          )}
           <div className="overlay" />
           <svg className="ornament ornament-tl" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" /><path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" /><circle cx="4" cy="4" r="2" fill="white" /></svg>
           <svg className="ornament ornament-tr" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M60 4 L60 28 M60 4 L36 4" stroke="white" strokeWidth="1" /><path d="M60 4 L46 18" stroke="white" strokeWidth="0.5" /><circle cx="60" cy="4" r="2" fill="white" /></svg>

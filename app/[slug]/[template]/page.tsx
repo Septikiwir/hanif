@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { supabase } from "@/lib/supabase";
 import TemplateV1 from "@/components/TemplateV1";
 import TemplateV2 from "@/components/TemplateV2";
+import TemplateV3 from "@/components/TemplateV3";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -75,6 +76,8 @@ export default async function InvitationPage({
       return <TemplateV1 data={invitation.content as any} slug={slug} />;
     case "v2":
       return <TemplateV2 data={invitation.content as any} slug={slug} />;
+    case "v3":
+      return <TemplateV3 data={invitation.content as any} slug={slug} />;
     default:
       return (
         <div style={{ padding: "50px", textAlign: "center", fontFamily: "sans-serif" }}>
@@ -84,3 +87,4 @@ export default async function InvitationPage({
       );
   }
 }
+

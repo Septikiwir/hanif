@@ -134,6 +134,13 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
   const weddingDate = useMemo(() => new Date(data.event.date), [data.event.date]);
   const audioSrc = useMemo(() => data.media.music.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29"), [data.media.music]);
 
+  const hasOpeningPhoto = useMemo(() => !!data.media.openingPhoto, [data.media.openingPhoto]);
+  const hasGallery = useMemo(() => !!(data.media.gallery && data.media.gallery.length > 0 && data.media.gallery[0]?.src), [data.media.gallery]);
+  const hasStoryPhoto = useMemo(() => !!(data.media.gallery?.[3]?.src || data.media.openingPhoto), [data.media.gallery, data.media.openingPhoto]);
+  const hasMoments = useMemo(() => hasGallery && !!data.media.gallery?.[4]?.src, [hasGallery, data.media.gallery]);
+  const hasVideo = useMemo(() => !!data.media.galleryVideo, [data.media.galleryVideo]);
+  const hasStory = useMemo(() => !!(data.media.story && data.media.story.length > 0), [data.media.story]);
+
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isOpeningReady, setIsOpeningReady] = useState(false);
@@ -324,7 +331,9 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
       {/* Opening Screen (Matched to V1) */}
       <section className={`opening-screen ${isInvitationOpen ? "closed" : ""}`}>
         <div className="screen">
-          <div className="bg-photo" style={{ backgroundImage: `url(${data.media.openingPhoto || data.couple.bride.photo})` }} />
+          {hasOpeningPhoto && (
+            <div className="bg-photo" style={{ backgroundImage: `url(${data.media.openingPhoto})` }} />
+          )}
           <div className="overlay" />
           <svg className="ornament ornament-tl" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M4 4 L4 28 M4 4 L28 4" stroke="white" strokeWidth="1" /><path d="M4 4 L18 18" stroke="white" strokeWidth="0.5" /><circle cx="4" cy="4" r="2" fill="white" /></svg>
           <svg className="ornament ornament-tr" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M60 4 L60 28 M60 4 L36 4" stroke="white" strokeWidth="1" /><path d="M60 4 L46 18" stroke="white" strokeWidth="0.5" /><circle cx="60" cy="4" r="2" fill="white" /></svg>
@@ -390,11 +399,13 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
             <motion.span variants={fi} className="eyebrow">WEDDING DAY</motion.span>
           </div>
 
-          <motion.div variants={fs} className="hero-img-wrap">
-            <div className="hero-arch-img arch">
-              <Image src={data.media.openingPhoto || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Hero" />
-            </div>
-          </motion.div>
+          {hasOpeningPhoto && (
+            <motion.div variants={fs} className="hero-img-wrap">
+              <div className="hero-arch-img arch">
+                <Image src={data.media.openingPhoto || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Hero" />
+              </div>
+            </motion.div>
+          )}
 
           <div className="hero-bottom">
             <motion.h2 variants={fi}>
@@ -470,27 +481,40 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
           </div>
         </section>
 
-        {/* Collage Section */}
-        <section
-          id="collage"
-          className="reveal"
-        >
-          <div className="head reveal reveal-up">
-            <SectionEyebrow>The Gallery</SectionEyebrow>
-            <h2>Our Captured Moments</h2>
-          </div>
+        {hasGallery && (
+          <section
+            id="collage"
+            className="reveal"
+          >
+            <div className="head reveal reveal-up">
+              <SectionEyebrow>The Gallery</SectionEyebrow>
+              <h2>Our Captured Moments</h2>
+            </div>
 
-          <div className="collage-grid reveal reveal-scale">
-            <motion.div variants={fs} className="c1"><Image src={data.media.gallery[0]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G1" /></motion.div>
-            <motion.div variants={fs} className="c2"><Image src={data.media.gallery[1]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G2" /></motion.div>
-            <motion.div variants={fs} className="c3"><Image src={data.media.gallery[2]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G3" /></motion.div>
-          </div>
+            <div className="collage-grid reveal reveal-scale">
+              <motion.div variants={fs} className="c1">
+                {data.media.gallery[0]?.src && (
+                  <Image src={data.media.gallery[0].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G1" />
+                )}
+              </motion.div>
+              <motion.div variants={fs} className="c2">
+                {data.media.gallery[1]?.src && (
+                  <Image src={data.media.gallery[1].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G2" />
+                )}
+              </motion.div>
+              <motion.div variants={fs} className="c3">
+                {data.media.gallery[2]?.src && (
+                  <Image src={data.media.gallery[2].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="G3" />
+                )}
+              </motion.div>
+            </div>
 
-          <div className="collage-quote">
-            <motion.p variants={fi}>"Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day."</motion.p>
-            <motion.span variants={fi}>— Forever &amp; Always</motion.span>
-          </div>
-        </section>
+            <div className="collage-quote">
+              <motion.p variants={fi}>"Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day."</motion.p>
+              <motion.span variants={fi}>— Forever &amp; Always</motion.span>
+            </div>
+          </section>
+        )}
 
         {/* Events Section */}
         <section
@@ -572,33 +596,37 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
         </section>
 
         {/* Story Section */}
-        <section
-          id="story"
-          className="reveal"
-        >
-          <div className="story-head reveal reveal-up">
-            <SectionEyebrow>Our Journey</SectionEyebrow>
-            <h2>Story of Us</h2>
-          </div>
+        {hasStory && (
+          <section
+            id="story"
+            className="reveal"
+          >
+            <div className="story-head reveal reveal-up">
+              <SectionEyebrow>Our Journey</SectionEyebrow>
+              <h2>Story of Us</h2>
+            </div>
 
-          <div className="story-main-arch arch reveal reveal-scale">
-            <Image src={data.media.gallery[3]?.src || data.media.openingPhoto || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Story" />
-          </div>
+            {hasStoryPhoto && (
+              <div className="story-main-arch arch reveal reveal-scale">
+                <Image src={data.media.gallery[3]?.src || data.media.openingPhoto || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Story" />
+              </div>
+            )}
 
-          <div className="timeline mt-16 reveal reveal-up">
-            {data.media.story.map((item, idx) => (
-              <motion.div key={idx} variants={fi} className="tl-item">
-                <div className="tl-content">
-                  <span className="tl-year">{item.year || "2024"}</span>
-                  <h3 className="tl-heading">{item.title || "The Beginning"}</h3>
-                  <p className="tl-body">{item.subtitle}</p>
-                </div>
-                <div className="tl-dot" />
-                <div className="tl-spacer" />
-              </motion.div>
-            ))}
-          </div>
-        </section>
+            <div className="timeline mt-16 reveal reveal-up">
+              {data.media.story.map((item, idx) => (
+                <motion.div key={idx} variants={fi} className="tl-item">
+                  <div className="tl-content">
+                    <span className="tl-year">{item.year || "2024"}</span>
+                    <h3 className="tl-heading">{item.title || "The Beginning"}</h3>
+                    <p className="tl-body">{item.subtitle}</p>
+                  </div>
+                  <div className="tl-dot" />
+                  <div className="tl-spacer" />
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Wishes Section */}
         <section
@@ -694,31 +722,63 @@ export default function TemplateV2({ data, slug }: { data: InvitationData; slug:
         </section>
 
         {/* Moment Section */}
-        <section
-          id="moment"
-          className="reveal"
-        >
-          <div className="reveal reveal-up">
-            <h2>Our Moments</h2>
-            <p className="moment-tagline">A glimpse of our happiness</p>
-          </div>
+        {(hasVideo || hasMoments) && (
+          <section
+            id="moment"
+            className="reveal"
+          >
+            <div className="reveal reveal-up">
+              <h2>Our Moments</h2>
+              <p className="moment-tagline">A glimpse of our happiness</p>
+            </div>
 
-          <div className="video-wrap reveal reveal-scale">
-            <video src={data.media.galleryVideo} className="w-full h-full object-cover" autoPlay muted loop playsInline />
-          </div>
+            {hasVideo && (
+              <div className="video-wrap reveal reveal-scale">
+                <video src={data.media.galleryVideo} className="w-full h-full object-cover" autoPlay muted loop playsInline />
+              </div>
+            )}
 
-          <div className="moment-grid-2 reveal reveal-up">
-            <motion.div variants={fs}><Image src={data.media.gallery[4]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M1" /></motion.div>
-            <motion.div variants={fs}><Image src={data.media.gallery[5]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M2" /></motion.div>
-          </div>
+            {hasMoments && (
+              <>
+                <div className="moment-grid-2 reveal reveal-up">
+                  <motion.div variants={fs}>
+                    {data.media.gallery[4]?.src && (
+                      <Image src={data.media.gallery[4].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M1" />
+                    )}
+                  </motion.div>
+                  <motion.div variants={fs}>
+                    {data.media.gallery[5]?.src && (
+                      <Image src={data.media.gallery[5].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M2" />
+                    )}
+                  </motion.div>
+                </div>
 
-          <div className="moment-grid-4 reveal reveal-up">
-            <motion.div variants={fs}><Image src={data.media.gallery[0]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M3" /></motion.div>
-            <motion.div variants={fs}><Image src={data.media.gallery[1]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M4" /></motion.div>
-            <motion.div variants={fs}><Image src={data.media.gallery[2]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M5" /></motion.div>
-            <motion.div variants={fs}><Image src={data.media.gallery[3]?.src || data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M6" /></motion.div>
-          </div>
-        </section>
+                <div className="moment-grid-4 reveal reveal-up">
+                  <motion.div variants={fs}>
+                    {data.media.gallery[0]?.src && (
+                      <Image src={data.media.gallery[0].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M3" />
+                    )}
+                  </motion.div>
+                  <motion.div variants={fs}>
+                    {data.media.gallery[1]?.src && (
+                      <Image src={data.media.gallery[1].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M4" />
+                    )}
+                  </motion.div>
+                  <motion.div variants={fs}>
+                    {data.media.gallery[2]?.src && (
+                      <Image src={data.media.gallery[2].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M5" />
+                    )}
+                  </motion.div>
+                  <motion.div variants={fs}>
+                    {data.media.gallery[3]?.src && (
+                      <Image src={data.media.gallery[3].src || ""} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="M6" />
+                    )}
+                  </motion.div>
+                </div>
+              </>
+            )}
+          </section>
+        )}
 
         {/* Countdown Section */}
         <section id="countdown" className="reveal">
