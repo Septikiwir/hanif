@@ -27,17 +27,22 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 async function main() {
   const { data, error } = await supabase
     .from('invitations')
-    .select('slug, content')
-    .eq('slug', 'Indah-Arif')
-    .single();
+    .select('id, slug, content');
 
   if (error) {
-    console.error('Error fetching invitation:', error);
+    console.error('Error fetching invitations:', error);
     return;
   }
 
-  console.log('--- Content for Indah-Arif ---');
-  console.log(JSON.stringify(data.content.media, null, 2));
+  console.log('--- Slugs and couples found in database ---');
+  data.forEach(item => {
+    const bride = item.content?.couple?.bride?.fullName || item.content?.couple?.bride?.shortName;
+    const groom = item.content?.couple?.groom?.fullName || item.content?.couple?.groom?.shortName;
+    console.log(`Slug: "${item.slug}" -> ${bride} & ${groom}`);
+    if (item.slug.toLowerCase().includes('neneng')) {
+      console.log('JSON:', JSON.stringify(item.content, null, 2));
+    }
+  });
 }
 
 main();

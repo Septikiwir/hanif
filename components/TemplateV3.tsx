@@ -347,7 +347,7 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
       <section className={`opening-screen ${isInvitationOpen ? "closed" : ""}`}>
         <div className="screen">
           {hasOpeningMedia && (
-            <div className="bg-photo">
+            <div className="bg-photo" style={{ backgroundImage: "none" }}>
               {isVideo(data.media.openingPhoto || data.media.heroVideo || "") ? (
                 <video
                   src={(data.media.openingPhoto || data.media.heroVideo || "") + "#t=5"}
