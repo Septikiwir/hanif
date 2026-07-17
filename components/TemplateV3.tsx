@@ -349,7 +349,16 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
           {hasOpeningMedia && (
             <div className="bg-photo">
               {isVideo(data.media.openingPhoto || data.media.heroVideo || "") ? (
-                <video src={data.media.openingPhoto || data.media.heroVideo || ""} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                <video
+                  src={(data.media.openingPhoto || data.media.heroVideo || "") + "#t=5"}
+                  muted
+                  playsInline
+                  preload="auto"
+                  onLoadedMetadata={(e) => {
+                    e.currentTarget.currentTime = 5;
+                  }}
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${data.media.openingPhoto || data.media.heroVideo || ""})` }} />
               )}

@@ -334,7 +334,11 @@ export default function EditInvitationPage() {
               </div>
               <div className="admin-form-group">
                 <label className="admin-label">Template</label>
-                <select className="admin-input" value={template || "v1"} onChange={e => setTemplate(e.target.value)}><option value="v1">Template V1 (Modern Emerald)</option></select>
+                 <select className="admin-input" value={template || "v1"} onChange={e => setTemplate(e.target.value)}>
+                  <option value="v1">Template V1 (Modern Emerald)</option>
+                  <option value="v2">Template V2 (Classic Sage)</option>
+                  <option value="v3">Template V3 (Moody Romantic)</option>
+                </select>
               </div>
             </div>
             <div className="mt-6 pt-5" style={{borderTop:"1px solid #f1f5f9"}}>
