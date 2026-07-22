@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 import { toJpeg } from "html-to-image";
+import { FloralCornerAccents, FloralPhotoSprayLeft, FloralPhotoSprayRight, FloralDivider, FloralHeaderAccent, FloralQuoteAccents, FloralQuoteWreath } from "@/components/FloralAccents";
 
 // --- TYPES (reuse from V2) ---
 export interface InvitationData {
@@ -395,7 +396,7 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
       </section>
 
       {/* ═══ MAIN CONTENT ═══ */}
-      <main className={(!isInvitationOpen || !isVideoFinished) ? "h-screen overflow-hidden" : ""}>
+      <main className={!isInvitationOpen ? "h-screen overflow-hidden" : ""}>
 
         {/* Floating Controls */}
         <div className="v3-floating-controls">
@@ -423,6 +424,8 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
                   autoPlay
                   muted
                   playsInline
+                  onLoadedData={(e) => { e.currentTarget.playbackRate = 3; }}
+                  onPlay={(e) => { e.currentTarget.playbackRate = 3; }}
                   onEnded={() => setIsVideoFinished(true)}
                   onError={() => setIsVideoFinished(true)}
                   style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }}
@@ -478,66 +481,85 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
         </section>
 
         {/* ─── QUOTE SECTION ─── */}
-        <section id="v3-quote" className="reveal reveal-up">
-          <div className="v3-quote-deco-top">✦</div>
-          <p className="v3-quote-text">
-            &ldquo;{data.media.quote?.text || "And of His signs is that He created for you from yourselves mates that you may find tranquility in them."}&rdquo;
-          </p>
-          <motion.span variants={fadeUp} className="v3-quote-source">— {data.media.quote?.ref || "QS. Ar-Rum: 21"}</motion.span>
-          <div className="v3-quote-deco-bottom">✦</div>
+        <section id="v3-quote" className="reveal reveal-up" style={{ padding: "56px 20px" }}>
+          <div className="v3-events-bg-pattern" />
+          <div className="v3-event-card" style={{ position: "relative", overflow: "hidden", padding: "48px 24px" }}>
+
+            <div className="v3-quote-deco-top">✦</div>
+            <p className="v3-quote-text" style={{ position: "relative", zIndex: 1 }}>
+              &ldquo;{data.media.quote?.text || "And of His signs is that He created for you from yourselves mates that you may find tranquility in them."}&rdquo;
+            </p>
+            <motion.span variants={fadeUp} className="v3-quote-source" style={{ position: "relative", zIndex: 1 }}>— {data.media.quote?.ref || "QS. Ar-Rum: 21"}</motion.span>
+            <div className="v3-quote-deco-bottom">✦</div>
+          </div>
         </section>
 
         {/* ─── COUPLE SECTION ─── */}
-        <section id="v3-couple" className="reveal">
-          <div className="v3-couple-header reveal reveal-up">
-            <SectionLabel>INTRODUCING</SectionLabel>
-            <h2 className="v3-couple-title">The Happy <em>Couple</em></h2>
-          </div>
+        <section id="v3-couple" className="reveal v3-bg-blue-landscape-portrait" style={{ padding: "56px 20px" }}>
+          <div className="v3-events-bg-pattern" />
 
-          {/* Bride */}
-          <div className="v3-couple-card reveal reveal-up">
-            {hasBridePhoto && (
-              <div className="v3-couple-photo-wrap">
-                <div className="v3-couple-photo-hexagon">
-                  <SafeImg src={data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Bride" />
+          <div className="v3-event-card" style={{ position: "relative", overflow: "hidden", padding: "44px 24px" }}>
+            <FloralCornerAccents size={90} opacity={0.85} />
+
+            <div className="v3-couple-header reveal reveal-up" style={{ marginBottom: "32px", position: "relative", zIndex: 2 }}>
+              <SectionLabel>INTRODUCING</SectionLabel>
+              <h2 className="v3-couple-title">The Happy <em>Couple</em></h2>
+              <FloralHeaderAccent />
+            </div>
+
+            {/* Bride */}
+            <div className="v3-couple-card reveal reveal-up" style={{ marginBottom: 0, position: "relative", zIndex: 2 }}>
+              {hasBridePhoto && (
+                <div className="v3-couple-photo-wrap">
+                  <div className="v3-floral-photo-accent-tl">
+                    <FloralPhotoSprayLeft size={75} />
+                  </div>
+                  <div className="v3-floral-photo-accent-br">
+                    <FloralPhotoSprayRight size={75} />
+                  </div>
+                  <div className="v3-couple-photo-hexagon">
+                    <SafeImg src={data.couple.bride.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Bride" />
+                  </div>
                 </div>
-              </div>
-            )}
-            <motion.h3 variants={fadeUp} className="v3-couple-name">{data.couple.bride.fullName}</motion.h3>
-            <motion.p variants={fadeUp} className="v3-couple-parents">
-              {data.couple.bride.label || "Putri dari"}<br />
-              <strong>{data.couple.bride.parents.father} &amp; {data.couple.bride.parents.mother}</strong>
-            </motion.p>
-            <motion.a variants={fadeUp} href={data.couple.bride.instagram.url} target="_blank" className="v3-couple-ig">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-              @{data.couple.bride.instagram.username}
-            </motion.a>
-          </div>
+              )}
+              <motion.h3 variants={fadeUp} className="v3-couple-name">{data.couple.bride.fullName}</motion.h3>
+              <motion.p variants={fadeUp} className="v3-couple-parents">
+                {data.couple.bride.label || "Putri dari"}<br />
+                <strong>{data.couple.bride.parents.father} &amp; {data.couple.bride.parents.mother}</strong>
+              </motion.p>
+              <motion.a variants={fadeUp} href={data.couple.bride.instagram.url} target="_blank" className="v3-couple-ig">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                @{data.couple.bride.instagram.username}
+              </motion.a>
+            </div>
 
-          <div className="v3-couple-separator">
-            <div className="v3-couple-sep-line" />
-            <span className="v3-couple-sep-icon">&amp;</span>
-            <div className="v3-couple-sep-line" />
-          </div>
+            <FloralDivider />
 
-          {/* Groom */}
-          <div className="v3-couple-card reveal reveal-up">
-            {hasGroomPhoto && (
-              <div className="v3-couple-photo-wrap">
-                <div className="v3-couple-photo-hexagon">
-                  <SafeImg src={data.couple.groom.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Groom" />
+            {/* Groom */}
+            <div className="v3-couple-card reveal reveal-up" style={{ marginBottom: 0, position: "relative", zIndex: 2 }}>
+              {hasGroomPhoto && (
+                <div className="v3-couple-photo-wrap">
+                  <div className="v3-floral-photo-accent-tr">
+                    <FloralPhotoSprayRight size={75} />
+                  </div>
+                  <div className="v3-floral-photo-accent-bl">
+                    <FloralPhotoSprayLeft size={75} />
+                  </div>
+                  <div className="v3-couple-photo-hexagon">
+                    <SafeImg src={data.couple.groom.photo} width={0} height={0} sizes="100vw" className="w-full h-full object-cover" alt="Groom" />
+                  </div>
                 </div>
-              </div>
-            )}
-            <h3 className="v3-couple-name">{data.couple.groom.fullName}</h3>
-            <p className="v3-couple-parents">
-              {data.couple.groom.label || "Putra dari"}<br />
-              <strong>{data.couple.groom.parents.father} &amp; {data.couple.groom.parents.mother}</strong>
-            </p>
-            <a href={data.couple.groom.instagram.url} target="_blank" className="v3-couple-ig">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-              @{data.couple.groom.instagram.username}
-            </a>
+              )}
+              <h3 className="v3-couple-name">{data.couple.groom.fullName}</h3>
+              <p className="v3-couple-parents">
+                {data.couple.groom.label || "Putra dari"}<br />
+                <strong>{data.couple.groom.parents.father} &amp; {data.couple.groom.parents.mother}</strong>
+              </p>
+              <a href={data.couple.groom.instagram.url} target="_blank" className="v3-couple-ig">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                @{data.couple.groom.instagram.username}
+              </a>
+            </div>
           </div>
         </section>
 
@@ -725,6 +747,8 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
 
         {/* ─── WISHES SECTION ─── */}
         <section id="v3-wishes" className="reveal reveal-up">
+          <div className="v3-events-bg-pattern" />
+          <SectionLabel>WISHES</SectionLabel>
           <h2>Digital <em>Wishes</em></h2>
           <p className="v3-wishes-sub">Berikan doa restu Anda untuk kebahagiaan kami</p>
 
@@ -766,6 +790,8 @@ export default function TemplateV3({ data, slug }: { data: InvitationData; slug:
 
         {/* ─── LOVE GIFT SECTION ─── */}
         <section id="v3-gift" className="reveal reveal-up">
+          <div className="v3-events-bg-pattern" />
+          <SectionLabel>WEDDING GIFT</SectionLabel>
           <h2>Love <em>Gift</em></h2>
           <p className="v3-gift-sub">Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih untuk kami, dapat melalui:</p>
 
