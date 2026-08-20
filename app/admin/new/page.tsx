@@ -226,6 +226,7 @@ export default function NewInvitationPage() {
                   <option value="v1">Template V1 (Modern Emerald)</option>
                   <option value="v2">Template V2 (Classic Sage)</option>
                   <option value="v3">Template V3 (Moody Romantic)</option>
+                  <option value="v4">Template V4 (Duplikat V1)</option>
                 </select>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 import TemplateV1 from "@/components/TemplateV1";
 import TemplateV2 from "@/components/TemplateV2";
 import TemplateV3 from "@/components/TemplateV3";
+import TemplateV4 from "@/components/TemplateV4";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -78,6 +79,8 @@ export default async function InvitationPage({
       return <TemplateV2 data={invitation.content as any} slug={slug} />;
     case "v3":
       return <TemplateV3 data={invitation.content as any} slug={slug} />;
+    case "v4":
+      return <TemplateV4 data={invitation.content as any} slug={slug} />;
     default:
       return (
         <div style={{ padding: "50px", textAlign: "center", fontFamily: "sans-serif" }}>

@@ -5121,3 +5121,71 @@ main {
   align-items: center;
   gap: 8px;
 }
+
+/* ─── TEMPLATE V4 SCOPED THEME ─── */
+.template-v4 {
+  --v4-blue: #3A7FB8;
+  --v4-blue-light: #68A7D4;
+  --v4-blue-pale: #A3C9ED;
+  --v4-primary: #3A7FB8;
+  --v4-accent: #68A7D4;
+
+  /* Re-map gold variables inside .template-v4 scope to blue */
+  --gold: #3A7FB8;
+  --gold-light: #68A7D4;
+  --gold-pale: #A3C9ED;
+
+  --v4-gold: #3A7FB8;
+  --v4-gold-light: #68A7D4;
+  --v4-gold-pale: #A3C9ED;
+
+  --v4-burgundy: #4a0e1a;
+  --v4-burgundy-mid: #6b1828;
+  --v4-burgundy-light: #8b2535;
+  --v4-cream: #faf6f0;
+  --v4-cream-dark: #f2eae0;
+  --v4-cream-warm: #ede0d0;
+  --v4-text-dark: #2c1810;
+  --v4-text-mid: #5c3d30;
+  --v4-text-light: #8b6b58;
+
+  --v4-font-heading: 'Collina-Regular', sans-serif;
+  --v4-font-sub: 'Collina-Regular', sans-serif;
+  --v4-font-body: var(--font-eb-garamond), serif;
+}
+
+.template-v4 .section-label {
+  color: var(--v4-blue);
+}
+
+.template-v4 .quote-ref,
+.template-v4 .event-type,
+.template-v4 .ampersand-divider {
+  color: var(--v4-blue);
+}
+
+.template-v4 .event-card::before,
+.template-v4 .event-card::after {
+  background: linear-gradient(to right, transparent, var(--v4-blue), transparent);
+}
+
+.template-v4 .btn-gold {
+  background: var(--v4-blue);
+  color: #fff;
+}
+
+.template-v4 .gold-line {
+  background: linear-gradient(to right, transparent, var(--v4-blue-light), transparent);
+}
+
+.template-v4 .ornament-center {
+  color: var(--v4-blue);
+}
+
+.template-v4 .ornament-center::before {
+  background: linear-gradient(to right, transparent, var(--v4-blue-light)) !important;
+}
+
+.template-v4 .ornament-center::after {
+  background: linear-gradient(to left, transparent, var(--v4-blue-light)) !important;
+}
