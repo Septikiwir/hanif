@@ -732,8 +732,15 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
           <div className="section-heading reveal reveal-up"><span className="section-label">Our Special Day</span><h2 className="section-title">Save the Date</h2></div>
           <div className="gallery-video-wrap reveal reveal-scale" style={{ aspectRatio: "1 / 1", width: "100%", maxWidth: "430px", margin: "0 auto 1.5rem", borderRadius: "12px", border: "1px solid rgba(255, 255, 255, 0.15)", boxShadow: "0 10px 30px rgba(0,0,0,0.3)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(to right, transparent, var(--v4-blue), transparent)", zIndex: 20, pointerEvents: "none" }} />
-            <video src="/Compress%20MP4%20Video%20Files%20Online%20Free%20_%20Mp4Compress%282%29.mp4" className="gallery-video" autoPlay muted loop playsInline preload="metadata" />
+            <video src="/Compress%20MP4%20Video%20Files%20Online%20Free%20_%20Mp4Compress%282%29.mp4" className="gallery-video" style={{ transform: "scale(1.2) translateX(5%) translateY(-7%)" }} autoPlay muted loop playsInline preload="metadata" />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(to right, transparent, var(--v4-blue), transparent)", zIndex: 20, pointerEvents: "none" }} />
+
+            {/* Tombol Save the Date Melayang di Dalam Kotak Video */}
+            <div style={{ position: "absolute", bottom: "20px", left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 25 }}>
+              <a href={`https://www.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+${data.couple.bride.shortName}+%26+${data.couple.groom.shortName}&dates=${data.event.date.replace(/[-:]/g, "").split(".")[0]}Z/${data.event.date.replace(/[-:]/g, "").split(".")[0]}Z`} target="_blank" rel="noopener noreferrer" className="save-date-btn" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 8 }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Save the Date
+              </a>
+            </div>
           </div>
         </section>
 
