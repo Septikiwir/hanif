@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: 'Dream-Avenue';
+  src: url('/FontsFree-Net-Dream-Avenue.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Collina-Regular';
   src: url('/Collina-Regular.otf') format('opentype');
   font-weight: normal;
@@ -5149,9 +5156,13 @@ main {
   --v4-text-mid: #5c3d30;
   --v4-text-light: #8b6b58;
 
-  --v4-font-heading: 'Collina-Regular', sans-serif;
-  --v4-font-sub: 'Collina-Regular', sans-serif;
+  --v4-font-heading: 'Dream-Avenue', sans-serif;
+  --v4-font-sub: 'Dream-Avenue', sans-serif;
   --v4-font-body: var(--font-eb-garamond), serif;
+
+  /* Re-map typography variables inside .template-v4 scope to Dream Avenue */
+  --font-heading: 'Dream-Avenue', sans-serif;
+  --font-sub: 'Dream-Avenue', sans-serif;
 }
 
 .template-v4 .section-label {

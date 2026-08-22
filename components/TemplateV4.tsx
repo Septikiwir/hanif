@@ -289,13 +289,13 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
           </>
         ) : isAddress ? (
           <div style={{ marginBottom: 20 }}>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: "#444", marginBottom: 0, fontFamily: "var(--font-body)", textAlign: "center" }}>{address}</p>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: "#444", marginBottom: 0, fontFamily: "var(--v4-font-body)", textAlign: "center" }}>{address}</p>
           </div>
         ) : (
           <>
             <Chip src={chipImage} />
             <div style={{ marginBottom: 20 }}>
-              <p style={{ fontFamily: "var(--font-heading)", fontSize: 22, color: "#1a1a1a", letterSpacing: "0.15em", marginBottom: 4 }}>{accountNumber}</p>
+              <p style={{ fontFamily: "var(--v4-font-heading)", fontSize: 22, color: "#1a1a1a", letterSpacing: "0.15em", marginBottom: 4 }}>{accountNumber}</p>
             </div>
           </>
         )}
@@ -818,13 +818,13 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
               <button type="submit" className="btn-gold" disabled={isSubmittingWishes}>{isSubmittingWishes ? "Mengirim..." : "Kirim Ucapan"}</button>
             </form>
             <div className="comment-list reveal reveal-up delay-2">
-              <p style={{ fontFamily: "var(--font-sub)", fontSize: 10, letterSpacing: "0.2em", color: "rgba(0,0,0,0.4)", marginBottom: "1rem" }}>{wishes.length} Ucapan</p>
+              <p style={{ fontFamily: "var(--v4-font-sub)", fontSize: 10, letterSpacing: "0.2em", color: "rgba(0,0,0,0.4)", marginBottom: "1rem" }}>{wishes.length} Ucapan</p>
               {currentWishes.map((item, idx) => (
                 <div key={idx} className="comment-item"><p className="comment-name">{item.name}</p><p className="comment-text">{item.message}</p></div>
               ))}
             </div>
             {totalPages > 1 && (
-              <div className="comment-pagination" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginTop: "2rem", fontFamily: "var(--font-sub)", fontSize: 11, letterSpacing: "0.15em", color: "rgba(0,0,0,0.4)" }}>
+              <div className="comment-pagination" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginTop: "2rem", fontFamily: "var(--v4-font-sub)", fontSize: 11, letterSpacing: "0.15em", color: "rgba(0,0,0,0.4)" }}>
                 <button type="button" disabled={currentPage === 1} onClick={() => setCurrentPage(v => Math.max(1, v - 1))} style={{ background: "none", border: "none", color: currentPage === 1 ? "#ddd" : "inherit", cursor: currentPage === 1 ? "default" : "pointer" }}>← Prev</button>
                 {[...Array(totalPages)].map((_, i) => (<button key={i} onClick={() => setCurrentPage(i + 1)} style={{ background: "none", border: "none", color: currentPage === i + 1 ? "var(--burgundy)" : "inherit", fontWeight: currentPage === i + 1 ? "bold" : "normal", cursor: "pointer", minWidth: 24 }}>{i + 1}</button>))}
                 <button type="button" disabled={currentPage === totalPages} onClick={() => setCurrentPage(v => Math.min(totalPages, v + 1))} style={{ background: "none", border: "none", color: currentPage === totalPages ? "#ddd" : "inherit", cursor: currentPage === totalPages ? "default" : "pointer" }}>Next →</button>
