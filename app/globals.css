@@ -1072,7 +1072,7 @@ main {
     linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(7, 7, 7, 0.5) 100%),
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 28%),
     rgba(8, 8, 8, 0.5);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .v4-rsvp-wishes::before {
@@ -1087,6 +1087,7 @@ main {
   position: relative;
   z-index: 1;
   max-width: 100%;
+  overflow: visible;
 }
 
 .v4-rw-intro {
@@ -1103,6 +1104,7 @@ main {
   flex-direction: column;
   gap: 10px;
   padding: 0;
+  overflow: visible;
 }
 
 .v4-rw-label {
@@ -1127,6 +1129,7 @@ main {
   outline: none;
   box-shadow: none;
   backdrop-filter: blur(3px);
+  box-sizing: border-box;
 }
 
 .v4-rw-input::placeholder,
@@ -1138,6 +1141,62 @@ main {
 .v4-rw-textarea:focus {
   border-color: rgba(255, 255, 255, 0.58);
   background: rgba(110, 110, 110, 0.62);
+}
+
+.v4-name-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 18px;
+  overflow: visible;
+}
+
+.v4-name-input-wrap .v4-rw-input {
+  margin-bottom: 0;
+  padding-right: 56px;
+}
+
+.v4-status-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  z-index: 10;
+  animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.v4-status-indicator.hadir {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.v4-status-indicator.tidak-hadir {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.v4-status-indicator svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .v4-rw-textarea {
@@ -1264,12 +1323,46 @@ main {
   backdrop-filter: blur(3px);
 }
 
+.v4-wish-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
 .v4-wish-name {
   font-family: var(--font-heading);
   font-size: 18px;
   line-height: 1.1;
-  margin-bottom: 6px;
+  margin-bottom: 0;
   color: #ffffff;
+}
+
+.v4-wish-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.v4-wish-indicator.hadir {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.v4-wish-indicator.tidak-hadir {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.v4-wish-indicator svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
 }
 
 .v4-wish-message {
@@ -5404,20 +5497,20 @@ main {
 
 /* ─── TEMPLATE V4 SCOPED THEME ─── */
 .template-v4 {
-  --v4-blue: #3A7FB8;
-  --v4-blue-light: #68A7D4;
-  --v4-blue-pale: #A3C9ED;
-  --v4-primary: #3A7FB8;
-  --v4-accent: #68A7D4;
+  --v4-blue: #b8923a;
+  --v4-blue-light: #d4ad68;
+  --v4-blue-pale: #edd9a3;
+  --v4-primary: #b8923a;
+  --v4-accent: #d4ad68;
 
-  /* Re-map gold variables inside .template-v4 scope to blue */
-  --gold: #3A7FB8;
-  --gold-light: #68A7D4;
-  --gold-pale: #A3C9ED;
+  /* Re-map gold variables inside .template-v4 scope to gold */
+  --gold: #b8923a;
+  --gold-light: #d4ad68;
+  --gold-pale: #edd9a3;
 
-  --v4-gold: #3A7FB8;
-  --v4-gold-light: #68A7D4;
-  --v4-gold-pale: #A3C9ED;
+  --v4-gold: #b8923a;
+  --v4-gold-light: #d4ad68;
+  --v4-gold-pale: #edd9a3;
 
   --v4-burgundy: #4a0e1a;
   --v4-burgundy-mid: #6b1828;

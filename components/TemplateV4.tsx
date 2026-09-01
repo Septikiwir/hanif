@@ -365,6 +365,7 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
   }, []);
   const qrCardRef = useRef<HTMLDivElement | null>(null);
   const [wishes, setWishes] = useState<Wish[]>([]);
+  const [rsvpList, setRsvpList] = useState<{ name: string; attendance: string }[]>([]);
   const [rsvpStats, setRsvpStats] = useState({ hadir: 0, tidakHadir: 0 });
   const [isSubmittingWishes, setIsSubmittingWishes] = useState(false);
   const [isSubmittingRSVP, setIsSubmittingRSVP] = useState(false);
@@ -386,13 +387,19 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
   const showToast = (message: string, type: "success" | "error" = "success") => setToast({ message, type });
   const hideToast = useCallback(() => setToast(null), []);
 
+  const getRsvpStatus = useCallback((name: string) => {
+    const rsvp = rsvpList.find((r) => r.name.toLowerCase().trim() === name.toLowerCase().trim());
+    return rsvp?.attendance || null;
+  }, [rsvpList]);
+
   const fetchWishes = useCallback(async () => {
     const { data: list, error } = await supabase.from("wishes").select("*").eq("invitation_slug", slug).order("created_at", { ascending: false });
     if (!error && list) setWishes(list);
   }, [slug]);
   const fetchRSVPStats = useCallback(async () => {
-    const { data: list, error } = await supabase.from("rsvp").select("attendance").eq("invitation_slug", slug);
+    const { data: list, error } = await supabase.from("rsvp").select("*").eq("invitation_slug", slug);
     if (!error && list) {
+      setRsvpList(list);
       const hadir = list.filter((r) => r.attendance === "Hadir").length;
       const tidakHadir = list.filter((r) => r.attendance === "Tidak Hadir").length;
       setRsvpStats({ hadir, tidakHadir });
@@ -732,7 +739,7 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
         <section className="intro-section" style={{ padding: 0 }}>
           <article className="event-card reveal reveal-up delay-2" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.15)", margin: "40px 24px", textAlign: "center" }}>
             <p className="reveal reveal-up" style={{ color: "var(--v4-blue)", fontSize: 22, fontFamily: "var(--v4-font-heading)" }}>{data.media.greetingText || "Assalamu'alaikum Wr. Wb."}</p>
-            <div className="ornament-center reveal reveal-fade" style={{ margin: "10px 0" }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z" fill="#3A7FB8" opacity="0.8" /></svg></div>
+            <div className="ornament-center reveal reveal-fade" style={{ margin: "10px 0" }}><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5Z" fill="#d4ad68" opacity="0.8" /></svg></div>
             <p className="intro-lead reveal reveal-up delay-1" style={{ marginBottom: 0 }}>{data.media.introText || "Dengan memohon Rahmat dan Ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami"}</p>
           </article>
 
@@ -855,7 +862,23 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
             <p className="v4-rw-intro reveal reveal-up">Bagi tamu undangan yang akan hadir di acara pernikahan kami, silakan kirimkan konfirmasi kehadiran dengan mengisi form berikut:</p>
             <form className="v4-rw-form reveal reveal-up delay-1" onSubmit={handleCombinedSubmit}>
               <label className="v4-rw-label">Nama</label>
-              <input type="text" className="v4-rw-input" value={rsvpName} onChange={(e) => setRsvpName(e.target.value)} />
+              <div className="v4-name-input-wrap">
+                <input type="text" className="v4-rw-input" value={rsvpName} onChange={(e) => setRsvpName(e.target.value)} />
+                {rsvpStatus && (
+                  <div className={`v4-status-indicator ${rsvpStatus === "Hadir" ? "hadir" : "tidak-hadir"}`}>
+                    {rsvpStatus === "Hadir" ? (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    )}
+                  </div>
+                )}
+              </div>
               <label className="v4-rw-label">Konfirmasi Kehadiran</label>
               <div className="v4-attendance-toggle">
                 <button type="button" className={`v4-att-btn${rsvpStatus === "Hadir" ? " active" : ""}`} onClick={() => setRsvpStatus("Hadir")}>Hadir</button>
@@ -869,13 +892,32 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
             </form>
             <div className="v4-wishes-divider" aria-hidden="true" />
             <div className="v4-wishes-list reveal reveal-up delay-2">
-              {currentWishes.map((item, idx) => (
-                <div key={idx} className="v4-wish-card">
-                  <p className="v4-wish-name">{item.name}</p>
-                  <p className="v4-wish-message">{item.message}</p>
-                  <p className="v4-wish-time">{timeAgo(item.created_at)}</p>
-                </div>
-              ))}
+              {currentWishes.map((item, idx) => {
+                const rsvpStatus = getRsvpStatus(item.name);
+                return (
+                  <div key={idx} className="v4-wish-card">
+                    <div className="v4-wish-header">
+                      <p className="v4-wish-name">{item.name}</p>
+                      {rsvpStatus && (
+                        <div className={`v4-wish-indicator ${rsvpStatus === "Hadir" ? "hadir" : "tidak-hadir"}`}>
+                          {rsvpStatus === "Hadir" ? (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          ) : (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <p className="v4-wish-message">{item.message}</p>
+                    <p className="v4-wish-time">{timeAgo(item.created_at)}</p>
+                  </div>
+                );
+              })}
             </div>
             {totalPages > 1 && (
               <div className="v4-wishes-pagination">
