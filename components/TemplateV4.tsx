@@ -86,6 +86,23 @@ type Wish = {
   created_at: string;
 };
 
+const timeAgo = (dateStr: string): string => {
+  const now = new Date();
+  const date = new Date(dateStr);
+  const diff = now.getTime() - date.getTime();
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  if (mins < 1) return "baru saja";
+  if (mins < 60) return `${mins} menit yang lalu`;
+  if (hours < 24) return `${hours} jam yang lalu`;
+  if (days < 7) return `${days} hari yang lalu`;
+  if (weeks < 5) return `${weeks} minggu yang lalu`;
+  return `${months} bulan yang lalu`;
+};
+
 // --- CUSTOM TOAST ------------------------------------------------------------
 const Toast = ({ message, type, onClose }: { message: string; type: "success" | "error"; onClose: () => void }) => {
   useEffect(() => {
@@ -136,11 +153,11 @@ function Chip({ src }: { src?: string }) {
   return (
     <div
       style={{
-        width: 100,
-        height: 100,
-        borderRadius: 12,
+        width: 50,
+        height: 50,
+        borderRadius: 8,
         position: "relative",
-        marginBottom: 20,
+        marginBottom: 12,
         overflow: "hidden",
         border: "1px solid #eee",
         boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
@@ -512,6 +529,24 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
     else { setWishName(""); setWishText(""); fetchWishes(); showToast("Ucapan berhasil dikirim!"); setCurrentPage(1); }
   };
 
+  const handleCombinedSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!rsvpName) return showToast("Mohon isi nama Anda.", "error");
+    if (!rsvpStatus) return showToast("Mohon pilih konfirmasi kehadiran.", "error");
+    setIsSubmittingRSVP(true);
+    const { error: rsvpError } = await supabase.from("rsvp").insert([{ name: rsvpName, attendance: rsvpStatus, invitation_slug: slug }]);
+    if (rsvpError) { setIsSubmittingRSVP(false); return showToast("Gagal mengirim konfirmasi.", "error"); }
+    if (wishText.trim()) {
+      const { error: wishError } = await supabase.from("wishes").insert([{ name: rsvpName, message: wishText, invitation_slug: slug }]);
+      if (wishError) { showToast("Konfirmasi terkirim, tapi ucapan gagal dikirim.", "error"); }
+    }
+    setIsSubmittingRSVP(false);
+    setRsvpName(""); setRsvpStatus(""); setWishText("");
+    fetchRSVPStats();
+    if (wishText.trim()) { fetchWishes(); setCurrentPage(1); }
+    showToast("Terima kasih atas konfirmasi dan ucapannya!");
+  };
+
   const downloadQrImage = async () => {
     if (!tokenValue) { showToast("Token tidak tersedia", "error"); return; }
     setIsExporting(true);
@@ -796,45 +831,49 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
           </div>
         </section>
 
-        <section className="rsvp-section">
-          <div className="wishes-bg"><svg width="100%" height="100%" viewBox="0 0 430 600" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="#A3C9ED" strokeWidth="0.5"><path d="M0,300 Q215,100 430,300 Q215,500 0,300Z" opacity="0.3" /><circle cx="215" cy="300" r="180" opacity="0.2" /><circle cx="215" cy="300" r="220" opacity="0.1" /></g></svg></div>
-          <div className="wishes-inner">
-            <div className="wishes-heading reveal reveal-up"><h2 className="wishes-title">RSVP</h2><p className="wishes-subtitle">Konfirmasi Kehadiran</p></div>
-            <div className="rsvp-stats reveal reveal-up delay-1"><div className="rsvp-stat rsvp-hadir"><span className="rsvp-number">{rsvpStats.hadir}</span><span className="rsvp-label">Hadir</span></div><div className="rsvp-stat rsvp-tidak"><span className="rsvp-number">{rsvpStats.tidakHadir}</span><span className="rsvp-label">Tidak Hadir</span></div></div>
-            <form className="wishes-form reveal reveal-up delay-2" onSubmit={handleRSVPSubmit}>
-              <input type="text" placeholder="Nama Anda" value={rsvpName} onChange={(e) => setRsvpName(e.target.value)} />
-              <select value={rsvpStatus} onChange={(e) => setRsvpStatus(e.target.value)}><option value="" disabled>— Konfirmasi Kehadiran —</option><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select>
-              <button type="submit" className="btn-gold" disabled={isSubmittingRSVP}>{isSubmittingRSVP ? "Mengirim..." : "Konfirmasi"}</button>
+        <section className="v4-rsvp-wishes" style={data.media.qrBannerPhoto ? { backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.5) 100%), url(${data.media.qrBannerPhoto})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>
+          <div className="v4-rw-inner">
+            <div className="section-heading reveal reveal-up">
+              <span className="section-label">Konfirmasi &amp; Harapan</span>
+              <h2 className="section-title">RSVP &amp; Wishes</h2>
+            </div>
+            <p className="v4-rw-intro reveal reveal-up">Bagi tamu undangan yang akan hadir di acara pernikahan kami, silakan kirimkan konfirmasi kehadiran dengan mengisi form berikut:</p>
+            <form className="v4-rw-form reveal reveal-up delay-1" onSubmit={handleCombinedSubmit}>
+              <label className="v4-rw-label">Nama</label>
+              <input type="text" className="v4-rw-input" value={rsvpName} onChange={(e) => setRsvpName(e.target.value)} />
+              <label className="v4-rw-label">Konfirmasi Kehadiran</label>
+              <div className="v4-attendance-toggle">
+                <button type="button" className={`v4-att-btn${rsvpStatus === "Hadir" ? " active" : ""}`} onClick={() => setRsvpStatus("Hadir")}>Hadir</button>
+                <button type="button" className={`v4-att-btn${rsvpStatus === "Tidak Hadir" ? " active" : ""}`} onClick={() => setRsvpStatus("Tidak Hadir")}>Tidak Hadir</button>
+              </div>
+              <label className="v4-rw-label">Doa &amp; Ucapan</label>
+              <textarea className="v4-rw-textarea" rows={4} value={wishText} onChange={(e) => setWishText(e.target.value)} />
+              <div className="v4-rw-submit-wrap">
+                <button type="submit" className="v4-rw-submit" disabled={isSubmittingRSVP}>{isSubmittingRSVP ? "MENGIRIM..." : "KIRIM"}</button>
+              </div>
             </form>
-          </div>
-        </section>
-
-        <section className="wishes-section">
-          <div className="wishes-inner">
-            <div className="wishes-heading reveal reveal-up"><h2 className="wishes-title">Wishes</h2><p className="wishes-subtitle">Berikan ucapan & doa untuk kedua mempelai</p></div>
-            <form className="wishes-form reveal reveal-up delay-1" onSubmit={handleWishesSubmit}>
-              <input type="text" placeholder="Nama Anda" value={wishName} onChange={(e) => setWishName(e.target.value)} />
-              <textarea rows={3} placeholder="Tuliskan ucapan & doa Anda…" value={wishText} onChange={(e) => setWishText(e.target.value)} />
-              <button type="submit" className="btn-gold" disabled={isSubmittingWishes}>{isSubmittingWishes ? "Mengirim..." : "Kirim Ucapan"}</button>
-            </form>
-            <div className="comment-list reveal reveal-up delay-2">
-              <p style={{ fontFamily: "var(--v4-font-sub)", fontSize: 10, letterSpacing: "0.2em", color: "rgba(0,0,0,0.4)", marginBottom: "1rem" }}>{wishes.length} Ucapan</p>
+            <div className="v4-wishes-divider" aria-hidden="true" />
+            <div className="v4-wishes-list reveal reveal-up delay-2">
               {currentWishes.map((item, idx) => (
-                <div key={idx} className="comment-item"><p className="comment-name">{item.name}</p><p className="comment-text">{item.message}</p></div>
+                <div key={idx} className="v4-wish-card">
+                  <p className="v4-wish-name">{item.name}</p>
+                  <p className="v4-wish-message">{item.message}</p>
+                  <p className="v4-wish-time">{timeAgo(item.created_at)}</p>
+                </div>
               ))}
             </div>
             {totalPages > 1 && (
-              <div className="comment-pagination" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginTop: "2rem", fontFamily: "var(--v4-font-sub)", fontSize: 11, letterSpacing: "0.15em", color: "rgba(0,0,0,0.4)" }}>
-                <button type="button" disabled={currentPage === 1} onClick={() => setCurrentPage(v => Math.max(1, v - 1))} style={{ background: "none", border: "none", color: currentPage === 1 ? "#ddd" : "inherit", cursor: currentPage === 1 ? "default" : "pointer" }}>← Prev</button>
-                {[...Array(totalPages)].map((_, i) => (<button key={i} onClick={() => setCurrentPage(i + 1)} style={{ background: "none", border: "none", color: currentPage === i + 1 ? "var(--burgundy)" : "inherit", fontWeight: currentPage === i + 1 ? "bold" : "normal", cursor: "pointer", minWidth: 24 }}>{i + 1}</button>))}
-                <button type="button" disabled={currentPage === totalPages} onClick={() => setCurrentPage(v => Math.min(totalPages, v + 1))} style={{ background: "none", border: "none", color: currentPage === totalPages ? "#ddd" : "inherit", cursor: currentPage === totalPages ? "default" : "pointer" }}>Next →</button>
+              <div className="v4-wishes-pagination">
+                <button type="button" disabled={currentPage === 1} onClick={() => setCurrentPage(v => Math.max(1, v - 1))}>← Prev</button>
+                {[...Array(totalPages)].map((_, i) => (<button key={i} onClick={() => setCurrentPage(i + 1)} className={currentPage === i + 1 ? "active" : ""}>{i + 1}</button>))}
+                <button type="button" disabled={currentPage === totalPages} onClick={() => setCurrentPage(v => Math.min(totalPages, v + 1))}>Next →</button>
               </div>
             )}
           </div>
         </section>
 
         <footer className="footer-section">
-          <div><Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
+          <div><Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><h2 className="section-title" style={{ margin: "12px 0 0", fontSize: "clamp(22px, 6vw, 30px)" }}>#selaLUdiRAYakan</h2><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
           <div><p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p><h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h2></div>
           <div className="nimantra-credit">
             <Image src="/Nimantra S - White.png" alt="Nimantra Monogram" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
