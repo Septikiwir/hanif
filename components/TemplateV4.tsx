@@ -340,6 +340,7 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
 
 export default function TemplateV4({ data, slug }: { data: InvitationData; slug: string }) {
   const weddingDate = useMemo(() => new Date(data.event.date), [data.event.date]);
+  const audioStartAt = useMemo(() => (slug.toLowerCase() === "lusy-raymond" ? 101 : 0), [slug]);
   const audioSrc = useMemo(() => {
     // Encode spaces and special characters like parentheses
     return data.media.music.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29");
@@ -416,6 +417,20 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
     const audio = audioRef.current; if (!audio) return;
     audio.load(); // Force reload when src changes
   }, [audioSrc]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || audioStartAt <= 0) return;
+
+    const seekToStart = () => {
+      if (audio.currentTime < audioStartAt) {
+        audio.currentTime = audioStartAt;
+      }
+    };
+
+    audio.addEventListener("loadedmetadata", seekToStart);
+    return () => audio.removeEventListener("loadedmetadata", seekToStart);
+  }, [audioStartAt]);
 
   useEffect(() => {
     const audio = audioRef.current; if (!audio) return;

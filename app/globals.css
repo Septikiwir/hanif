@@ -5442,7 +5442,10 @@ main {
   color: var(--v4-blue);
 }
 
-.template-v4 .quote-ref,
+.template-v4 .quote-ref {
+  color: #fff;
+}
+
 .template-v4 .event-type,
 .template-v4 .ampersand-divider {
   color: var(--v4-blue);
