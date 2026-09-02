@@ -340,7 +340,7 @@ function PaymentCard({ bank, holderName, logoUrl, isQris, qrisImage, chipImage, 
 
 export default function TemplateV4({ data, slug }: { data: InvitationData; slug: string }) {
   const weddingDate = useMemo(() => new Date(data.event.date), [data.event.date]);
-  const audioStartAt = useMemo(() => (slug.toLowerCase() === "lusy-raymond" ? 101 : 0), [slug]);
+  const audioStartAt = useMemo(() => 0, [slug]);
   const audioSrc = useMemo(() => {
     // Encode spaces and special characters like parentheses
     return data.media.music.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29");
@@ -378,6 +378,8 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
   const ITEMS_PER_PAGE = 5;
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const saveDateVideoRef = useRef<HTMLVideoElement | null>(null);
+  const galleryVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [isOpeningReady, setIsOpeningReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -479,6 +481,28 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
     if (isInvitationOpen) { video.play().catch(() => { }); }
     else { video.pause(); video.currentTime = 0; }
   }, [isInvitationOpen]);
+
+  // IntersectionObserver for save-date and gallery videos
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (saveDateVideoRef.current) observer.observe(saveDateVideoRef.current);
+    if (galleryVideoRef.current) observer.observe(galleryVideoRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (isInvitationOpen) {
@@ -789,7 +813,7 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
           <div className="section-heading reveal reveal-up"><span className="section-label">Our Special Day</span><h2 className="section-title">Save the Date</h2></div>
           <div className="gallery-video-wrap reveal reveal-scale" style={{ aspectRatio: "1 / 1", width: "100%", maxWidth: "430px", margin: "0 auto 1.5rem", borderRadius: "12px", border: "1px solid rgba(255, 255, 255, 0.15)", boxShadow: "0 10px 30px rgba(0,0,0,0.3)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(to right, transparent, var(--v4-blue), transparent)", zIndex: 20, pointerEvents: "none" }} />
-            <video src="/Compress%20MP4%20Video%20Files%20Online%20Free%20_%20Mp4Compress%282%29.mp4" className="gallery-video" style={{ transform: "scale(1.2) translateX(5%) translateY(-7%)" }} autoPlay muted loop playsInline preload="metadata" />
+            <video ref={saveDateVideoRef} src="/Compress%20MP4%20Video%20Files%20Online%20Free%20_%20Mp4Compress%282%29.mp4" className="gallery-video" style={{ transform: "scale(1.2) translateX(5%) translateY(-7%)" }} muted loop playsInline preload="metadata" />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(to right, transparent, var(--v4-blue), transparent)", zIndex: 20, pointerEvents: "none" }} />
 
             {/* Tombol Save the Date Melayang di Dalam Kotak Video */}
@@ -814,7 +838,7 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
         <section className="gallery-section">
           <div className="section-heading reveal reveal-up"><span className="section-label">Kenangan</span><h2 className="section-title">Photo Gallery</h2></div>
           <div className="gallery-wrap">
-            <div className="gallery-video-wrap reveal reveal-scale"><video src={data.media.galleryVideo} className="gallery-video" autoPlay muted loop playsInline preload="metadata" /></div>
+            <div className="gallery-video-wrap reveal reveal-scale"><video ref={galleryVideoRef} src={data.media.galleryVideo} className="gallery-video" muted loop playsInline preload="metadata" /></div>
             <div className="gallery-grid">
               {data.media.gallery.map((img, idx) => (
                 <button key={idx} className={`gallery-thumb reveal reveal-fade ${img.isLandscape ? "landscape" : ""}`} onClick={() => setLightboxImage(img.src)}>
