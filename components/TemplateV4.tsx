@@ -364,6 +364,7 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
     }
   }, []);
   const qrCardRef = useRef<HTMLDivElement | null>(null);
+  const countdownIntervalsRef = useRef<NodeJS.Timeout[]>([]);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [rsvpList, setRsvpList] = useState<{ name: string; attendance: string }[]>([]);
   const [rsvpStats, setRsvpStats] = useState({ hadir: 0, tidakHadir: 0 });
@@ -512,21 +513,39 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
           if (entry.isIntersecting) {
             const target = entry.target as HTMLElement;
             target.classList.add("visible");
+            observer.unobserve(target);
             if (target.classList.contains("event-date-number") && !target.dataset.counted) {
               const targetVal = parseInt(target.innerText) || 17;
-              let current = 1; const duration = 1200; const frameRate = 1000 / 60; const totalFrames = duration / frameRate; const increment = (targetVal - 1) / totalFrames;
+              let current = 1; 
+              const duration = 1200; 
+              const frameRate = 1000 / 60; 
+              const totalFrames = duration / frameRate; 
+              const increment = (targetVal - 1) / totalFrames;
               target.dataset.counted = "true";
               const timer = setInterval(() => {
                 current += increment;
-                if (current >= targetVal) { target.innerText = targetVal.toString(); clearInterval(timer); }
+                if (current >= targetVal) { 
+                  target.innerText = targetVal.toString(); 
+                  clearInterval(timer);
+                  // Remove timer from tracking array
+                  const idx = countdownIntervalsRef.current.indexOf(timer);
+                  if (idx > -1) countdownIntervalsRef.current.splice(idx, 1);
+                }
                 else { target.innerText = Math.floor(current).toString(); }
               }, frameRate);
+              // Track this interval so we can clean it up
+              countdownIntervalsRef.current.push(timer);
             }
           }
         });
       }, { threshold: 0.1, rootMargin: "0px 0px -20% 0px" });
       elements.forEach((el) => observer.observe(el));
-      return () => observer.disconnect();
+      return () => {
+        observer.disconnect();
+        // Clean up all pending intervals
+        countdownIntervalsRef.current.forEach(timer => clearInterval(timer));
+        countdownIntervalsRef.current = [];
+      };
     }
   }, [isInvitationOpen]);
 
@@ -543,12 +562,11 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
   }, [isInvitationOpen]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if ("scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-      window.scrollTo(0, 0);
-    }
+    return () => {
+      // Cleanup: clear all pending intervals on unmount
+      countdownIntervalsRef.current.forEach(timer => clearInterval(timer));
+      countdownIntervalsRef.current = [];
+    };
   }, []);
 
   useEffect(() => {
