@@ -528,6 +528,9 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const target = entry.target as HTMLElement;
+            // Debugging log for iOS crash tracing
+            console.log("[DEBUG] Reveal animation triggered for element:", target.className, target.tagName);
+            
             target.classList.add("visible");
             observer.unobserve(target);
             if (target.classList.contains("event-date-number") && !target.dataset.counted) {
@@ -1002,13 +1005,21 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
         </section>
 
         <footer className="footer-section">
-          <div><Image src={data.media.logo} alt="Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} /><h2 className="section-title" style={{ margin: "12px 0 0", fontSize: "clamp(22px, 6vw, 30px)" }}>#selaLUdiRAYakan</h2><span className="gold-line" style={{ margin: "2rem auto" }} /><p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p></div>
-          <div><p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p><h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h2></div>
+          <div>
+            <Image src={data.media.logo} alt="Logo" width={200} height={80} className="reveal reveal-fade" style={{ height: "80px", width: "auto", margin: "0 auto", display: "block", objectFit: "contain" }} />
+            <h2 className="section-title" style={{ margin: "12px 0 0", fontSize: "clamp(22px, 6vw, 30px)" }}>#selaLUdiRAYakan</h2>
+            <span className="gold-line" style={{ margin: "2rem auto" }} />
+            <p className="footer-note reveal reveal-up delay-1">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+          </div>
+          <div>
+            <p className="footer-byline reveal reveal-up delay-2">Kami yang berbahagia,</p>
+            <h2 className="footer-names reveal reveal-up delay-3" style={{ marginBottom: 0 }}>{data.couple.bride.shortName} &amp; {data.couple.groom.shortName}</h2>
+          </div>
           <div className="nimantra-credit">
-            <Image src="/Nimantra S - White.png" alt="Nimantra Monogram" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
+            <Image src="/Nimantra S - White.png" alt="Nimantra Monogram" width={64} height={32} className="reveal reveal-fade" style={{ height: "32px", width: "auto", margin: "0 auto 16px", display: "block", objectFit: "contain", opacity: 0.8 }} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "24px" }}>
               <p className="credit-title" style={{ marginBottom: 0 }}>Invitation by</p>
-              <Image src="/Nimantra L - White.png" alt="Nimantra Logo" width={0} height={0} sizes="100vw" className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
+              <Image src="/Nimantra L - White.png" alt="Nimantra Logo" width={100} height={18} className="reveal reveal-fade" style={{ height: "18px", width: "auto", objectFit: "contain", opacity: 0.8 }} />
             </div>
             <div className="credit-socials">
               <a href="https://wa.me/6285169770397" target="_blank" rel="noopener noreferrer" className="social-item" style={{ textDecoration: 'none' }}>
