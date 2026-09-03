@@ -484,26 +484,42 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
   }, [isInvitationOpen]);
 
   // IntersectionObserver for save-date and gallery videos
+  // Fix #2: Pause hero video when a section video is playing to prevent
+  // 3 simultaneous video decodes (causes iOS Jetsam memory kill).
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target as HTMLVideoElement;
+          const heroVideo = heroVideoRef.current;
+
           if (entry.isIntersecting) {
+            // Play this section video
             video.play().catch(() => {});
+            // Pause hero background video to free GPU memory
+            if (heroVideo && !heroVideo.paused) {
+              heroVideo.pause();
+            }
           } else {
+            // Pause this section video
             video.pause();
+            // Only resume hero video if NO section video is currently playing
+            const saveDatePlaying = saveDateVideoRef.current && !saveDateVideoRef.current.paused;
+            const galleryPlaying = galleryVideoRef.current && !galleryVideoRef.current.paused;
+            if (heroVideo && !saveDatePlaying && !galleryPlaying && isInvitationOpen) {
+              heroVideo.play().catch(() => {});
+            }
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (saveDateVideoRef.current) observer.observe(saveDateVideoRef.current);
     if (galleryVideoRef.current) observer.observe(galleryVideoRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [isInvitationOpen]);
 
   useEffect(() => {
     if (isInvitationOpen) {
@@ -895,8 +911,22 @@ export default function TemplateV4({ data, slug }: { data: InvitationData; slug:
           </div>
         </section>
 
-        <section className="v4-rsvp-wishes" style={data.media.qrBannerPhoto ? { backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.5) 100%), url(${data.media.qrBannerPhoto})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>
-          <div className="v4-rw-inner">
+        <section className="v4-rsvp-wishes" style={{ position: "relative" }}>
+          {/* Fix #3: Use Next.js Image instead of CSS background-image for lazy loading and optimization */}
+          {data.media.qrBannerPhoto && (
+            <Image
+              src={data.media.qrBannerPhoto}
+              alt=""
+              fill
+              sizes="100vw"
+              loading="lazy"
+              style={{ objectFit: "cover", objectPosition: "center", zIndex: 0 }}
+            />
+          )}
+          {data.media.qrBannerPhoto && (
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.5) 100%)", zIndex: 1, pointerEvents: "none" }} />
+          )}
+          <div className="v4-rw-inner" style={{ position: "relative", zIndex: 2 }}>
             <div className="section-heading reveal reveal-up">
               <span className="section-label">Konfirmasi &amp; Harapan</span>
               <h2 className="section-title">RSVP &amp; Wishes</h2>
